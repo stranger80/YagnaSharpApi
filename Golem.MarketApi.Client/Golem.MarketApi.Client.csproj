@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>Golem.MarketApi.Client</AssemblyName>
+    <PackageId>Golem.MarketApi.Client</PackageId>
+    <OutputType>Library</OutputType>
+    <Authors>OpenAPI</Authors>
+    <Company>OpenAPI</Company>
+    <AssemblyTitle>OpenAPI Library</AssemblyTitle>
+    <Description>A library generated from a OpenAPI doc</Description>
+    <Copyright>No Copyright</Copyright>
+    <RootNamespace>Golem.MarketApi.Client</RootNamespace>
+    <Version>1.0.0</Version>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Golem.MarketApi.Client.xml</DocumentationFile>
+    <RepositoryUrl>https://github.com/GIT_USER_ID/GIT_REPO_ID.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>Minor update</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JsonSubTypes" Version="1.5.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="RestSharp" Version="106.10.1" />
+  </ItemGroup>
+
+</Project>
