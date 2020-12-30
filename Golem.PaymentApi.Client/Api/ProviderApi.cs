@@ -15,7 +15,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
-using Golem.PaymentApi.Client.Client;
+using Golem.Common.Client.Client;
 using Golem.PaymentApi.Client.Model;
 
 namespace Golem.PaymentApi.Client.Api
@@ -33,7 +33,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Debit Note or timeout has passed. The Requestor may refuse to cancel the Debit Note if they have already paid it. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns></returns>
@@ -45,7 +45,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Debit Note or timeout has passed. The Requestor may refuse to cancel the Debit Note if they have already paid it. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>ApiResponse of Object(void)</returns>
@@ -56,7 +56,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Invoice or timeout has passed. The Requestor may refuse to cancel the Invoice if they have already paid it. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns></returns>
@@ -68,7 +68,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Invoice or timeout has passed. The Requestor may refuse to cancel the Invoice if they have already paid it. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>ApiResponse of Object(void)</returns>
@@ -79,7 +79,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <returns>DebitNote</returns>
         DebitNote GetDebitNote (string debitNoteId);
@@ -90,7 +90,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <returns>ApiResponse of DebitNote</returns>
         ApiResponse<DebitNote> GetDebitNoteWithHttpInfo (string debitNoteId);
@@ -100,7 +100,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// Listen for Debit Note-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -114,7 +114,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// Listen for Debit Note-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -127,7 +127,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>List&lt;DebitNote&gt;</returns>
@@ -139,7 +139,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>ApiResponse of List&lt;DebitNote&gt;</returns>
@@ -150,7 +150,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <returns>Invoice</returns>
         Invoice GetInvoice (string invoiceId);
@@ -161,7 +161,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <returns>ApiResponse of Invoice</returns>
         ApiResponse<Invoice> GetInvoiceWithHttpInfo (string invoiceId);
@@ -171,7 +171,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// Listen for Invoice-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -185,7 +185,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// Listen for Invoice-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -198,7 +198,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>List&lt;Invoice&gt;</returns>
@@ -210,7 +210,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>ApiResponse of List&lt;Invoice&gt;</returns>
@@ -221,7 +221,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paymentId"></param>
         /// <returns>Payment</returns>
         Payment GetPayment (string paymentId);
@@ -232,7 +232,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paymentId"></param>
         /// <returns>ApiResponse of Payment</returns>
         ApiResponse<Payment> GetPaymentWithHttpInfo (string paymentId);
@@ -242,7 +242,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// Payments can be treated as events and this method can be used to listen for new payments by long-polling.  If there are any payments the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; payments. Setting the parameter value to the timestamp of the last processed payment ensures that no payments will go unnoticed. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -256,7 +256,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// Payments can be treated as events and this method can be used to listen for new payments by long-polling.  If there are any payments the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; payments. Setting the parameter value to the timestamp of the last processed payment ensures that no payments will go unnoticed. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -269,7 +269,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
@@ -282,7 +282,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
@@ -294,7 +294,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
@@ -307,7 +307,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
@@ -319,7 +319,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>List&lt;Account&gt;</returns>
         List<Account> GetProviderAccounts ();
 
@@ -329,7 +329,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;Account&gt;</returns>
         ApiResponse<List<Account>> GetProviderAccountsWithHttpInfo ();
         /// <summary>
@@ -338,7 +338,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNote"></param>
         /// <returns>DebitNote</returns>
         DebitNote IssueDebitNote (DebitNote debitNote);
@@ -349,7 +349,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNote"></param>
         /// <returns>ApiResponse of DebitNote</returns>
         ApiResponse<DebitNote> IssueDebitNoteWithHttpInfo (DebitNote debitNote);
@@ -359,7 +359,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoice"></param>
         /// <returns>Invoice</returns>
         Invoice IssueInvoice (Invoice invoice);
@@ -370,7 +370,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoice"></param>
         /// <returns>ApiResponse of Invoice</returns>
         ApiResponse<Invoice> IssueInvoiceWithHttpInfo (Invoice invoice);
@@ -380,7 +380,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Debit Note or timeout has passed. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns></returns>
@@ -392,7 +392,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Debit Note or timeout has passed. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>ApiResponse of Object(void)</returns>
@@ -403,7 +403,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Invoice or timeout has passed. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns></returns>
@@ -415,7 +415,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Invoice or timeout has passed. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>ApiResponse of Object(void)</returns>
@@ -435,7 +435,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Debit Note or timeout has passed. The Requestor may refuse to cancel the Debit Note if they have already paid it. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of void</returns>
@@ -447,7 +447,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Debit Note or timeout has passed. The Requestor may refuse to cancel the Debit Note if they have already paid it. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of ApiResponse</returns>
@@ -458,7 +458,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Invoice or timeout has passed. The Requestor may refuse to cancel the Invoice if they have already paid it. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of void</returns>
@@ -470,7 +470,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Invoice or timeout has passed. The Requestor may refuse to cancel the Invoice if they have already paid it. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of ApiResponse</returns>
@@ -481,7 +481,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <returns>Task of DebitNote</returns>
         System.Threading.Tasks.Task<DebitNote> GetDebitNoteAsync (string debitNoteId);
@@ -492,7 +492,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <returns>Task of ApiResponse (DebitNote)</returns>
         System.Threading.Tasks.Task<ApiResponse<DebitNote>> GetDebitNoteAsyncWithHttpInfo (string debitNoteId);
@@ -502,7 +502,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// Listen for Debit Note-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -516,7 +516,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// Listen for Debit Note-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -529,7 +529,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of List&lt;DebitNote&gt;</returns>
@@ -541,7 +541,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of ApiResponse (List&lt;DebitNote&gt;)</returns>
@@ -552,7 +552,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <returns>Task of Invoice</returns>
         System.Threading.Tasks.Task<Invoice> GetInvoiceAsync (string invoiceId);
@@ -563,7 +563,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <returns>Task of ApiResponse (Invoice)</returns>
         System.Threading.Tasks.Task<ApiResponse<Invoice>> GetInvoiceAsyncWithHttpInfo (string invoiceId);
@@ -573,7 +573,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// Listen for Invoice-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -587,7 +587,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// Listen for Invoice-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -600,7 +600,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of List&lt;Invoice&gt;</returns>
@@ -612,7 +612,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of ApiResponse (List&lt;Invoice&gt;)</returns>
@@ -623,7 +623,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paymentId"></param>
         /// <returns>Task of Payment</returns>
         System.Threading.Tasks.Task<Payment> GetPaymentAsync (string paymentId);
@@ -634,7 +634,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paymentId"></param>
         /// <returns>Task of ApiResponse (Payment)</returns>
         System.Threading.Tasks.Task<ApiResponse<Payment>> GetPaymentAsyncWithHttpInfo (string paymentId);
@@ -644,7 +644,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// Payments can be treated as events and this method can be used to listen for new payments by long-polling.  If there are any payments the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; payments. Setting the parameter value to the timestamp of the last processed payment ensures that no payments will go unnoticed. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -658,7 +658,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// Payments can be treated as events and this method can be used to listen for new payments by long-polling.  If there are any payments the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; payments. Setting the parameter value to the timestamp of the last processed payment ensures that no payments will go unnoticed. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -671,7 +671,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
@@ -684,7 +684,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
@@ -696,7 +696,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
@@ -709,7 +709,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
@@ -721,7 +721,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;Account&gt;</returns>
         System.Threading.Tasks.Task<List<Account>> GetProviderAccountsAsync ();
 
@@ -731,7 +731,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Account&gt;)</returns>
         System.Threading.Tasks.Task<ApiResponse<List<Account>>> GetProviderAccountsAsyncWithHttpInfo ();
         /// <summary>
@@ -740,7 +740,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNote"></param>
         /// <returns>Task of DebitNote</returns>
         System.Threading.Tasks.Task<DebitNote> IssueDebitNoteAsync (DebitNote debitNote);
@@ -751,7 +751,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNote"></param>
         /// <returns>Task of ApiResponse (DebitNote)</returns>
         System.Threading.Tasks.Task<ApiResponse<DebitNote>> IssueDebitNoteAsyncWithHttpInfo (DebitNote debitNote);
@@ -761,7 +761,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoice"></param>
         /// <returns>Task of Invoice</returns>
         System.Threading.Tasks.Task<Invoice> IssueInvoiceAsync (Invoice invoice);
@@ -772,7 +772,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoice"></param>
         /// <returns>Task of ApiResponse (Invoice)</returns>
         System.Threading.Tasks.Task<ApiResponse<Invoice>> IssueInvoiceAsyncWithHttpInfo (Invoice invoice);
@@ -782,7 +782,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Debit Note or timeout has passed. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of void</returns>
@@ -794,7 +794,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Debit Note or timeout has passed. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of ApiResponse</returns>
@@ -805,7 +805,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Invoice or timeout has passed. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of void</returns>
@@ -817,7 +817,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Invoice or timeout has passed. 
         /// </remarks>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of ApiResponse</returns>
@@ -838,7 +838,7 @@ namespace Golem.PaymentApi.Client.Api
     /// </summary>
     public partial class ProviderApi : IProviderApi
     {
-        private Golem.PaymentApi.Client.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
+        private Golem.Common.Client.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProviderApi"/> class.
@@ -854,13 +854,13 @@ namespace Golem.PaymentApi.Client.Api
         /// <returns></returns>
         public ProviderApi(String basePath)
         {
-            this.Configuration = Golem.PaymentApi.Client.Client.Configuration.MergeConfigurations(
-                Golem.PaymentApi.Client.Client.GlobalConfiguration.Instance,
-                new Golem.PaymentApi.Client.Client.Configuration { BasePath = basePath }
+            this.Configuration = Golem.Common.Client.Client.Configuration.MergeConfigurations(
+                Golem.Common.Client.Client.GlobalConfiguration.Instance,
+                new Golem.Common.Client.Client.Configuration { BasePath = basePath }
             );
-            this.Client = new Golem.PaymentApi.Client.Client.ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new Golem.PaymentApi.Client.Client.ApiClient(this.Configuration.BasePath);
-            this.ExceptionFactory = Golem.PaymentApi.Client.Client.Configuration.DefaultExceptionFactory;
+            this.Client = new Golem.Common.Client.Client.ApiClient(this.Configuration.BasePath);
+            this.AsynchronousClient = new Golem.Common.Client.Client.ApiClient(this.Configuration.BasePath);
+            this.ExceptionFactory = Golem.Common.Client.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -869,17 +869,17 @@ namespace Golem.PaymentApi.Client.Api
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public ProviderApi(Golem.PaymentApi.Client.Client.Configuration configuration)
+        public ProviderApi(Golem.Common.Client.Client.Configuration configuration)
         {
             if (configuration == null) throw new ArgumentNullException("configuration");
 
-            this.Configuration = Golem.PaymentApi.Client.Client.Configuration.MergeConfigurations(
-                Golem.PaymentApi.Client.Client.GlobalConfiguration.Instance,
+            this.Configuration = Golem.Common.Client.Client.Configuration.MergeConfigurations(
+                Golem.Common.Client.Client.GlobalConfiguration.Instance,
                 configuration
             );
-            this.Client = new Golem.PaymentApi.Client.Client.ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new Golem.PaymentApi.Client.Client.ApiClient(this.Configuration.BasePath);
-            ExceptionFactory = Golem.PaymentApi.Client.Client.Configuration.DefaultExceptionFactory;
+            this.Client = new Golem.Common.Client.Client.ApiClient(this.Configuration.BasePath);
+            this.AsynchronousClient = new Golem.Common.Client.Client.ApiClient(this.Configuration.BasePath);
+            ExceptionFactory = Golem.Common.Client.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -889,7 +889,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <param name="client">The client interface for synchronous API access.</param>
         /// <param name="asyncClient">The client interface for asynchronous API access.</param>
         /// <param name="configuration">The configuration object.</param>
-        public ProviderApi(Golem.PaymentApi.Client.Client.ISynchronousClient client,Golem.PaymentApi.Client.Client.IAsynchronousClient asyncClient, Golem.PaymentApi.Client.Client.IReadableConfiguration configuration)
+        public ProviderApi(Golem.Common.Client.Client.ISynchronousClient client,Golem.Common.Client.Client.IAsynchronousClient asyncClient, Golem.Common.Client.Client.IReadableConfiguration configuration)
         {
             if(client == null) throw new ArgumentNullException("client");
             if(asyncClient == null) throw new ArgumentNullException("asyncClient");
@@ -898,18 +898,18 @@ namespace Golem.PaymentApi.Client.Api
             this.Client = client;
             this.AsynchronousClient = asyncClient;
             this.Configuration = configuration;
-            this.ExceptionFactory = Golem.PaymentApi.Client.Client.Configuration.DefaultExceptionFactory;
+            this.ExceptionFactory = Golem.Common.Client.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
         /// The client for accessing this underlying API asynchronously.
         /// </summary>
-        public Golem.PaymentApi.Client.Client.IAsynchronousClient AsynchronousClient { get; set; }
+        public Golem.Common.Client.Client.IAsynchronousClient AsynchronousClient { get; set; }
 
         /// <summary>
         /// The client for accessing this underlying API synchronously.
         /// </summary>
-        public Golem.PaymentApi.Client.Client.ISynchronousClient Client { get; set; }
+        public Golem.Common.Client.Client.ISynchronousClient Client { get; set; }
 
         /// <summary>
         /// Gets the base path of the API client.
@@ -924,12 +924,12 @@ namespace Golem.PaymentApi.Client.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public Golem.PaymentApi.Client.Client.IReadableConfiguration Configuration {get; set;}
+        public Golem.Common.Client.Client.IReadableConfiguration Configuration {get; set;}
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
         /// </summary>
-        public Golem.PaymentApi.Client.Client.ExceptionFactory ExceptionFactory
+        public Golem.Common.Client.Client.ExceptionFactory ExceptionFactory
         {
             get
             {
@@ -945,7 +945,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Cancel Debit Note. This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Debit Note or timeout has passed. The Requestor may refuse to cancel the Debit Note if they have already paid it. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns></returns>
@@ -957,17 +957,17 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Cancel Debit Note. This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Debit Note or timeout has passed. The Requestor may refuse to cancel the Debit Note if they have already paid it. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse<Object> CancelDebitNoteWithHttpInfo (string debitNoteId, float? timeout = default(float?))
+        public Golem.Common.Client.Client.ApiResponse<Object> CancelDebitNoteWithHttpInfo (string debitNoteId, float? timeout = default(float?))
         {
             // verify the required parameter 'debitNoteId' is set
             if (debitNoteId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->CancelDebitNote");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->CancelDebitNote");
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -977,24 +977,24 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (debitNoteId != null)
-                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.Common.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1012,7 +1012,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Cancel Debit Note. This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Debit Note or timeout has passed. The Requestor may refuse to cancel the Debit Note if they have already paid it. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of void</returns>
@@ -1025,18 +1025,18 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Cancel Debit Note. This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Debit Note or timeout has passed. The Requestor may refuse to cancel the Debit Note if they have already paid it. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<Object>> CancelDebitNoteAsyncWithHttpInfo (string debitNoteId, float? timeout = default(float?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> CancelDebitNoteAsyncWithHttpInfo (string debitNoteId, float? timeout = default(float?))
         {
             // verify the required parameter 'debitNoteId' is set
             if (debitNoteId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->CancelDebitNote");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->CancelDebitNote");
 
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1053,17 +1053,17 @@ namespace Golem.PaymentApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (debitNoteId != null)
-                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.Common.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1082,7 +1082,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Cancel Invoice. This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Invoice or timeout has passed. The Requestor may refuse to cancel the Invoice if they have already paid it. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns></returns>
@@ -1094,17 +1094,17 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Cancel Invoice. This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Invoice or timeout has passed. The Requestor may refuse to cancel the Invoice if they have already paid it. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse<Object> CancelInvoiceWithHttpInfo (string invoiceId, float? timeout = default(float?))
+        public Golem.Common.Client.Client.ApiResponse<Object> CancelInvoiceWithHttpInfo (string invoiceId, float? timeout = default(float?))
         {
             // verify the required parameter 'invoiceId' is set
             if (invoiceId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->CancelInvoice");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->CancelInvoice");
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1114,24 +1114,24 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (invoiceId != null)
-                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.Common.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1149,7 +1149,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Cancel Invoice. This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Invoice or timeout has passed. The Requestor may refuse to cancel the Invoice if they have already paid it. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of void</returns>
@@ -1162,18 +1162,18 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Cancel Invoice. This is a blocking operation. It will not return until the Requestor has acknowledged cancelling the Invoice or timeout has passed. The Requestor may refuse to cancel the Invoice if they have already paid it. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<Object>> CancelInvoiceAsyncWithHttpInfo (string invoiceId, float? timeout = default(float?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> CancelInvoiceAsyncWithHttpInfo (string invoiceId, float? timeout = default(float?))
         {
             // verify the required parameter 'invoiceId' is set
             if (invoiceId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->CancelInvoice");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->CancelInvoice");
 
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1190,17 +1190,17 @@ namespace Golem.PaymentApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (invoiceId != null)
-                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.Common.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1219,28 +1219,28 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Debit Note. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <returns>DebitNote</returns>
         public DebitNote GetDebitNote (string debitNoteId)
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<DebitNote> localVarResponse = GetDebitNoteWithHttpInfo(debitNoteId);
+             Golem.Common.Client.Client.ApiResponse<DebitNote> localVarResponse = GetDebitNoteWithHttpInfo(debitNoteId);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Get Debit Note. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <returns>ApiResponse of DebitNote</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse< DebitNote > GetDebitNoteWithHttpInfo (string debitNoteId)
+        public Golem.Common.Client.Client.ApiResponse< DebitNote > GetDebitNoteWithHttpInfo (string debitNoteId)
         {
             // verify the required parameter 'debitNoteId' is set
             if (debitNoteId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->GetDebitNote");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->GetDebitNote");
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1250,20 +1250,20 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (debitNoteId != null)
-                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.Common.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1281,12 +1281,12 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Debit Note. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <returns>Task of DebitNote</returns>
         public async System.Threading.Tasks.Task<DebitNote> GetDebitNoteAsync (string debitNoteId)
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<DebitNote> localVarResponse = await GetDebitNoteAsyncWithHttpInfo(debitNoteId);
+             Golem.Common.Client.Client.ApiResponse<DebitNote> localVarResponse = await GetDebitNoteAsyncWithHttpInfo(debitNoteId);
              return localVarResponse.Data;
 
         }
@@ -1294,17 +1294,17 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Debit Note. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <returns>Task of ApiResponse (DebitNote)</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<DebitNote>> GetDebitNoteAsyncWithHttpInfo (string debitNoteId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<DebitNote>> GetDebitNoteAsyncWithHttpInfo (string debitNoteId)
         {
             // verify the required parameter 'debitNoteId' is set
             if (debitNoteId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->GetDebitNote");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->GetDebitNote");
 
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1321,13 +1321,13 @@ namespace Golem.PaymentApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (debitNoteId != null)
-                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.Common.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1346,7 +1346,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Debit Note events. Listen for Debit Note-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -1354,22 +1354,22 @@ namespace Golem.PaymentApi.Client.Api
         /// <returns>List&lt;DebitNoteEvent&gt;</returns>
         public List<DebitNoteEvent> GetDebitNoteEvents (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<DebitNoteEvent>> localVarResponse = GetDebitNoteEventsWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
+             Golem.Common.Client.Client.ApiResponse<List<DebitNoteEvent>> localVarResponse = GetDebitNoteEventsWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Get Debit Note events. Listen for Debit Note-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>ApiResponse of List&lt;DebitNoteEvent&gt;</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse< List<DebitNoteEvent> > GetDebitNoteEventsWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public Golem.Common.Client.Client.ApiResponse< List<DebitNoteEvent> > GetDebitNoteEventsWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1379,34 +1379,34 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxEvents != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
             }
             if (appSessionId != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1424,7 +1424,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Debit Note events. Listen for Debit Note-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -1432,7 +1432,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <returns>Task of List&lt;DebitNoteEvent&gt;</returns>
         public async System.Threading.Tasks.Task<List<DebitNoteEvent>> GetDebitNoteEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<DebitNoteEvent>> localVarResponse = await GetDebitNoteEventsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
+             Golem.Common.Client.Client.ApiResponse<List<DebitNoteEvent>> localVarResponse = await GetDebitNoteEventsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
              return localVarResponse.Data;
 
         }
@@ -1440,16 +1440,16 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Debit Note events. Listen for Debit Note-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;DebitNoteEvent&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<List<DebitNoteEvent>>> GetDebitNoteEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<DebitNoteEvent>>> GetDebitNoteEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1467,26 +1467,26 @@ namespace Golem.PaymentApi.Client.Api
             
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxEvents != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
             }
             if (appSessionId != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1505,26 +1505,26 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Debit Notes known by this node (either issued by this Provider or received by this Requestor). 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>List&lt;DebitNote&gt;</returns>
         public List<DebitNote> GetDebitNotes (DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<DebitNote>> localVarResponse = GetDebitNotesWithHttpInfo(afterTimestamp, maxItems);
+             Golem.Common.Client.Client.ApiResponse<List<DebitNote>> localVarResponse = GetDebitNotesWithHttpInfo(afterTimestamp, maxItems);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Get Debit Notes known by this node (either issued by this Provider or received by this Requestor). 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>ApiResponse of List&lt;DebitNote&gt;</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse< List<DebitNote> > GetDebitNotesWithHttpInfo (DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
+        public Golem.Common.Client.Client.ApiResponse< List<DebitNote> > GetDebitNotesWithHttpInfo (DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1534,26 +1534,26 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxItems != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1571,13 +1571,13 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Debit Notes known by this node (either issued by this Provider or received by this Requestor). 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of List&lt;DebitNote&gt;</returns>
         public async System.Threading.Tasks.Task<List<DebitNote>> GetDebitNotesAsync (DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<DebitNote>> localVarResponse = await GetDebitNotesAsyncWithHttpInfo(afterTimestamp, maxItems);
+             Golem.Common.Client.Client.ApiResponse<List<DebitNote>> localVarResponse = await GetDebitNotesAsyncWithHttpInfo(afterTimestamp, maxItems);
              return localVarResponse.Data;
 
         }
@@ -1585,14 +1585,14 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Debit Notes known by this node (either issued by this Provider or received by this Requestor). 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of ApiResponse (List&lt;DebitNote&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<List<DebitNote>>> GetDebitNotesAsyncWithHttpInfo (DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<DebitNote>>> GetDebitNotesAsyncWithHttpInfo (DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1610,18 +1610,18 @@ namespace Golem.PaymentApi.Client.Api
             
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxItems != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1640,28 +1640,28 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Invoice. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <returns>Invoice</returns>
         public Invoice GetInvoice (string invoiceId)
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<Invoice> localVarResponse = GetInvoiceWithHttpInfo(invoiceId);
+             Golem.Common.Client.Client.ApiResponse<Invoice> localVarResponse = GetInvoiceWithHttpInfo(invoiceId);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Get Invoice. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <returns>ApiResponse of Invoice</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse< Invoice > GetInvoiceWithHttpInfo (string invoiceId)
+        public Golem.Common.Client.Client.ApiResponse< Invoice > GetInvoiceWithHttpInfo (string invoiceId)
         {
             // verify the required parameter 'invoiceId' is set
             if (invoiceId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->GetInvoice");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->GetInvoice");
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1671,20 +1671,20 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (invoiceId != null)
-                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.Common.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1702,12 +1702,12 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Invoice. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <returns>Task of Invoice</returns>
         public async System.Threading.Tasks.Task<Invoice> GetInvoiceAsync (string invoiceId)
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<Invoice> localVarResponse = await GetInvoiceAsyncWithHttpInfo(invoiceId);
+             Golem.Common.Client.Client.ApiResponse<Invoice> localVarResponse = await GetInvoiceAsyncWithHttpInfo(invoiceId);
              return localVarResponse.Data;
 
         }
@@ -1715,17 +1715,17 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Invoice. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <returns>Task of ApiResponse (Invoice)</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<Invoice>> GetInvoiceAsyncWithHttpInfo (string invoiceId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Invoice>> GetInvoiceAsyncWithHttpInfo (string invoiceId)
         {
             // verify the required parameter 'invoiceId' is set
             if (invoiceId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->GetInvoice");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->GetInvoice");
 
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1742,13 +1742,13 @@ namespace Golem.PaymentApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (invoiceId != null)
-                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.Common.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1767,7 +1767,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Invoice events. Listen for Invoice-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -1775,22 +1775,22 @@ namespace Golem.PaymentApi.Client.Api
         /// <returns>List&lt;InvoiceEvent&gt;</returns>
         public List<InvoiceEvent> GetInvoiceEvents (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<InvoiceEvent>> localVarResponse = GetInvoiceEventsWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
+             Golem.Common.Client.Client.ApiResponse<List<InvoiceEvent>> localVarResponse = GetInvoiceEventsWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Get Invoice events. Listen for Invoice-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>ApiResponse of List&lt;InvoiceEvent&gt;</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse< List<InvoiceEvent> > GetInvoiceEventsWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public Golem.Common.Client.Client.ApiResponse< List<InvoiceEvent> > GetInvoiceEventsWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1800,34 +1800,34 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxEvents != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
             }
             if (appSessionId != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1845,7 +1845,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Invoice events. Listen for Invoice-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -1853,7 +1853,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <returns>Task of List&lt;InvoiceEvent&gt;</returns>
         public async System.Threading.Tasks.Task<List<InvoiceEvent>> GetInvoiceEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<InvoiceEvent>> localVarResponse = await GetInvoiceEventsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
+             Golem.Common.Client.Client.ApiResponse<List<InvoiceEvent>> localVarResponse = await GetInvoiceEventsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
              return localVarResponse.Data;
 
         }
@@ -1861,16 +1861,16 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Invoice events. Listen for Invoice-related events using long-polling. If there are any events the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; events. Setting the parameter value to the timestamp of the last processed event ensures that no events will go unnoticed. **Note:** The events are persistent, ie. calling the API does not remove the event records from receiving queue. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;InvoiceEvent&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<List<InvoiceEvent>>> GetInvoiceEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<InvoiceEvent>>> GetInvoiceEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1888,26 +1888,26 @@ namespace Golem.PaymentApi.Client.Api
             
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxEvents != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
             }
             if (appSessionId != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1926,26 +1926,26 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Invoices known to this node (either issued by this Provider or received by this Requestor). 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>List&lt;Invoice&gt;</returns>
         public List<Invoice> GetInvoices (DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<Invoice>> localVarResponse = GetInvoicesWithHttpInfo(afterTimestamp, maxItems);
+             Golem.Common.Client.Client.ApiResponse<List<Invoice>> localVarResponse = GetInvoicesWithHttpInfo(afterTimestamp, maxItems);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Get Invoices known to this node (either issued by this Provider or received by this Requestor). 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>ApiResponse of List&lt;Invoice&gt;</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse< List<Invoice> > GetInvoicesWithHttpInfo (DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
+        public Golem.Common.Client.Client.ApiResponse< List<Invoice> > GetInvoicesWithHttpInfo (DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1955,26 +1955,26 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxItems != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1992,13 +1992,13 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Invoices known to this node (either issued by this Provider or received by this Requestor). 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of List&lt;Invoice&gt;</returns>
         public async System.Threading.Tasks.Task<List<Invoice>> GetInvoicesAsync (DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<Invoice>> localVarResponse = await GetInvoicesAsyncWithHttpInfo(afterTimestamp, maxItems);
+             Golem.Common.Client.Client.ApiResponse<List<Invoice>> localVarResponse = await GetInvoicesAsyncWithHttpInfo(afterTimestamp, maxItems);
              return localVarResponse.Data;
 
         }
@@ -2006,14 +2006,14 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Invoices known to this node (either issued by this Provider or received by this Requestor). 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of ApiResponse (List&lt;Invoice&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<List<Invoice>>> GetInvoicesAsyncWithHttpInfo (DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<Invoice>>> GetInvoicesAsyncWithHttpInfo (DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2031,18 +2031,18 @@ namespace Golem.PaymentApi.Client.Api
             
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxItems != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2061,28 +2061,28 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Payment. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paymentId"></param>
         /// <returns>Payment</returns>
         public Payment GetPayment (string paymentId)
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<Payment> localVarResponse = GetPaymentWithHttpInfo(paymentId);
+             Golem.Common.Client.Client.ApiResponse<Payment> localVarResponse = GetPaymentWithHttpInfo(paymentId);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Get Payment. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paymentId"></param>
         /// <returns>ApiResponse of Payment</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse< Payment > GetPaymentWithHttpInfo (string paymentId)
+        public Golem.Common.Client.Client.ApiResponse< Payment > GetPaymentWithHttpInfo (string paymentId)
         {
             // verify the required parameter 'paymentId' is set
             if (paymentId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'paymentId' when calling ProviderApi->GetPayment");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'paymentId' when calling ProviderApi->GetPayment");
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2092,20 +2092,20 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (paymentId != null)
-                localVarRequestOptions.PathParameters.Add("paymentId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(paymentId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("paymentId", Golem.Common.Client.Client.ClientUtils.ParameterToString(paymentId)); // path parameter
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2123,12 +2123,12 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Payment. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paymentId"></param>
         /// <returns>Task of Payment</returns>
         public async System.Threading.Tasks.Task<Payment> GetPaymentAsync (string paymentId)
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<Payment> localVarResponse = await GetPaymentAsyncWithHttpInfo(paymentId);
+             Golem.Common.Client.Client.ApiResponse<Payment> localVarResponse = await GetPaymentAsyncWithHttpInfo(paymentId);
              return localVarResponse.Data;
 
         }
@@ -2136,17 +2136,17 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Payment. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="paymentId"></param>
         /// <returns>Task of ApiResponse (Payment)</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<Payment>> GetPaymentAsyncWithHttpInfo (string paymentId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Payment>> GetPaymentAsyncWithHttpInfo (string paymentId)
         {
             // verify the required parameter 'paymentId' is set
             if (paymentId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'paymentId' when calling ProviderApi->GetPayment");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'paymentId' when calling ProviderApi->GetPayment");
 
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2163,13 +2163,13 @@ namespace Golem.PaymentApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (paymentId != null)
-                localVarRequestOptions.PathParameters.Add("paymentId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(paymentId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("paymentId", Golem.Common.Client.Client.ClientUtils.ParameterToString(paymentId)); // path parameter
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2188,7 +2188,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Payments. Payments can be treated as events and this method can be used to listen for new payments by long-polling.  If there are any payments the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; payments. Setting the parameter value to the timestamp of the last processed payment ensures that no payments will go unnoticed. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -2196,22 +2196,22 @@ namespace Golem.PaymentApi.Client.Api
         /// <returns>List&lt;Payment&gt;</returns>
         public List<Payment> GetPayments (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<Payment>> localVarResponse = GetPaymentsWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
+             Golem.Common.Client.Client.ApiResponse<List<Payment>> localVarResponse = GetPaymentsWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Get Payments. Payments can be treated as events and this method can be used to listen for new payments by long-polling.  If there are any payments the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; payments. Setting the parameter value to the timestamp of the last processed payment ensures that no payments will go unnoticed. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>ApiResponse of List&lt;Payment&gt;</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse< List<Payment> > GetPaymentsWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public Golem.Common.Client.Client.ApiResponse< List<Payment> > GetPaymentsWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2221,34 +2221,34 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxEvents != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
             }
             if (appSessionId != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2266,7 +2266,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Payments. Payments can be treated as events and this method can be used to listen for new payments by long-polling.  If there are any payments the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; payments. Setting the parameter value to the timestamp of the last processed payment ensures that no payments will go unnoticed. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -2274,7 +2274,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <returns>Task of List&lt;Payment&gt;</returns>
         public async System.Threading.Tasks.Task<List<Payment>> GetPaymentsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<Payment>> localVarResponse = await GetPaymentsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
+             Golem.Common.Client.Client.ApiResponse<List<Payment>> localVarResponse = await GetPaymentsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
              return localVarResponse.Data;
 
         }
@@ -2282,16 +2282,16 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Payments. Payments can be treated as events and this method can be used to listen for new payments by long-polling.  If there are any payments the method will return them immediately. If there are none the method will wait until one appears or timeout passes. &#x60;afterTimestamp&#x60; parameter can be used in order to get just the &#39;new&#39; payments. Setting the parameter value to the timestamp of the last processed payment ensures that no payments will go unnoticed. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;Payment&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<List<Payment>>> GetPaymentsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<Payment>>> GetPaymentsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2309,26 +2309,26 @@ namespace Golem.PaymentApi.Client.Api
             
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxEvents != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
             }
             if (appSessionId != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2347,32 +2347,32 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Payments for Debit Note. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>List&lt;Payment&gt;</returns>
         public List<Payment> GetPaymentsForDebitNote (string debitNoteId, DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<Payment>> localVarResponse = GetPaymentsForDebitNoteWithHttpInfo(debitNoteId, afterTimestamp, maxItems);
+             Golem.Common.Client.Client.ApiResponse<List<Payment>> localVarResponse = GetPaymentsForDebitNoteWithHttpInfo(debitNoteId, afterTimestamp, maxItems);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Get Payments for Debit Note. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>ApiResponse of List&lt;Payment&gt;</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse< List<Payment> > GetPaymentsForDebitNoteWithHttpInfo (string debitNoteId, DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
+        public Golem.Common.Client.Client.ApiResponse< List<Payment> > GetPaymentsForDebitNoteWithHttpInfo (string debitNoteId, DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
             // verify the required parameter 'debitNoteId' is set
             if (debitNoteId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->GetPaymentsForDebitNote");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->GetPaymentsForDebitNote");
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2382,28 +2382,28 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (debitNoteId != null)
-                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.Common.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxItems != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2421,14 +2421,14 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Payments for Debit Note. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of List&lt;Payment&gt;</returns>
         public async System.Threading.Tasks.Task<List<Payment>> GetPaymentsForDebitNoteAsync (string debitNoteId, DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<Payment>> localVarResponse = await GetPaymentsForDebitNoteAsyncWithHttpInfo(debitNoteId, afterTimestamp, maxItems);
+             Golem.Common.Client.Client.ApiResponse<List<Payment>> localVarResponse = await GetPaymentsForDebitNoteAsyncWithHttpInfo(debitNoteId, afterTimestamp, maxItems);
              return localVarResponse.Data;
 
         }
@@ -2436,19 +2436,19 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Payments for Debit Note. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of ApiResponse (List&lt;Payment&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<List<Payment>>> GetPaymentsForDebitNoteAsyncWithHttpInfo (string debitNoteId, DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<Payment>>> GetPaymentsForDebitNoteAsyncWithHttpInfo (string debitNoteId, DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
             // verify the required parameter 'debitNoteId' is set
             if (debitNoteId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->GetPaymentsForDebitNote");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->GetPaymentsForDebitNote");
 
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2465,21 +2465,21 @@ namespace Golem.PaymentApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (debitNoteId != null)
-                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.Common.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxItems != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2498,32 +2498,32 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Payments for Invoice. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>List&lt;Payment&gt;</returns>
         public List<Payment> GetPaymentsForInvoice (string invoiceId, DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<Payment>> localVarResponse = GetPaymentsForInvoiceWithHttpInfo(invoiceId, afterTimestamp, maxItems);
+             Golem.Common.Client.Client.ApiResponse<List<Payment>> localVarResponse = GetPaymentsForInvoiceWithHttpInfo(invoiceId, afterTimestamp, maxItems);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Get Payments for Invoice. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>ApiResponse of List&lt;Payment&gt;</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse< List<Payment> > GetPaymentsForInvoiceWithHttpInfo (string invoiceId, DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
+        public Golem.Common.Client.Client.ApiResponse< List<Payment> > GetPaymentsForInvoiceWithHttpInfo (string invoiceId, DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
             // verify the required parameter 'invoiceId' is set
             if (invoiceId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->GetPaymentsForInvoice");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->GetPaymentsForInvoice");
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2533,28 +2533,28 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (invoiceId != null)
-                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.Common.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxItems != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2572,14 +2572,14 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Payments for Invoice. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of List&lt;Payment&gt;</returns>
         public async System.Threading.Tasks.Task<List<Payment>> GetPaymentsForInvoiceAsync (string invoiceId, DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<Payment>> localVarResponse = await GetPaymentsForInvoiceAsyncWithHttpInfo(invoiceId, afterTimestamp, maxItems);
+             Golem.Common.Client.Client.ApiResponse<List<Payment>> localVarResponse = await GetPaymentsForInvoiceAsyncWithHttpInfo(invoiceId, afterTimestamp, maxItems);
              return localVarResponse.Data;
 
         }
@@ -2587,19 +2587,19 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get Payments for Invoice. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxItems">Maximum number of items that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of ApiResponse (List&lt;Payment&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<List<Payment>>> GetPaymentsForInvoiceAsyncWithHttpInfo (string invoiceId, DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<Payment>>> GetPaymentsForInvoiceAsyncWithHttpInfo (string invoiceId, DateTime? afterTimestamp = default(DateTime?), int? maxItems = default(int?))
         {
             // verify the required parameter 'invoiceId' is set
             if (invoiceId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->GetPaymentsForInvoice");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->GetPaymentsForInvoice");
 
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2616,21 +2616,21 @@ namespace Golem.PaymentApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (invoiceId != null)
-                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.Common.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxItems != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxItems", maxItems));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2649,22 +2649,22 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get available accounts for receiving payments. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>List&lt;Account&gt;</returns>
         public List<Account> GetProviderAccounts ()
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<Account>> localVarResponse = GetProviderAccountsWithHttpInfo();
+             Golem.Common.Client.Client.ApiResponse<List<Account>> localVarResponse = GetProviderAccountsWithHttpInfo();
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Get available accounts for receiving payments. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;Account&gt;</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse< List<Account> > GetProviderAccountsWithHttpInfo ()
+        public Golem.Common.Client.Client.ApiResponse< List<Account> > GetProviderAccountsWithHttpInfo ()
         {
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2674,10 +2674,10 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
 
@@ -2685,7 +2685,7 @@ namespace Golem.PaymentApi.Client.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2703,11 +2703,11 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get available accounts for receiving payments. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;Account&gt;</returns>
         public async System.Threading.Tasks.Task<List<Account>> GetProviderAccountsAsync ()
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<List<Account>> localVarResponse = await GetProviderAccountsAsyncWithHttpInfo();
+             Golem.Common.Client.Client.ApiResponse<List<Account>> localVarResponse = await GetProviderAccountsAsyncWithHttpInfo();
              return localVarResponse.Data;
 
         }
@@ -2715,12 +2715,12 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Get available accounts for receiving payments. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Account&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<List<Account>>> GetProviderAccountsAsyncWithHttpInfo ()
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<Account>>> GetProviderAccountsAsyncWithHttpInfo ()
         {
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2741,7 +2741,7 @@ namespace Golem.PaymentApi.Client.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2760,28 +2760,28 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Issue a Debit Note. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNote"></param>
         /// <returns>DebitNote</returns>
         public DebitNote IssueDebitNote (DebitNote debitNote)
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<DebitNote> localVarResponse = IssueDebitNoteWithHttpInfo(debitNote);
+             Golem.Common.Client.Client.ApiResponse<DebitNote> localVarResponse = IssueDebitNoteWithHttpInfo(debitNote);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Issue a Debit Note. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNote"></param>
         /// <returns>ApiResponse of DebitNote</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse< DebitNote > IssueDebitNoteWithHttpInfo (DebitNote debitNote)
+        public Golem.Common.Client.Client.ApiResponse< DebitNote > IssueDebitNoteWithHttpInfo (DebitNote debitNote)
         {
             // verify the required parameter 'debitNote' is set
             if (debitNote == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'debitNote' when calling ProviderApi->IssueDebitNote");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'debitNote' when calling ProviderApi->IssueDebitNote");
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -2792,10 +2792,10 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.Data = debitNote;
@@ -2804,7 +2804,7 @@ namespace Golem.PaymentApi.Client.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2822,12 +2822,12 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Issue a Debit Note. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNote"></param>
         /// <returns>Task of DebitNote</returns>
         public async System.Threading.Tasks.Task<DebitNote> IssueDebitNoteAsync (DebitNote debitNote)
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<DebitNote> localVarResponse = await IssueDebitNoteAsyncWithHttpInfo(debitNote);
+             Golem.Common.Client.Client.ApiResponse<DebitNote> localVarResponse = await IssueDebitNoteAsyncWithHttpInfo(debitNote);
              return localVarResponse.Data;
 
         }
@@ -2835,17 +2835,17 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Issue a Debit Note. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNote"></param>
         /// <returns>Task of ApiResponse (DebitNote)</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<DebitNote>> IssueDebitNoteAsyncWithHttpInfo (DebitNote debitNote)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<DebitNote>> IssueDebitNoteAsyncWithHttpInfo (DebitNote debitNote)
         {
             // verify the required parameter 'debitNote' is set
             if (debitNote == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'debitNote' when calling ProviderApi->IssueDebitNote");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'debitNote' when calling ProviderApi->IssueDebitNote");
 
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -2868,7 +2868,7 @@ namespace Golem.PaymentApi.Client.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2887,28 +2887,28 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Issue an Invoice. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoice"></param>
         /// <returns>Invoice</returns>
         public Invoice IssueInvoice (Invoice invoice)
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<Invoice> localVarResponse = IssueInvoiceWithHttpInfo(invoice);
+             Golem.Common.Client.Client.ApiResponse<Invoice> localVarResponse = IssueInvoiceWithHttpInfo(invoice);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Issue an Invoice. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoice"></param>
         /// <returns>ApiResponse of Invoice</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse< Invoice > IssueInvoiceWithHttpInfo (Invoice invoice)
+        public Golem.Common.Client.Client.ApiResponse< Invoice > IssueInvoiceWithHttpInfo (Invoice invoice)
         {
             // verify the required parameter 'invoice' is set
             if (invoice == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'invoice' when calling ProviderApi->IssueInvoice");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'invoice' when calling ProviderApi->IssueInvoice");
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -2919,10 +2919,10 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.Data = invoice;
@@ -2931,7 +2931,7 @@ namespace Golem.PaymentApi.Client.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2949,12 +2949,12 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Issue an Invoice. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoice"></param>
         /// <returns>Task of Invoice</returns>
         public async System.Threading.Tasks.Task<Invoice> IssueInvoiceAsync (Invoice invoice)
         {
-             Golem.PaymentApi.Client.Client.ApiResponse<Invoice> localVarResponse = await IssueInvoiceAsyncWithHttpInfo(invoice);
+             Golem.Common.Client.Client.ApiResponse<Invoice> localVarResponse = await IssueInvoiceAsyncWithHttpInfo(invoice);
              return localVarResponse.Data;
 
         }
@@ -2962,17 +2962,17 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Issue an Invoice. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoice"></param>
         /// <returns>Task of ApiResponse (Invoice)</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<Invoice>> IssueInvoiceAsyncWithHttpInfo (Invoice invoice)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Invoice>> IssueInvoiceAsyncWithHttpInfo (Invoice invoice)
         {
             // verify the required parameter 'invoice' is set
             if (invoice == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'invoice' when calling ProviderApi->IssueInvoice");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'invoice' when calling ProviderApi->IssueInvoice");
 
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -2995,7 +2995,7 @@ namespace Golem.PaymentApi.Client.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -3014,7 +3014,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Send Debit Note to Requestor. This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Debit Note or timeout has passed. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns></returns>
@@ -3026,17 +3026,17 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Send Debit Note to Requestor. This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Debit Note or timeout has passed. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse<Object> SendDebitNoteWithHttpInfo (string debitNoteId, float? timeout = default(float?))
+        public Golem.Common.Client.Client.ApiResponse<Object> SendDebitNoteWithHttpInfo (string debitNoteId, float? timeout = default(float?))
         {
             // verify the required parameter 'debitNoteId' is set
             if (debitNoteId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->SendDebitNote");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->SendDebitNote");
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -3046,24 +3046,24 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (debitNoteId != null)
-                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.Common.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -3081,7 +3081,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Send Debit Note to Requestor. This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Debit Note or timeout has passed. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of void</returns>
@@ -3094,18 +3094,18 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Send Debit Note to Requestor. This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Debit Note or timeout has passed. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="debitNoteId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<Object>> SendDebitNoteAsyncWithHttpInfo (string debitNoteId, float? timeout = default(float?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> SendDebitNoteAsyncWithHttpInfo (string debitNoteId, float? timeout = default(float?))
         {
             // verify the required parameter 'debitNoteId' is set
             if (debitNoteId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->SendDebitNote");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'debitNoteId' when calling ProviderApi->SendDebitNote");
 
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -3122,17 +3122,17 @@ namespace Golem.PaymentApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (debitNoteId != null)
-                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("debitNoteId", Golem.Common.Client.Client.ClientUtils.ParameterToString(debitNoteId)); // path parameter
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -3151,7 +3151,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Send Invoice to Requestor. This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Invoice or timeout has passed. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns></returns>
@@ -3163,17 +3163,17 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Send Invoice to Requestor. This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Invoice or timeout has passed. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public Golem.PaymentApi.Client.Client.ApiResponse<Object> SendInvoiceWithHttpInfo (string invoiceId, float? timeout = default(float?))
+        public Golem.Common.Client.Client.ApiResponse<Object> SendInvoiceWithHttpInfo (string invoiceId, float? timeout = default(float?))
         {
             // verify the required parameter 'invoiceId' is set
             if (invoiceId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->SendInvoice");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->SendInvoice");
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -3183,24 +3183,24 @@ namespace Golem.PaymentApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.PaymentApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (invoiceId != null)
-                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.Common.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -3218,7 +3218,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Send Invoice to Requestor. This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Invoice or timeout has passed. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of void</returns>
@@ -3231,18 +3231,18 @@ namespace Golem.PaymentApi.Client.Api
         /// <summary>
         /// Send Invoice to Requestor. This is a blocking operation. It will not return until the Requestor has acknowledged receiving the Invoice or timeout has passed. 
         /// </summary>
-        /// <exception cref="Golem.PaymentApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="invoiceId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.PaymentApi.Client.Client.ApiResponse<Object>> SendInvoiceAsyncWithHttpInfo (string invoiceId, float? timeout = default(float?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> SendInvoiceAsyncWithHttpInfo (string invoiceId, float? timeout = default(float?))
         {
             // verify the required parameter 'invoiceId' is set
             if (invoiceId == null)
-                throw new Golem.PaymentApi.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->SendInvoice");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'invoiceId' when calling ProviderApi->SendInvoice");
 
 
-            Golem.PaymentApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.PaymentApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -3259,17 +3259,17 @@ namespace Golem.PaymentApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (invoiceId != null)
-                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.PaymentApi.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("invoiceId", Golem.Common.Client.Client.ClientUtils.ParameterToString(invoiceId)); // path parameter
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.PaymentApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.PaymentApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request

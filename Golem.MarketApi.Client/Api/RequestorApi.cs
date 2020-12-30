@@ -15,7 +15,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
-using Golem.MarketApi.Client.Client;
+using Golem.Common.Client.Client;
 using Golem.MarketApi.Client.Model;
 
 namespace Golem.MarketApi.Client.Api
@@ -33,7 +33,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// It is only possible before Provider approved or rejected the Agreement, and before its Expiration.  Causes:   - the awaiting &#x60;approveAgreement&#x60; on Provider side to return with &#x60;Cancelled&#x60; response.   - the awaiting &#x60;waitForApproval&#x60; local call to return with &#x60;Cancelled&#x60; response. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns></returns>
@@ -45,7 +45,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// It is only possible before Provider approved or rejected the Agreement, and before its Expiration.  Causes:   - the awaiting &#x60;approveAgreement&#x60; on Provider side to return with &#x60;Cancelled&#x60; response.   - the awaiting &#x60;waitForApproval&#x60; local call to return with &#x60;Cancelled&#x60; response. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
@@ -56,7 +56,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until there is at least one new event. All events are appearing on both sides equally.  Returns Agreement related events: * &#x60;AgreementApprovedEvent&#x60; - Indicates that the Agreement has been approved   by the Provider.   - The Provider is now ready to accept a request to start an Activity     as described in the negotiated agreement.   - The Providers’s corresponding &#x60;approveAgreement&#x60; call returns &#x60;Approved&#x60;     after this event is emitted.  * &#x60;AgreementRejectedEvent&#x60; - Indicates that the Provider has called   &#x60;rejectAgreement&#x60;, which effectively stops the Agreement handshake.   The Requestor may attempt to return to the Negotiation phase by sending   a new Proposal.  * &#x60;AgreementCancelledEvent&#x60; - Indicates that the Requestor has called   &#x60;cancelAgreement&#x60;, which effectively stops the Agreement handshake.  * &#x60;AgreementTerminatedEvent&#x60; - Indicates that the Agreement has been   terminated by specified party (contains signature). 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -70,7 +70,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until there is at least one new event. All events are appearing on both sides equally.  Returns Agreement related events: * &#x60;AgreementApprovedEvent&#x60; - Indicates that the Agreement has been approved   by the Provider.   - The Provider is now ready to accept a request to start an Activity     as described in the negotiated agreement.   - The Providers’s corresponding &#x60;approveAgreement&#x60; call returns &#x60;Approved&#x60;     after this event is emitted.  * &#x60;AgreementRejectedEvent&#x60; - Indicates that the Provider has called   &#x60;rejectAgreement&#x60;, which effectively stops the Agreement handshake.   The Requestor may attempt to return to the Negotiation phase by sending   a new Proposal.  * &#x60;AgreementCancelledEvent&#x60; - Indicates that the Requestor has called   &#x60;cancelAgreement&#x60;, which effectively stops the Agreement handshake.  * &#x60;AgreementTerminatedEvent&#x60; - Indicates that the Agreement has been   terminated by specified party (contains signature). 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -83,7 +83,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until there is at least one new event. Returns Proposal related events: * &#x60;ProposalEvent&#x60; - Indicates that there is new Offer Proposal for this Demand. * &#x60;ProposalRejectedEvent&#x60; - Indicates that the Provider has rejected   our previous Proposal related to this Demand. This effectively ends a   Negotiation chain - it explicitly indicates that the sender will not   create another counter-Proposal.  * &#x60;PropertyQueryEvent&#x60; - not supported yet.  **Note**: When &#x60;collectOffers&#x60; is waiting, simultaneous call to &#x60;unsubscribeDemand&#x60; on the same &#x60;subscriptionId&#x60; should result in \&quot;Subscription does not exist\&quot; error returned from &#x60;collectOffers&#x60;.  **Note**: Specification requires this endpoint to support list of specific Proposal Ids to listen for messages related only to specific Proposals. This is not covered yet. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -96,7 +96,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until there is at least one new event. Returns Proposal related events: * &#x60;ProposalEvent&#x60; - Indicates that there is new Offer Proposal for this Demand. * &#x60;ProposalRejectedEvent&#x60; - Indicates that the Provider has rejected   our previous Proposal related to this Demand. This effectively ends a   Negotiation chain - it explicitly indicates that the sender will not   create another counter-Proposal.  * &#x60;PropertyQueryEvent&#x60; - not supported yet.  **Note**: When &#x60;collectOffers&#x60; is waiting, simultaneous call to &#x60;unsubscribeDemand&#x60; on the same &#x60;subscriptionId&#x60; should result in \&quot;Subscription does not exist\&quot; error returned from &#x60;collectOffers&#x60;.  **Note**: Specification requires this endpoint to support list of specific Proposal Ids to listen for messages related only to specific Proposals. This is not covered yet. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -108,7 +108,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Signs self-created Agreement and sends it to the Provider.  This call should immediately follow &#x60;createAgreement&#x60;. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns></returns>
@@ -120,7 +120,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Signs self-created Agreement and sends it to the Provider.  This call should immediately follow &#x60;createAgreement&#x60;. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
@@ -131,7 +131,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Creates and sends a modified version of original Demand (a counter-proposal) adjusted to previously received Proposal (ie. Offer). Changes Proposal state to &#x60;Draft&#x60;. Returns created Proposal id. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="demandOfferBase"></param>
@@ -144,7 +144,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Creates and sends a modified version of original Demand (a counter-proposal) adjusted to previously received Proposal (ie. Offer). Changes Proposal state to &#x60;Draft&#x60;. Returns created Proposal id. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="demandOfferBase"></param>
@@ -156,7 +156,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Initiates the Agreement handshake phase.  Formulates an Agreement artifact from the Proposal indicated by the received Proposal Id. Created Agreement is in &#x60;Proposal&#x60; state.  The Approval Expiry Date is added to Agreement artifact and implies the effective timeout on the whole Agreement Confirmation sequence.  A successful call to &#x60;createAgreement&#x60; shall immediately be followed by a &#x60;confirmAgreement&#x60; and &#x60;waitForApproval&#x60; call in order to listen for responses from the Provider.  **Note**: Moves given Proposal to &#x60;Approved&#x60; state. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementProposal"></param>
         /// <returns>string</returns>
         string CreateAgreement (AgreementProposal agreementProposal);
@@ -167,7 +167,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Initiates the Agreement handshake phase.  Formulates an Agreement artifact from the Proposal indicated by the received Proposal Id. Created Agreement is in &#x60;Proposal&#x60; state.  The Approval Expiry Date is added to Agreement artifact and implies the effective timeout on the whole Agreement Confirmation sequence.  A successful call to &#x60;createAgreement&#x60; shall immediately be followed by a &#x60;confirmAgreement&#x60; and &#x60;waitForApproval&#x60; call in order to listen for responses from the Provider.  **Note**: Moves given Proposal to &#x60;Approved&#x60; state. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementProposal"></param>
         /// <returns>ApiResponse of string</returns>
         ApiResponse<string> CreateAgreementWithHttpInfo (AgreementProposal agreementProposal);
@@ -177,7 +177,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>Agreement</returns>
         Agreement GetAgreement (string agreementId);
@@ -188,7 +188,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>ApiResponse of Agreement</returns>
         ApiResponse<Agreement> GetAgreementWithHttpInfo (string agreementId);
@@ -198,7 +198,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>List&lt;Demand&gt;</returns>
         List<Demand> GetDemands ();
 
@@ -208,7 +208,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;Demand&gt;</returns>
         ApiResponse<List<Demand>> GetDemandsWithHttpInfo ();
         /// <summary>
@@ -217,7 +217,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <returns>Proposal</returns>
@@ -229,7 +229,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <returns>ApiResponse of Proposal</returns>
@@ -240,7 +240,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Sends a response to a received property value query.  The Market Matching Mechanism, when resolving the match relation for the specific Demand-Offer pair, is to detect the “dynamic” properties required (via constraints) by the other side. At this point, it is able to query the issuing node for those properties and submit the other side’s requested properties as the context of the query.  **Note**: The property query responses may be submitted in “chunks”, ie. the responder may choose to resolve ‘quick’/lightweight’ properties faster and provide response sooner, while still working on more time-consuming properties in the background. Therefore the response contains both the resolved properties, as well as list of properties which responder knows still require resolution.  **Note**: This method must be implemented for Market API Capability Level 2. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="queryId"></param>
         /// <param name="body"></param>
@@ -253,7 +253,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Sends a response to a received property value query.  The Market Matching Mechanism, when resolving the match relation for the specific Demand-Offer pair, is to detect the “dynamic” properties required (via constraints) by the other side. At this point, it is able to query the issuing node for those properties and submit the other side’s requested properties as the context of the query.  **Note**: The property query responses may be submitted in “chunks”, ie. the responder may choose to resolve ‘quick’/lightweight’ properties faster and provide response sooner, while still working on more time-consuming properties in the background. Therefore the response contains both the resolved properties, as well as list of properties which responder knows still require resolution.  **Note**: This method must be implemented for Market API Capability Level 2. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="queryId"></param>
         /// <param name="body"></param>
@@ -265,7 +265,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Effectively ends a Negotiation chain - it explicitly indicates that the sender will not create another counter-Proposal. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
@@ -278,7 +278,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Effectively ends a Negotiation chain - it explicitly indicates that the sender will not create another counter-Proposal. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
@@ -290,7 +290,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Demand object can be considered an \&quot;open\&quot; or public Demand, as it is not directed at a specific Provider, but rather is sent to the market so that the matching mechanism implementation can associate relevant Offers.  **Note**: it is an \&quot;atomic\&quot; operation, ie. as soon as Subscription is placed, the Demand is published on the market. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="demandOfferBase"></param>
         /// <returns>string</returns>
         string SubscribeDemand (DemandOfferBase demandOfferBase);
@@ -301,7 +301,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Demand object can be considered an \&quot;open\&quot; or public Demand, as it is not directed at a specific Provider, but rather is sent to the market so that the matching mechanism implementation can associate relevant Offers.  **Note**: it is an \&quot;atomic\&quot; operation, ie. as soon as Subscription is placed, the Demand is published on the market. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="demandOfferBase"></param>
         /// <returns>ApiResponse of string</returns>
         ApiResponse<string> SubscribeDemandWithHttpInfo (DemandOfferBase demandOfferBase);
@@ -311,7 +311,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Method to finish/close the Agreement while in &#x60;Approved&#x60; state.  The other party gets notified about calling party decision to terminate a \&quot;running\&quot; agreement.  **Note**: Can be invoked at any time after Agreement was approved by both sides.  **Note**: Financial and reputational consequences are not defined by this specification. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns></returns>
@@ -323,7 +323,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Method to finish/close the Agreement while in &#x60;Approved&#x60; state.  The other party gets notified about calling party decision to terminate a \&quot;running\&quot; agreement.  **Note**: Can be invoked at any time after Agreement was approved by both sides.  **Note**: Financial and reputational consequences are not defined by this specification. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
@@ -334,7 +334,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Stop receiving Proposals.  **Note**: this will terminate all pending &#x60;collectOffers&#x60; calls on this subscription. This implies, that client code should not &#x60;unsubscribeDemand&#x60; before it has received all expected/useful inputs from &#x60;collectOffers&#x60;. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <returns></returns>
         void UnsubscribeDemand (string subscriptionId);
@@ -345,7 +345,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Stop receiving Proposals.  **Note**: this will terminate all pending &#x60;collectOffers&#x60; calls on this subscription. This implies, that client code should not &#x60;unsubscribeDemand&#x60; before it has received all expected/useful inputs from &#x60;collectOffers&#x60;. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <returns>ApiResponse of Object(void)</returns>
         ApiResponse<Object> UnsubscribeDemandWithHttpInfo (string subscriptionId);
@@ -355,7 +355,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. The call may be aborted by Requestor caller code. After the call is aborted or timed out, another &#x60;waitForApproval&#x60; call can be raised on the same Agreement Id. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns></returns>
@@ -367,7 +367,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. The call may be aborted by Requestor caller code. After the call is aborted or timed out, another &#x60;waitForApproval&#x60; call can be raised on the same Agreement Id. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>ApiResponse of Object(void)</returns>
@@ -387,7 +387,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// It is only possible before Provider approved or rejected the Agreement, and before its Expiration.  Causes:   - the awaiting &#x60;approveAgreement&#x60; on Provider side to return with &#x60;Cancelled&#x60; response.   - the awaiting &#x60;waitForApproval&#x60; local call to return with &#x60;Cancelled&#x60; response. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of void</returns>
@@ -399,7 +399,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// It is only possible before Provider approved or rejected the Agreement, and before its Expiration.  Causes:   - the awaiting &#x60;approveAgreement&#x60; on Provider side to return with &#x60;Cancelled&#x60; response.   - the awaiting &#x60;waitForApproval&#x60; local call to return with &#x60;Cancelled&#x60; response. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
@@ -410,7 +410,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until there is at least one new event. All events are appearing on both sides equally.  Returns Agreement related events: * &#x60;AgreementApprovedEvent&#x60; - Indicates that the Agreement has been approved   by the Provider.   - The Provider is now ready to accept a request to start an Activity     as described in the negotiated agreement.   - The Providers’s corresponding &#x60;approveAgreement&#x60; call returns &#x60;Approved&#x60;     after this event is emitted.  * &#x60;AgreementRejectedEvent&#x60; - Indicates that the Provider has called   &#x60;rejectAgreement&#x60;, which effectively stops the Agreement handshake.   The Requestor may attempt to return to the Negotiation phase by sending   a new Proposal.  * &#x60;AgreementCancelledEvent&#x60; - Indicates that the Requestor has called   &#x60;cancelAgreement&#x60;, which effectively stops the Agreement handshake.  * &#x60;AgreementTerminatedEvent&#x60; - Indicates that the Agreement has been   terminated by specified party (contains signature). 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -424,7 +424,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until there is at least one new event. All events are appearing on both sides equally.  Returns Agreement related events: * &#x60;AgreementApprovedEvent&#x60; - Indicates that the Agreement has been approved   by the Provider.   - The Provider is now ready to accept a request to start an Activity     as described in the negotiated agreement.   - The Providers’s corresponding &#x60;approveAgreement&#x60; call returns &#x60;Approved&#x60;     after this event is emitted.  * &#x60;AgreementRejectedEvent&#x60; - Indicates that the Provider has called   &#x60;rejectAgreement&#x60;, which effectively stops the Agreement handshake.   The Requestor may attempt to return to the Negotiation phase by sending   a new Proposal.  * &#x60;AgreementCancelledEvent&#x60; - Indicates that the Requestor has called   &#x60;cancelAgreement&#x60;, which effectively stops the Agreement handshake.  * &#x60;AgreementTerminatedEvent&#x60; - Indicates that the Agreement has been   terminated by specified party (contains signature). 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -437,7 +437,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until there is at least one new event. Returns Proposal related events: * &#x60;ProposalEvent&#x60; - Indicates that there is new Offer Proposal for this Demand. * &#x60;ProposalRejectedEvent&#x60; - Indicates that the Provider has rejected   our previous Proposal related to this Demand. This effectively ends a   Negotiation chain - it explicitly indicates that the sender will not   create another counter-Proposal.  * &#x60;PropertyQueryEvent&#x60; - not supported yet.  **Note**: When &#x60;collectOffers&#x60; is waiting, simultaneous call to &#x60;unsubscribeDemand&#x60; on the same &#x60;subscriptionId&#x60; should result in \&quot;Subscription does not exist\&quot; error returned from &#x60;collectOffers&#x60;.  **Note**: Specification requires this endpoint to support list of specific Proposal Ids to listen for messages related only to specific Proposals. This is not covered yet. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -450,7 +450,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. It will not return until there is at least one new event. Returns Proposal related events: * &#x60;ProposalEvent&#x60; - Indicates that there is new Offer Proposal for this Demand. * &#x60;ProposalRejectedEvent&#x60; - Indicates that the Provider has rejected   our previous Proposal related to this Demand. This effectively ends a   Negotiation chain - it explicitly indicates that the sender will not   create another counter-Proposal.  * &#x60;PropertyQueryEvent&#x60; - not supported yet.  **Note**: When &#x60;collectOffers&#x60; is waiting, simultaneous call to &#x60;unsubscribeDemand&#x60; on the same &#x60;subscriptionId&#x60; should result in \&quot;Subscription does not exist\&quot; error returned from &#x60;collectOffers&#x60;.  **Note**: Specification requires this endpoint to support list of specific Proposal Ids to listen for messages related only to specific Proposals. This is not covered yet. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -462,7 +462,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Signs self-created Agreement and sends it to the Provider.  This call should immediately follow &#x60;createAgreement&#x60;. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of void</returns>
@@ -474,7 +474,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Signs self-created Agreement and sends it to the Provider.  This call should immediately follow &#x60;createAgreement&#x60;. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of ApiResponse</returns>
@@ -485,7 +485,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Creates and sends a modified version of original Demand (a counter-proposal) adjusted to previously received Proposal (ie. Offer). Changes Proposal state to &#x60;Draft&#x60;. Returns created Proposal id. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="demandOfferBase"></param>
@@ -498,7 +498,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Creates and sends a modified version of original Demand (a counter-proposal) adjusted to previously received Proposal (ie. Offer). Changes Proposal state to &#x60;Draft&#x60;. Returns created Proposal id. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="demandOfferBase"></param>
@@ -510,7 +510,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Initiates the Agreement handshake phase.  Formulates an Agreement artifact from the Proposal indicated by the received Proposal Id. Created Agreement is in &#x60;Proposal&#x60; state.  The Approval Expiry Date is added to Agreement artifact and implies the effective timeout on the whole Agreement Confirmation sequence.  A successful call to &#x60;createAgreement&#x60; shall immediately be followed by a &#x60;confirmAgreement&#x60; and &#x60;waitForApproval&#x60; call in order to listen for responses from the Provider.  **Note**: Moves given Proposal to &#x60;Approved&#x60; state. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementProposal"></param>
         /// <returns>Task of string</returns>
         System.Threading.Tasks.Task<string> CreateAgreementAsync (AgreementProposal agreementProposal);
@@ -521,7 +521,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Initiates the Agreement handshake phase.  Formulates an Agreement artifact from the Proposal indicated by the received Proposal Id. Created Agreement is in &#x60;Proposal&#x60; state.  The Approval Expiry Date is added to Agreement artifact and implies the effective timeout on the whole Agreement Confirmation sequence.  A successful call to &#x60;createAgreement&#x60; shall immediately be followed by a &#x60;confirmAgreement&#x60; and &#x60;waitForApproval&#x60; call in order to listen for responses from the Provider.  **Note**: Moves given Proposal to &#x60;Approved&#x60; state. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementProposal"></param>
         /// <returns>Task of ApiResponse (string)</returns>
         System.Threading.Tasks.Task<ApiResponse<string>> CreateAgreementAsyncWithHttpInfo (AgreementProposal agreementProposal);
@@ -531,7 +531,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>Task of Agreement</returns>
         System.Threading.Tasks.Task<Agreement> GetAgreementAsync (string agreementId);
@@ -542,7 +542,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>Task of ApiResponse (Agreement)</returns>
         System.Threading.Tasks.Task<ApiResponse<Agreement>> GetAgreementAsyncWithHttpInfo (string agreementId);
@@ -552,7 +552,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;Demand&gt;</returns>
         System.Threading.Tasks.Task<List<Demand>> GetDemandsAsync ();
 
@@ -562,7 +562,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Demand&gt;)</returns>
         System.Threading.Tasks.Task<ApiResponse<List<Demand>>> GetDemandsAsyncWithHttpInfo ();
         /// <summary>
@@ -571,7 +571,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <returns>Task of Proposal</returns>
@@ -583,7 +583,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <returns>Task of ApiResponse (Proposal)</returns>
@@ -594,7 +594,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Sends a response to a received property value query.  The Market Matching Mechanism, when resolving the match relation for the specific Demand-Offer pair, is to detect the “dynamic” properties required (via constraints) by the other side. At this point, it is able to query the issuing node for those properties and submit the other side’s requested properties as the context of the query.  **Note**: The property query responses may be submitted in “chunks”, ie. the responder may choose to resolve ‘quick’/lightweight’ properties faster and provide response sooner, while still working on more time-consuming properties in the background. Therefore the response contains both the resolved properties, as well as list of properties which responder knows still require resolution.  **Note**: This method must be implemented for Market API Capability Level 2. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="queryId"></param>
         /// <param name="body"></param>
@@ -607,7 +607,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Sends a response to a received property value query.  The Market Matching Mechanism, when resolving the match relation for the specific Demand-Offer pair, is to detect the “dynamic” properties required (via constraints) by the other side. At this point, it is able to query the issuing node for those properties and submit the other side’s requested properties as the context of the query.  **Note**: The property query responses may be submitted in “chunks”, ie. the responder may choose to resolve ‘quick’/lightweight’ properties faster and provide response sooner, while still working on more time-consuming properties in the background. Therefore the response contains both the resolved properties, as well as list of properties which responder knows still require resolution.  **Note**: This method must be implemented for Market API Capability Level 2. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="queryId"></param>
         /// <param name="body"></param>
@@ -619,7 +619,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Effectively ends a Negotiation chain - it explicitly indicates that the sender will not create another counter-Proposal. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
@@ -632,7 +632,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Effectively ends a Negotiation chain - it explicitly indicates that the sender will not create another counter-Proposal. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
@@ -644,7 +644,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Demand object can be considered an \&quot;open\&quot; or public Demand, as it is not directed at a specific Provider, but rather is sent to the market so that the matching mechanism implementation can associate relevant Offers.  **Note**: it is an \&quot;atomic\&quot; operation, ie. as soon as Subscription is placed, the Demand is published on the market. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="demandOfferBase"></param>
         /// <returns>Task of string</returns>
         System.Threading.Tasks.Task<string> SubscribeDemandAsync (DemandOfferBase demandOfferBase);
@@ -655,7 +655,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Demand object can be considered an \&quot;open\&quot; or public Demand, as it is not directed at a specific Provider, but rather is sent to the market so that the matching mechanism implementation can associate relevant Offers.  **Note**: it is an \&quot;atomic\&quot; operation, ie. as soon as Subscription is placed, the Demand is published on the market. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="demandOfferBase"></param>
         /// <returns>Task of ApiResponse (string)</returns>
         System.Threading.Tasks.Task<ApiResponse<string>> SubscribeDemandAsyncWithHttpInfo (DemandOfferBase demandOfferBase);
@@ -665,7 +665,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Method to finish/close the Agreement while in &#x60;Approved&#x60; state.  The other party gets notified about calling party decision to terminate a \&quot;running\&quot; agreement.  **Note**: Can be invoked at any time after Agreement was approved by both sides.  **Note**: Financial and reputational consequences are not defined by this specification. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of void</returns>
@@ -677,7 +677,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Method to finish/close the Agreement while in &#x60;Approved&#x60; state.  The other party gets notified about calling party decision to terminate a \&quot;running\&quot; agreement.  **Note**: Can be invoked at any time after Agreement was approved by both sides.  **Note**: Financial and reputational consequences are not defined by this specification. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
@@ -688,7 +688,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Stop receiving Proposals.  **Note**: this will terminate all pending &#x60;collectOffers&#x60; calls on this subscription. This implies, that client code should not &#x60;unsubscribeDemand&#x60; before it has received all expected/useful inputs from &#x60;collectOffers&#x60;. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <returns>Task of void</returns>
         System.Threading.Tasks.Task UnsubscribeDemandAsync (string subscriptionId);
@@ -699,7 +699,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// Stop receiving Proposals.  **Note**: this will terminate all pending &#x60;collectOffers&#x60; calls on this subscription. This implies, that client code should not &#x60;unsubscribeDemand&#x60; before it has received all expected/useful inputs from &#x60;collectOffers&#x60;. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> UnsubscribeDemandAsyncWithHttpInfo (string subscriptionId);
@@ -709,7 +709,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. The call may be aborted by Requestor caller code. After the call is aborted or timed out, another &#x60;waitForApproval&#x60; call can be raised on the same Agreement Id. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of void</returns>
@@ -721,7 +721,7 @@ namespace Golem.MarketApi.Client.Api
         /// <remarks>
         /// This is a blocking operation. The call may be aborted by Requestor caller code. After the call is aborted or timed out, another &#x60;waitForApproval&#x60; call can be raised on the same Agreement Id. 
         /// </remarks>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of ApiResponse</returns>
@@ -742,7 +742,7 @@ namespace Golem.MarketApi.Client.Api
     /// </summary>
     public partial class RequestorApi : IRequestorApi
     {
-        private Golem.MarketApi.Client.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
+        private Golem.Common.Client.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestorApi"/> class.
@@ -758,13 +758,13 @@ namespace Golem.MarketApi.Client.Api
         /// <returns></returns>
         public RequestorApi(String basePath)
         {
-            this.Configuration = Golem.MarketApi.Client.Client.Configuration.MergeConfigurations(
-                Golem.MarketApi.Client.Client.GlobalConfiguration.Instance,
-                new Golem.MarketApi.Client.Client.Configuration { BasePath = basePath }
+            this.Configuration = Golem.Common.Client.Client.Configuration.MergeConfigurations(
+                Golem.Common.Client.Client.GlobalConfiguration.Instance,
+                new Golem.Common.Client.Client.Configuration { BasePath = basePath }
             );
-            this.Client = new Golem.MarketApi.Client.Client.ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new Golem.MarketApi.Client.Client.ApiClient(this.Configuration.BasePath);
-            this.ExceptionFactory = Golem.MarketApi.Client.Client.Configuration.DefaultExceptionFactory;
+            this.Client = new Golem.Common.Client.Client.ApiClient(this.Configuration.BasePath);
+            this.AsynchronousClient = new Golem.Common.Client.Client.ApiClient(this.Configuration.BasePath);
+            this.ExceptionFactory = Golem.Common.Client.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -773,17 +773,17 @@ namespace Golem.MarketApi.Client.Api
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public RequestorApi(Golem.MarketApi.Client.Client.Configuration configuration)
+        public RequestorApi(Golem.Common.Client.Client.Configuration configuration)
         {
             if (configuration == null) throw new ArgumentNullException("configuration");
 
-            this.Configuration = Golem.MarketApi.Client.Client.Configuration.MergeConfigurations(
-                Golem.MarketApi.Client.Client.GlobalConfiguration.Instance,
+            this.Configuration = Golem.Common.Client.Client.Configuration.MergeConfigurations(
+                Golem.Common.Client.Client.GlobalConfiguration.Instance,
                 configuration
             );
-            this.Client = new Golem.MarketApi.Client.Client.ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new Golem.MarketApi.Client.Client.ApiClient(this.Configuration.BasePath);
-            ExceptionFactory = Golem.MarketApi.Client.Client.Configuration.DefaultExceptionFactory;
+            this.Client = new Golem.Common.Client.Client.ApiClient(this.Configuration.BasePath);
+            this.AsynchronousClient = new Golem.Common.Client.Client.ApiClient(this.Configuration.BasePath);
+            ExceptionFactory = Golem.Common.Client.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -793,7 +793,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="client">The client interface for synchronous API access.</param>
         /// <param name="asyncClient">The client interface for asynchronous API access.</param>
         /// <param name="configuration">The configuration object.</param>
-        public RequestorApi(Golem.MarketApi.Client.Client.ISynchronousClient client,Golem.MarketApi.Client.Client.IAsynchronousClient asyncClient, Golem.MarketApi.Client.Client.IReadableConfiguration configuration)
+        public RequestorApi(Golem.Common.Client.Client.ISynchronousClient client,Golem.Common.Client.Client.IAsynchronousClient asyncClient, Golem.Common.Client.Client.IReadableConfiguration configuration)
         {
             if(client == null) throw new ArgumentNullException("client");
             if(asyncClient == null) throw new ArgumentNullException("asyncClient");
@@ -802,18 +802,18 @@ namespace Golem.MarketApi.Client.Api
             this.Client = client;
             this.AsynchronousClient = asyncClient;
             this.Configuration = configuration;
-            this.ExceptionFactory = Golem.MarketApi.Client.Client.Configuration.DefaultExceptionFactory;
+            this.ExceptionFactory = Golem.Common.Client.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
         /// The client for accessing this underlying API asynchronously.
         /// </summary>
-        public Golem.MarketApi.Client.Client.IAsynchronousClient AsynchronousClient { get; set; }
+        public Golem.Common.Client.Client.IAsynchronousClient AsynchronousClient { get; set; }
 
         /// <summary>
         /// The client for accessing this underlying API synchronously.
         /// </summary>
-        public Golem.MarketApi.Client.Client.ISynchronousClient Client { get; set; }
+        public Golem.Common.Client.Client.ISynchronousClient Client { get; set; }
 
         /// <summary>
         /// Gets the base path of the API client.
@@ -828,12 +828,12 @@ namespace Golem.MarketApi.Client.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public Golem.MarketApi.Client.Client.IReadableConfiguration Configuration {get; set;}
+        public Golem.Common.Client.Client.IReadableConfiguration Configuration {get; set;}
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
         /// </summary>
-        public Golem.MarketApi.Client.Client.ExceptionFactory ExceptionFactory
+        public Golem.Common.Client.Client.ExceptionFactory ExceptionFactory
         {
             get
             {
@@ -849,7 +849,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CancelAgreement - Cancels Agreement. It is only possible before Provider approved or rejected the Agreement, and before its Expiration.  Causes:   - the awaiting &#x60;approveAgreement&#x60; on Provider side to return with &#x60;Cancelled&#x60; response.   - the awaiting &#x60;waitForApproval&#x60; local call to return with &#x60;Cancelled&#x60; response. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns></returns>
@@ -861,17 +861,17 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CancelAgreement - Cancels Agreement. It is only possible before Provider approved or rejected the Agreement, and before its Expiration.  Causes:   - the awaiting &#x60;approveAgreement&#x60; on Provider side to return with &#x60;Cancelled&#x60; response.   - the awaiting &#x60;waitForApproval&#x60; local call to return with &#x60;Cancelled&#x60; response. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse<Object> CancelAgreementWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public Golem.Common.Client.Client.ApiResponse<Object> CancelAgreementWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->CancelAgreement");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->CancelAgreement");
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -882,21 +882,21 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (agreementId != null)
-                localVarRequestOptions.PathParameters.Add("agreementId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("agreementId", Golem.Common.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
             localVarRequestOptions.Data = requestBody;
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -914,7 +914,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CancelAgreement - Cancels Agreement. It is only possible before Provider approved or rejected the Agreement, and before its Expiration.  Causes:   - the awaiting &#x60;approveAgreement&#x60; on Provider side to return with &#x60;Cancelled&#x60; response.   - the awaiting &#x60;waitForApproval&#x60; local call to return with &#x60;Cancelled&#x60; response. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of void</returns>
@@ -927,18 +927,18 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CancelAgreement - Cancels Agreement. It is only possible before Provider approved or rejected the Agreement, and before its Expiration.  Causes:   - the awaiting &#x60;approveAgreement&#x60; on Provider side to return with &#x60;Cancelled&#x60; response.   - the awaiting &#x60;waitForApproval&#x60; local call to return with &#x60;Cancelled&#x60; response. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<Object>> CancelAgreementAsyncWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> CancelAgreementAsyncWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->CancelAgreement");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->CancelAgreement");
 
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -956,14 +956,14 @@ namespace Golem.MarketApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (agreementId != null)
-                localVarRequestOptions.PathParameters.Add("agreementId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("agreementId", Golem.Common.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
             localVarRequestOptions.Data = requestBody;
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -982,7 +982,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CollectAgreementEvents - Collects events related to an Agreement. This is a blocking operation. It will not return until there is at least one new event. All events are appearing on both sides equally.  Returns Agreement related events: * &#x60;AgreementApprovedEvent&#x60; - Indicates that the Agreement has been approved   by the Provider.   - The Provider is now ready to accept a request to start an Activity     as described in the negotiated agreement.   - The Providers’s corresponding &#x60;approveAgreement&#x60; call returns &#x60;Approved&#x60;     after this event is emitted.  * &#x60;AgreementRejectedEvent&#x60; - Indicates that the Provider has called   &#x60;rejectAgreement&#x60;, which effectively stops the Agreement handshake.   The Requestor may attempt to return to the Negotiation phase by sending   a new Proposal.  * &#x60;AgreementCancelledEvent&#x60; - Indicates that the Requestor has called   &#x60;cancelAgreement&#x60;, which effectively stops the Agreement handshake.  * &#x60;AgreementTerminatedEvent&#x60; - Indicates that the Agreement has been   terminated by specified party (contains signature). 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -990,22 +990,22 @@ namespace Golem.MarketApi.Client.Api
         /// <returns>List&lt;AgreementEvent&gt;</returns>
         public List<AgreementEvent> CollectAgreementEvents (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
-             Golem.MarketApi.Client.Client.ApiResponse<List<AgreementEvent>> localVarResponse = CollectAgreementEventsWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
+             Golem.Common.Client.Client.ApiResponse<List<AgreementEvent>> localVarResponse = CollectAgreementEventsWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// CollectAgreementEvents - Collects events related to an Agreement. This is a blocking operation. It will not return until there is at least one new event. All events are appearing on both sides equally.  Returns Agreement related events: * &#x60;AgreementApprovedEvent&#x60; - Indicates that the Agreement has been approved   by the Provider.   - The Provider is now ready to accept a request to start an Activity     as described in the negotiated agreement.   - The Providers’s corresponding &#x60;approveAgreement&#x60; call returns &#x60;Approved&#x60;     after this event is emitted.  * &#x60;AgreementRejectedEvent&#x60; - Indicates that the Provider has called   &#x60;rejectAgreement&#x60;, which effectively stops the Agreement handshake.   The Requestor may attempt to return to the Negotiation phase by sending   a new Proposal.  * &#x60;AgreementCancelledEvent&#x60; - Indicates that the Requestor has called   &#x60;cancelAgreement&#x60;, which effectively stops the Agreement handshake.  * &#x60;AgreementTerminatedEvent&#x60; - Indicates that the Agreement has been   terminated by specified party (contains signature). 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>ApiResponse of List&lt;AgreementEvent&gt;</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse< List<AgreementEvent> > CollectAgreementEventsWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public Golem.Common.Client.Client.ApiResponse< List<AgreementEvent> > CollectAgreementEventsWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1015,34 +1015,34 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxEvents != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
             }
             if (appSessionId != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1060,7 +1060,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CollectAgreementEvents - Collects events related to an Agreement. This is a blocking operation. It will not return until there is at least one new event. All events are appearing on both sides equally.  Returns Agreement related events: * &#x60;AgreementApprovedEvent&#x60; - Indicates that the Agreement has been approved   by the Provider.   - The Provider is now ready to accept a request to start an Activity     as described in the negotiated agreement.   - The Providers’s corresponding &#x60;approveAgreement&#x60; call returns &#x60;Approved&#x60;     after this event is emitted.  * &#x60;AgreementRejectedEvent&#x60; - Indicates that the Provider has called   &#x60;rejectAgreement&#x60;, which effectively stops the Agreement handshake.   The Requestor may attempt to return to the Negotiation phase by sending   a new Proposal.  * &#x60;AgreementCancelledEvent&#x60; - Indicates that the Requestor has called   &#x60;cancelAgreement&#x60;, which effectively stops the Agreement handshake.  * &#x60;AgreementTerminatedEvent&#x60; - Indicates that the Agreement has been   terminated by specified party (contains signature). 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
@@ -1068,7 +1068,7 @@ namespace Golem.MarketApi.Client.Api
         /// <returns>Task of List&lt;AgreementEvent&gt;</returns>
         public async System.Threading.Tasks.Task<List<AgreementEvent>> CollectAgreementEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
-             Golem.MarketApi.Client.Client.ApiResponse<List<AgreementEvent>> localVarResponse = await CollectAgreementEventsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
+             Golem.Common.Client.Client.ApiResponse<List<AgreementEvent>> localVarResponse = await CollectAgreementEventsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
              return localVarResponse.Data;
 
         }
@@ -1076,16 +1076,16 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CollectAgreementEvents - Collects events related to an Agreement. This is a blocking operation. It will not return until there is at least one new event. All events are appearing on both sides equally.  Returns Agreement related events: * &#x60;AgreementApprovedEvent&#x60; - Indicates that the Agreement has been approved   by the Provider.   - The Provider is now ready to accept a request to start an Activity     as described in the negotiated agreement.   - The Providers’s corresponding &#x60;approveAgreement&#x60; call returns &#x60;Approved&#x60;     after this event is emitted.  * &#x60;AgreementRejectedEvent&#x60; - Indicates that the Provider has called   &#x60;rejectAgreement&#x60;, which effectively stops the Agreement handshake.   The Requestor may attempt to return to the Negotiation phase by sending   a new Proposal.  * &#x60;AgreementCancelledEvent&#x60; - Indicates that the Requestor has called   &#x60;cancelAgreement&#x60;, which effectively stops the Agreement handshake.  * &#x60;AgreementTerminatedEvent&#x60; - Indicates that the Agreement has been   terminated by specified party (contains signature). 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="afterTimestamp">Apply only to records created later than the specified timestamp (optional)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;AgreementEvent&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<List<AgreementEvent>>> CollectAgreementEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<AgreementEvent>>> CollectAgreementEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
         {
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1103,26 +1103,26 @@ namespace Golem.MarketApi.Client.Api
             
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
             if (afterTimestamp != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "afterTimestamp", afterTimestamp));
             }
             if (maxEvents != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
             }
             if (appSessionId != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1141,32 +1141,32 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CollectOffers - Reads Market responses to published Demand. This is a blocking operation. It will not return until there is at least one new event. Returns Proposal related events: * &#x60;ProposalEvent&#x60; - Indicates that there is new Offer Proposal for this Demand. * &#x60;ProposalRejectedEvent&#x60; - Indicates that the Provider has rejected   our previous Proposal related to this Demand. This effectively ends a   Negotiation chain - it explicitly indicates that the sender will not   create another counter-Proposal.  * &#x60;PropertyQueryEvent&#x60; - not supported yet.  **Note**: When &#x60;collectOffers&#x60; is waiting, simultaneous call to &#x60;unsubscribeDemand&#x60; on the same &#x60;subscriptionId&#x60; should result in \&quot;Subscription does not exist\&quot; error returned from &#x60;collectOffers&#x60;.  **Note**: Specification requires this endpoint to support list of specific Proposal Ids to listen for messages related only to specific Proposals. This is not covered yet. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>List&lt;Event&gt;</returns>
         public List<Event> CollectOffers (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?))
         {
-             Golem.MarketApi.Client.Client.ApiResponse<List<Event>> localVarResponse = CollectOffersWithHttpInfo(subscriptionId, timeout, maxEvents);
+             Golem.Common.Client.Client.ApiResponse<List<Event>> localVarResponse = CollectOffersWithHttpInfo(subscriptionId, timeout, maxEvents);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// CollectOffers - Reads Market responses to published Demand. This is a blocking operation. It will not return until there is at least one new event. Returns Proposal related events: * &#x60;ProposalEvent&#x60; - Indicates that there is new Offer Proposal for this Demand. * &#x60;ProposalRejectedEvent&#x60; - Indicates that the Provider has rejected   our previous Proposal related to this Demand. This effectively ends a   Negotiation chain - it explicitly indicates that the sender will not   create another counter-Proposal.  * &#x60;PropertyQueryEvent&#x60; - not supported yet.  **Note**: When &#x60;collectOffers&#x60; is waiting, simultaneous call to &#x60;unsubscribeDemand&#x60; on the same &#x60;subscriptionId&#x60; should result in \&quot;Subscription does not exist\&quot; error returned from &#x60;collectOffers&#x60;.  **Note**: Specification requires this endpoint to support list of specific Proposal Ids to listen for messages related only to specific Proposals. This is not covered yet. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>ApiResponse of List&lt;Event&gt;</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse< List<Event> > CollectOffersWithHttpInfo (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?))
+        public Golem.Common.Client.Client.ApiResponse< List<Event> > CollectOffersWithHttpInfo (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?))
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->CollectOffers");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->CollectOffers");
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1176,28 +1176,28 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (subscriptionId != null)
-                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.Common.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
             if (maxEvents != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1215,14 +1215,14 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CollectOffers - Reads Market responses to published Demand. This is a blocking operation. It will not return until there is at least one new event. Returns Proposal related events: * &#x60;ProposalEvent&#x60; - Indicates that there is new Offer Proposal for this Demand. * &#x60;ProposalRejectedEvent&#x60; - Indicates that the Provider has rejected   our previous Proposal related to this Demand. This effectively ends a   Negotiation chain - it explicitly indicates that the sender will not   create another counter-Proposal.  * &#x60;PropertyQueryEvent&#x60; - not supported yet.  **Note**: When &#x60;collectOffers&#x60; is waiting, simultaneous call to &#x60;unsubscribeDemand&#x60; on the same &#x60;subscriptionId&#x60; should result in \&quot;Subscription does not exist\&quot; error returned from &#x60;collectOffers&#x60;.  **Note**: Specification requires this endpoint to support list of specific Proposal Ids to listen for messages related only to specific Proposals. This is not covered yet. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of List&lt;Event&gt;</returns>
         public async System.Threading.Tasks.Task<List<Event>> CollectOffersAsync (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?))
         {
-             Golem.MarketApi.Client.Client.ApiResponse<List<Event>> localVarResponse = await CollectOffersAsyncWithHttpInfo(subscriptionId, timeout, maxEvents);
+             Golem.Common.Client.Client.ApiResponse<List<Event>> localVarResponse = await CollectOffersAsyncWithHttpInfo(subscriptionId, timeout, maxEvents);
              return localVarResponse.Data;
 
         }
@@ -1230,19 +1230,19 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CollectOffers - Reads Market responses to published Demand. This is a blocking operation. It will not return until there is at least one new event. Returns Proposal related events: * &#x60;ProposalEvent&#x60; - Indicates that there is new Offer Proposal for this Demand. * &#x60;ProposalRejectedEvent&#x60; - Indicates that the Provider has rejected   our previous Proposal related to this Demand. This effectively ends a   Negotiation chain - it explicitly indicates that the sender will not   create another counter-Proposal.  * &#x60;PropertyQueryEvent&#x60; - not supported yet.  **Note**: When &#x60;collectOffers&#x60; is waiting, simultaneous call to &#x60;unsubscribeDemand&#x60; on the same &#x60;subscriptionId&#x60; should result in \&quot;Subscription does not exist\&quot; error returned from &#x60;collectOffers&#x60;.  **Note**: Specification requires this endpoint to support list of specific Proposal Ids to listen for messages related only to specific Proposals. This is not covered yet. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of ApiResponse (List&lt;Event&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<List<Event>>> CollectOffersAsyncWithHttpInfo (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<Event>>> CollectOffersAsyncWithHttpInfo (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?))
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->CollectOffers");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->CollectOffers");
 
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1259,21 +1259,21 @@ namespace Golem.MarketApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (subscriptionId != null)
-                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.Common.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
             if (maxEvents != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "maxEvents", maxEvents));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1292,7 +1292,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// ConfirmAgreement - Sends Agreement proposal to the Provider. Signs self-created Agreement and sends it to the Provider.  This call should immediately follow &#x60;createAgreement&#x60;. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns></returns>
@@ -1304,17 +1304,17 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// ConfirmAgreement - Sends Agreement proposal to the Provider. Signs self-created Agreement and sends it to the Provider.  This call should immediately follow &#x60;createAgreement&#x60;. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse<Object> ConfirmAgreementWithHttpInfo (string agreementId, string appSessionId = default(string))
+        public Golem.Common.Client.Client.ApiResponse<Object> ConfirmAgreementWithHttpInfo (string agreementId, string appSessionId = default(string))
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->ConfirmAgreement");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->ConfirmAgreement");
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1324,24 +1324,24 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (agreementId != null)
-                localVarRequestOptions.PathParameters.Add("agreementId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("agreementId", Golem.Common.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
             if (appSessionId != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1359,7 +1359,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// ConfirmAgreement - Sends Agreement proposal to the Provider. Signs self-created Agreement and sends it to the Provider.  This call should immediately follow &#x60;createAgreement&#x60;. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of void</returns>
@@ -1372,18 +1372,18 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// ConfirmAgreement - Sends Agreement proposal to the Provider. Signs self-created Agreement and sends it to the Provider.  This call should immediately follow &#x60;createAgreement&#x60;. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<Object>> ConfirmAgreementAsyncWithHttpInfo (string agreementId, string appSessionId = default(string))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> ConfirmAgreementAsyncWithHttpInfo (string agreementId, string appSessionId = default(string))
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->ConfirmAgreement");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->ConfirmAgreement");
 
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1400,17 +1400,17 @@ namespace Golem.MarketApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (agreementId != null)
-                localVarRequestOptions.PathParameters.Add("agreementId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("agreementId", Golem.Common.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
             if (appSessionId != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "appSessionId", appSessionId));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1429,40 +1429,40 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CounterProposalDemand - Responds with a bespoke Demand to received Offer. Creates and sends a modified version of original Demand (a counter-proposal) adjusted to previously received Proposal (ie. Offer). Changes Proposal state to &#x60;Draft&#x60;. Returns created Proposal id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="demandOfferBase"></param>
         /// <returns>string</returns>
         public string CounterProposalDemand (string subscriptionId, string proposalId, DemandOfferBase demandOfferBase)
         {
-             Golem.MarketApi.Client.Client.ApiResponse<string> localVarResponse = CounterProposalDemandWithHttpInfo(subscriptionId, proposalId, demandOfferBase);
+             Golem.Common.Client.Client.ApiResponse<string> localVarResponse = CounterProposalDemandWithHttpInfo(subscriptionId, proposalId, demandOfferBase);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// CounterProposalDemand - Responds with a bespoke Demand to received Offer. Creates and sends a modified version of original Demand (a counter-proposal) adjusted to previously received Proposal (ie. Offer). Changes Proposal state to &#x60;Draft&#x60;. Returns created Proposal id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="demandOfferBase"></param>
         /// <returns>ApiResponse of string</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse< string > CounterProposalDemandWithHttpInfo (string subscriptionId, string proposalId, DemandOfferBase demandOfferBase)
+        public Golem.Common.Client.Client.ApiResponse< string > CounterProposalDemandWithHttpInfo (string subscriptionId, string proposalId, DemandOfferBase demandOfferBase)
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->CounterProposalDemand");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->CounterProposalDemand");
 
             // verify the required parameter 'proposalId' is set
             if (proposalId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'proposalId' when calling RequestorApi->CounterProposalDemand");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'proposalId' when calling RequestorApi->CounterProposalDemand");
 
             // verify the required parameter 'demandOfferBase' is set
             if (demandOfferBase == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'demandOfferBase' when calling RequestorApi->CounterProposalDemand");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'demandOfferBase' when calling RequestorApi->CounterProposalDemand");
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -1473,23 +1473,23 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (subscriptionId != null)
-                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.Common.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
             if (proposalId != null)
-                localVarRequestOptions.PathParameters.Add("proposalId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(proposalId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("proposalId", Golem.Common.Client.Client.ClientUtils.ParameterToString(proposalId)); // path parameter
             localVarRequestOptions.Data = demandOfferBase;
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1507,14 +1507,14 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CounterProposalDemand - Responds with a bespoke Demand to received Offer. Creates and sends a modified version of original Demand (a counter-proposal) adjusted to previously received Proposal (ie. Offer). Changes Proposal state to &#x60;Draft&#x60;. Returns created Proposal id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="demandOfferBase"></param>
         /// <returns>Task of string</returns>
         public async System.Threading.Tasks.Task<string> CounterProposalDemandAsync (string subscriptionId, string proposalId, DemandOfferBase demandOfferBase)
         {
-             Golem.MarketApi.Client.Client.ApiResponse<string> localVarResponse = await CounterProposalDemandAsyncWithHttpInfo(subscriptionId, proposalId, demandOfferBase);
+             Golem.Common.Client.Client.ApiResponse<string> localVarResponse = await CounterProposalDemandAsyncWithHttpInfo(subscriptionId, proposalId, demandOfferBase);
              return localVarResponse.Data;
 
         }
@@ -1522,27 +1522,27 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CounterProposalDemand - Responds with a bespoke Demand to received Offer. Creates and sends a modified version of original Demand (a counter-proposal) adjusted to previously received Proposal (ie. Offer). Changes Proposal state to &#x60;Draft&#x60;. Returns created Proposal id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="demandOfferBase"></param>
         /// <returns>Task of ApiResponse (string)</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<string>> CounterProposalDemandAsyncWithHttpInfo (string subscriptionId, string proposalId, DemandOfferBase demandOfferBase)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<string>> CounterProposalDemandAsyncWithHttpInfo (string subscriptionId, string proposalId, DemandOfferBase demandOfferBase)
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->CounterProposalDemand");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->CounterProposalDemand");
 
             // verify the required parameter 'proposalId' is set
             if (proposalId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'proposalId' when calling RequestorApi->CounterProposalDemand");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'proposalId' when calling RequestorApi->CounterProposalDemand");
 
             // verify the required parameter 'demandOfferBase' is set
             if (demandOfferBase == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'demandOfferBase' when calling RequestorApi->CounterProposalDemand");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'demandOfferBase' when calling RequestorApi->CounterProposalDemand");
 
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -1560,16 +1560,16 @@ namespace Golem.MarketApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (subscriptionId != null)
-                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.Common.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
             if (proposalId != null)
-                localVarRequestOptions.PathParameters.Add("proposalId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(proposalId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("proposalId", Golem.Common.Client.Client.ClientUtils.ParameterToString(proposalId)); // path parameter
             localVarRequestOptions.Data = demandOfferBase;
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1588,28 +1588,28 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CreateAgreement - Creates Agreement from selected Proposal. Initiates the Agreement handshake phase.  Formulates an Agreement artifact from the Proposal indicated by the received Proposal Id. Created Agreement is in &#x60;Proposal&#x60; state.  The Approval Expiry Date is added to Agreement artifact and implies the effective timeout on the whole Agreement Confirmation sequence.  A successful call to &#x60;createAgreement&#x60; shall immediately be followed by a &#x60;confirmAgreement&#x60; and &#x60;waitForApproval&#x60; call in order to listen for responses from the Provider.  **Note**: Moves given Proposal to &#x60;Approved&#x60; state. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementProposal"></param>
         /// <returns>string</returns>
         public string CreateAgreement (AgreementProposal agreementProposal)
         {
-             Golem.MarketApi.Client.Client.ApiResponse<string> localVarResponse = CreateAgreementWithHttpInfo(agreementProposal);
+             Golem.Common.Client.Client.ApiResponse<string> localVarResponse = CreateAgreementWithHttpInfo(agreementProposal);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// CreateAgreement - Creates Agreement from selected Proposal. Initiates the Agreement handshake phase.  Formulates an Agreement artifact from the Proposal indicated by the received Proposal Id. Created Agreement is in &#x60;Proposal&#x60; state.  The Approval Expiry Date is added to Agreement artifact and implies the effective timeout on the whole Agreement Confirmation sequence.  A successful call to &#x60;createAgreement&#x60; shall immediately be followed by a &#x60;confirmAgreement&#x60; and &#x60;waitForApproval&#x60; call in order to listen for responses from the Provider.  **Note**: Moves given Proposal to &#x60;Approved&#x60; state. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementProposal"></param>
         /// <returns>ApiResponse of string</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse< string > CreateAgreementWithHttpInfo (AgreementProposal agreementProposal)
+        public Golem.Common.Client.Client.ApiResponse< string > CreateAgreementWithHttpInfo (AgreementProposal agreementProposal)
         {
             // verify the required parameter 'agreementProposal' is set
             if (agreementProposal == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'agreementProposal' when calling RequestorApi->CreateAgreement");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'agreementProposal' when calling RequestorApi->CreateAgreement");
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -1620,10 +1620,10 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.Data = agreementProposal;
@@ -1632,7 +1632,7 @@ namespace Golem.MarketApi.Client.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1650,12 +1650,12 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CreateAgreement - Creates Agreement from selected Proposal. Initiates the Agreement handshake phase.  Formulates an Agreement artifact from the Proposal indicated by the received Proposal Id. Created Agreement is in &#x60;Proposal&#x60; state.  The Approval Expiry Date is added to Agreement artifact and implies the effective timeout on the whole Agreement Confirmation sequence.  A successful call to &#x60;createAgreement&#x60; shall immediately be followed by a &#x60;confirmAgreement&#x60; and &#x60;waitForApproval&#x60; call in order to listen for responses from the Provider.  **Note**: Moves given Proposal to &#x60;Approved&#x60; state. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementProposal"></param>
         /// <returns>Task of string</returns>
         public async System.Threading.Tasks.Task<string> CreateAgreementAsync (AgreementProposal agreementProposal)
         {
-             Golem.MarketApi.Client.Client.ApiResponse<string> localVarResponse = await CreateAgreementAsyncWithHttpInfo(agreementProposal);
+             Golem.Common.Client.Client.ApiResponse<string> localVarResponse = await CreateAgreementAsyncWithHttpInfo(agreementProposal);
              return localVarResponse.Data;
 
         }
@@ -1663,17 +1663,17 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// CreateAgreement - Creates Agreement from selected Proposal. Initiates the Agreement handshake phase.  Formulates an Agreement artifact from the Proposal indicated by the received Proposal Id. Created Agreement is in &#x60;Proposal&#x60; state.  The Approval Expiry Date is added to Agreement artifact and implies the effective timeout on the whole Agreement Confirmation sequence.  A successful call to &#x60;createAgreement&#x60; shall immediately be followed by a &#x60;confirmAgreement&#x60; and &#x60;waitForApproval&#x60; call in order to listen for responses from the Provider.  **Note**: Moves given Proposal to &#x60;Approved&#x60; state. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementProposal"></param>
         /// <returns>Task of ApiResponse (string)</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<string>> CreateAgreementAsyncWithHttpInfo (AgreementProposal agreementProposal)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<string>> CreateAgreementAsyncWithHttpInfo (AgreementProposal agreementProposal)
         {
             // verify the required parameter 'agreementProposal' is set
             if (agreementProposal == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'agreementProposal' when calling RequestorApi->CreateAgreement");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'agreementProposal' when calling RequestorApi->CreateAgreement");
 
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -1696,7 +1696,7 @@ namespace Golem.MarketApi.Client.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1715,28 +1715,28 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// GetAgreement - Fetches agreement with given agreement id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>Agreement</returns>
         public Agreement GetAgreement (string agreementId)
         {
-             Golem.MarketApi.Client.Client.ApiResponse<Agreement> localVarResponse = GetAgreementWithHttpInfo(agreementId);
+             Golem.Common.Client.Client.ApiResponse<Agreement> localVarResponse = GetAgreementWithHttpInfo(agreementId);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// GetAgreement - Fetches agreement with given agreement id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>ApiResponse of Agreement</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse< Agreement > GetAgreementWithHttpInfo (string agreementId)
+        public Golem.Common.Client.Client.ApiResponse< Agreement > GetAgreementWithHttpInfo (string agreementId)
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->GetAgreement");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->GetAgreement");
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1746,20 +1746,20 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (agreementId != null)
-                localVarRequestOptions.PathParameters.Add("agreementId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("agreementId", Golem.Common.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1777,12 +1777,12 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// GetAgreement - Fetches agreement with given agreement id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>Task of Agreement</returns>
         public async System.Threading.Tasks.Task<Agreement> GetAgreementAsync (string agreementId)
         {
-             Golem.MarketApi.Client.Client.ApiResponse<Agreement> localVarResponse = await GetAgreementAsyncWithHttpInfo(agreementId);
+             Golem.Common.Client.Client.ApiResponse<Agreement> localVarResponse = await GetAgreementAsyncWithHttpInfo(agreementId);
              return localVarResponse.Data;
 
         }
@@ -1790,17 +1790,17 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// GetAgreement - Fetches agreement with given agreement id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>Task of ApiResponse (Agreement)</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<Agreement>> GetAgreementAsyncWithHttpInfo (string agreementId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Agreement>> GetAgreementAsyncWithHttpInfo (string agreementId)
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->GetAgreement");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->GetAgreement");
 
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1817,13 +1817,13 @@ namespace Golem.MarketApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (agreementId != null)
-                localVarRequestOptions.PathParameters.Add("agreementId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("agreementId", Golem.Common.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1842,22 +1842,22 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// GetDemands - Fetches all active Demands which have been published by the Requestor. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>List&lt;Demand&gt;</returns>
         public List<Demand> GetDemands ()
         {
-             Golem.MarketApi.Client.Client.ApiResponse<List<Demand>> localVarResponse = GetDemandsWithHttpInfo();
+             Golem.Common.Client.Client.ApiResponse<List<Demand>> localVarResponse = GetDemandsWithHttpInfo();
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// GetDemands - Fetches all active Demands which have been published by the Requestor. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;Demand&gt;</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse< List<Demand> > GetDemandsWithHttpInfo ()
+        public Golem.Common.Client.Client.ApiResponse< List<Demand> > GetDemandsWithHttpInfo ()
         {
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1867,10 +1867,10 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
 
@@ -1878,7 +1878,7 @@ namespace Golem.MarketApi.Client.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1896,11 +1896,11 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// GetDemands - Fetches all active Demands which have been published by the Requestor. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;Demand&gt;</returns>
         public async System.Threading.Tasks.Task<List<Demand>> GetDemandsAsync ()
         {
-             Golem.MarketApi.Client.Client.ApiResponse<List<Demand>> localVarResponse = await GetDemandsAsyncWithHttpInfo();
+             Golem.Common.Client.Client.ApiResponse<List<Demand>> localVarResponse = await GetDemandsAsyncWithHttpInfo();
              return localVarResponse.Data;
 
         }
@@ -1908,12 +1908,12 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// GetDemands - Fetches all active Demands which have been published by the Requestor. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Demand&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<List<Demand>>> GetDemandsAsyncWithHttpInfo ()
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<Demand>>> GetDemandsAsyncWithHttpInfo ()
         {
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1934,7 +1934,7 @@ namespace Golem.MarketApi.Client.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1953,34 +1953,34 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// GetProposalOffer - Fetches Proposal (Offer) with given id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <returns>Proposal</returns>
         public Proposal GetProposalOffer (string subscriptionId, string proposalId)
         {
-             Golem.MarketApi.Client.Client.ApiResponse<Proposal> localVarResponse = GetProposalOfferWithHttpInfo(subscriptionId, proposalId);
+             Golem.Common.Client.Client.ApiResponse<Proposal> localVarResponse = GetProposalOfferWithHttpInfo(subscriptionId, proposalId);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// GetProposalOffer - Fetches Proposal (Offer) with given id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <returns>ApiResponse of Proposal</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse< Proposal > GetProposalOfferWithHttpInfo (string subscriptionId, string proposalId)
+        public Golem.Common.Client.Client.ApiResponse< Proposal > GetProposalOfferWithHttpInfo (string subscriptionId, string proposalId)
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->GetProposalOffer");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->GetProposalOffer");
 
             // verify the required parameter 'proposalId' is set
             if (proposalId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'proposalId' when calling RequestorApi->GetProposalOffer");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'proposalId' when calling RequestorApi->GetProposalOffer");
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1990,22 +1990,22 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (subscriptionId != null)
-                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.Common.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
             if (proposalId != null)
-                localVarRequestOptions.PathParameters.Add("proposalId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(proposalId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("proposalId", Golem.Common.Client.Client.ClientUtils.ParameterToString(proposalId)); // path parameter
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2023,13 +2023,13 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// GetProposalOffer - Fetches Proposal (Offer) with given id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <returns>Task of Proposal</returns>
         public async System.Threading.Tasks.Task<Proposal> GetProposalOfferAsync (string subscriptionId, string proposalId)
         {
-             Golem.MarketApi.Client.Client.ApiResponse<Proposal> localVarResponse = await GetProposalOfferAsyncWithHttpInfo(subscriptionId, proposalId);
+             Golem.Common.Client.Client.ApiResponse<Proposal> localVarResponse = await GetProposalOfferAsyncWithHttpInfo(subscriptionId, proposalId);
              return localVarResponse.Data;
 
         }
@@ -2037,22 +2037,22 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// GetProposalOffer - Fetches Proposal (Offer) with given id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <returns>Task of ApiResponse (Proposal)</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<Proposal>> GetProposalOfferAsyncWithHttpInfo (string subscriptionId, string proposalId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Proposal>> GetProposalOfferAsyncWithHttpInfo (string subscriptionId, string proposalId)
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->GetProposalOffer");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->GetProposalOffer");
 
             // verify the required parameter 'proposalId' is set
             if (proposalId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'proposalId' when calling RequestorApi->GetProposalOffer");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'proposalId' when calling RequestorApi->GetProposalOffer");
 
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2069,15 +2069,15 @@ namespace Golem.MarketApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (subscriptionId != null)
-                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.Common.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
             if (proposalId != null)
-                localVarRequestOptions.PathParameters.Add("proposalId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(proposalId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("proposalId", Golem.Common.Client.Client.ClientUtils.ParameterToString(proposalId)); // path parameter
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2096,7 +2096,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// QueryReplyDemands - Handles dynamic property query. Sends a response to a received property value query.  The Market Matching Mechanism, when resolving the match relation for the specific Demand-Offer pair, is to detect the “dynamic” properties required (via constraints) by the other side. At this point, it is able to query the issuing node for those properties and submit the other side’s requested properties as the context of the query.  **Note**: The property query responses may be submitted in “chunks”, ie. the responder may choose to resolve ‘quick’/lightweight’ properties faster and provide response sooner, while still working on more time-consuming properties in the background. Therefore the response contains both the resolved properties, as well as list of properties which responder knows still require resolution.  **Note**: This method must be implemented for Market API Capability Level 2. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="queryId"></param>
         /// <param name="body"></param>
@@ -2109,26 +2109,26 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// QueryReplyDemands - Handles dynamic property query. Sends a response to a received property value query.  The Market Matching Mechanism, when resolving the match relation for the specific Demand-Offer pair, is to detect the “dynamic” properties required (via constraints) by the other side. At this point, it is able to query the issuing node for those properties and submit the other side’s requested properties as the context of the query.  **Note**: The property query responses may be submitted in “chunks”, ie. the responder may choose to resolve ‘quick’/lightweight’ properties faster and provide response sooner, while still working on more time-consuming properties in the background. Therefore the response contains both the resolved properties, as well as list of properties which responder knows still require resolution.  **Note**: This method must be implemented for Market API Capability Level 2. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="queryId"></param>
         /// <param name="body"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse<Object> QueryReplyDemandsWithHttpInfo (string subscriptionId, string queryId, Object body)
+        public Golem.Common.Client.Client.ApiResponse<Object> QueryReplyDemandsWithHttpInfo (string subscriptionId, string queryId, Object body)
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->QueryReplyDemands");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->QueryReplyDemands");
 
             // verify the required parameter 'queryId' is set
             if (queryId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'queryId' when calling RequestorApi->QueryReplyDemands");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'queryId' when calling RequestorApi->QueryReplyDemands");
 
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'body' when calling RequestorApi->QueryReplyDemands");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'body' when calling RequestorApi->QueryReplyDemands");
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -2139,23 +2139,23 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (subscriptionId != null)
-                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.Common.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
             if (queryId != null)
-                localVarRequestOptions.PathParameters.Add("queryId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(queryId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("queryId", Golem.Common.Client.Client.ClientUtils.ParameterToString(queryId)); // path parameter
             localVarRequestOptions.Data = body;
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2173,7 +2173,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// QueryReplyDemands - Handles dynamic property query. Sends a response to a received property value query.  The Market Matching Mechanism, when resolving the match relation for the specific Demand-Offer pair, is to detect the “dynamic” properties required (via constraints) by the other side. At this point, it is able to query the issuing node for those properties and submit the other side’s requested properties as the context of the query.  **Note**: The property query responses may be submitted in “chunks”, ie. the responder may choose to resolve ‘quick’/lightweight’ properties faster and provide response sooner, while still working on more time-consuming properties in the background. Therefore the response contains both the resolved properties, as well as list of properties which responder knows still require resolution.  **Note**: This method must be implemented for Market API Capability Level 2. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="queryId"></param>
         /// <param name="body"></param>
@@ -2187,27 +2187,27 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// QueryReplyDemands - Handles dynamic property query. Sends a response to a received property value query.  The Market Matching Mechanism, when resolving the match relation for the specific Demand-Offer pair, is to detect the “dynamic” properties required (via constraints) by the other side. At this point, it is able to query the issuing node for those properties and submit the other side’s requested properties as the context of the query.  **Note**: The property query responses may be submitted in “chunks”, ie. the responder may choose to resolve ‘quick’/lightweight’ properties faster and provide response sooner, while still working on more time-consuming properties in the background. Therefore the response contains both the resolved properties, as well as list of properties which responder knows still require resolution.  **Note**: This method must be implemented for Market API Capability Level 2. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="queryId"></param>
         /// <param name="body"></param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<Object>> QueryReplyDemandsAsyncWithHttpInfo (string subscriptionId, string queryId, Object body)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> QueryReplyDemandsAsyncWithHttpInfo (string subscriptionId, string queryId, Object body)
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->QueryReplyDemands");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->QueryReplyDemands");
 
             // verify the required parameter 'queryId' is set
             if (queryId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'queryId' when calling RequestorApi->QueryReplyDemands");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'queryId' when calling RequestorApi->QueryReplyDemands");
 
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'body' when calling RequestorApi->QueryReplyDemands");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'body' when calling RequestorApi->QueryReplyDemands");
 
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -2225,16 +2225,16 @@ namespace Golem.MarketApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (subscriptionId != null)
-                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.Common.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
             if (queryId != null)
-                localVarRequestOptions.PathParameters.Add("queryId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(queryId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("queryId", Golem.Common.Client.Client.ClientUtils.ParameterToString(queryId)); // path parameter
             localVarRequestOptions.Data = body;
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2253,7 +2253,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// RejectProposalOffer - Rejects Proposal (Offer). Effectively ends a Negotiation chain - it explicitly indicates that the sender will not create another counter-Proposal. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
@@ -2266,22 +2266,22 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// RejectProposalOffer - Rejects Proposal (Offer). Effectively ends a Negotiation chain - it explicitly indicates that the sender will not create another counter-Proposal. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse<Object> RejectProposalOfferWithHttpInfo (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public Golem.Common.Client.Client.ApiResponse<Object> RejectProposalOfferWithHttpInfo (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->RejectProposalOffer");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->RejectProposalOffer");
 
             // verify the required parameter 'proposalId' is set
             if (proposalId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'proposalId' when calling RequestorApi->RejectProposalOffer");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'proposalId' when calling RequestorApi->RejectProposalOffer");
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -2292,23 +2292,23 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (subscriptionId != null)
-                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.Common.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
             if (proposalId != null)
-                localVarRequestOptions.PathParameters.Add("proposalId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(proposalId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("proposalId", Golem.Common.Client.Client.ClientUtils.ParameterToString(proposalId)); // path parameter
             localVarRequestOptions.Data = requestBody;
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2326,7 +2326,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// RejectProposalOffer - Rejects Proposal (Offer). Effectively ends a Negotiation chain - it explicitly indicates that the sender will not create another counter-Proposal. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
@@ -2340,23 +2340,23 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// RejectProposalOffer - Rejects Proposal (Offer). Effectively ends a Negotiation chain - it explicitly indicates that the sender will not create another counter-Proposal. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<Object>> RejectProposalOfferAsyncWithHttpInfo (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> RejectProposalOfferAsyncWithHttpInfo (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->RejectProposalOffer");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->RejectProposalOffer");
 
             // verify the required parameter 'proposalId' is set
             if (proposalId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'proposalId' when calling RequestorApi->RejectProposalOffer");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'proposalId' when calling RequestorApi->RejectProposalOffer");
 
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -2374,16 +2374,16 @@ namespace Golem.MarketApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (subscriptionId != null)
-                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.Common.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
             if (proposalId != null)
-                localVarRequestOptions.PathParameters.Add("proposalId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(proposalId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("proposalId", Golem.Common.Client.Client.ClientUtils.ParameterToString(proposalId)); // path parameter
             localVarRequestOptions.Data = requestBody;
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2402,28 +2402,28 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// SubscribeDemand - Publishes Requestor capabilities via Demand. Demand object can be considered an \&quot;open\&quot; or public Demand, as it is not directed at a specific Provider, but rather is sent to the market so that the matching mechanism implementation can associate relevant Offers.  **Note**: it is an \&quot;atomic\&quot; operation, ie. as soon as Subscription is placed, the Demand is published on the market. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="demandOfferBase"></param>
         /// <returns>string</returns>
         public string SubscribeDemand (DemandOfferBase demandOfferBase)
         {
-             Golem.MarketApi.Client.Client.ApiResponse<string> localVarResponse = SubscribeDemandWithHttpInfo(demandOfferBase);
+             Golem.Common.Client.Client.ApiResponse<string> localVarResponse = SubscribeDemandWithHttpInfo(demandOfferBase);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// SubscribeDemand - Publishes Requestor capabilities via Demand. Demand object can be considered an \&quot;open\&quot; or public Demand, as it is not directed at a specific Provider, but rather is sent to the market so that the matching mechanism implementation can associate relevant Offers.  **Note**: it is an \&quot;atomic\&quot; operation, ie. as soon as Subscription is placed, the Demand is published on the market. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="demandOfferBase"></param>
         /// <returns>ApiResponse of string</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse< string > SubscribeDemandWithHttpInfo (DemandOfferBase demandOfferBase)
+        public Golem.Common.Client.Client.ApiResponse< string > SubscribeDemandWithHttpInfo (DemandOfferBase demandOfferBase)
         {
             // verify the required parameter 'demandOfferBase' is set
             if (demandOfferBase == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'demandOfferBase' when calling RequestorApi->SubscribeDemand");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'demandOfferBase' when calling RequestorApi->SubscribeDemand");
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -2434,10 +2434,10 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.Data = demandOfferBase;
@@ -2446,7 +2446,7 @@ namespace Golem.MarketApi.Client.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2464,12 +2464,12 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// SubscribeDemand - Publishes Requestor capabilities via Demand. Demand object can be considered an \&quot;open\&quot; or public Demand, as it is not directed at a specific Provider, but rather is sent to the market so that the matching mechanism implementation can associate relevant Offers.  **Note**: it is an \&quot;atomic\&quot; operation, ie. as soon as Subscription is placed, the Demand is published on the market. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="demandOfferBase"></param>
         /// <returns>Task of string</returns>
         public async System.Threading.Tasks.Task<string> SubscribeDemandAsync (DemandOfferBase demandOfferBase)
         {
-             Golem.MarketApi.Client.Client.ApiResponse<string> localVarResponse = await SubscribeDemandAsyncWithHttpInfo(demandOfferBase);
+             Golem.Common.Client.Client.ApiResponse<string> localVarResponse = await SubscribeDemandAsyncWithHttpInfo(demandOfferBase);
              return localVarResponse.Data;
 
         }
@@ -2477,17 +2477,17 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// SubscribeDemand - Publishes Requestor capabilities via Demand. Demand object can be considered an \&quot;open\&quot; or public Demand, as it is not directed at a specific Provider, but rather is sent to the market so that the matching mechanism implementation can associate relevant Offers.  **Note**: it is an \&quot;atomic\&quot; operation, ie. as soon as Subscription is placed, the Demand is published on the market. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="demandOfferBase"></param>
         /// <returns>Task of ApiResponse (string)</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<string>> SubscribeDemandAsyncWithHttpInfo (DemandOfferBase demandOfferBase)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<string>> SubscribeDemandAsyncWithHttpInfo (DemandOfferBase demandOfferBase)
         {
             // verify the required parameter 'demandOfferBase' is set
             if (demandOfferBase == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'demandOfferBase' when calling RequestorApi->SubscribeDemand");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'demandOfferBase' when calling RequestorApi->SubscribeDemand");
 
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -2510,7 +2510,7 @@ namespace Golem.MarketApi.Client.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2529,7 +2529,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// TerminateAgreement - Terminates approved Agreement. Method to finish/close the Agreement while in &#x60;Approved&#x60; state.  The other party gets notified about calling party decision to terminate a \&quot;running\&quot; agreement.  **Note**: Can be invoked at any time after Agreement was approved by both sides.  **Note**: Financial and reputational consequences are not defined by this specification. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns></returns>
@@ -2541,17 +2541,17 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// TerminateAgreement - Terminates approved Agreement. Method to finish/close the Agreement while in &#x60;Approved&#x60; state.  The other party gets notified about calling party decision to terminate a \&quot;running\&quot; agreement.  **Note**: Can be invoked at any time after Agreement was approved by both sides.  **Note**: Financial and reputational consequences are not defined by this specification. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse<Object> TerminateAgreementWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public Golem.Common.Client.Client.ApiResponse<Object> TerminateAgreementWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->TerminateAgreement");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->TerminateAgreement");
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -2562,21 +2562,21 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (agreementId != null)
-                localVarRequestOptions.PathParameters.Add("agreementId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("agreementId", Golem.Common.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
             localVarRequestOptions.Data = requestBody;
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2594,7 +2594,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// TerminateAgreement - Terminates approved Agreement. Method to finish/close the Agreement while in &#x60;Approved&#x60; state.  The other party gets notified about calling party decision to terminate a \&quot;running\&quot; agreement.  **Note**: Can be invoked at any time after Agreement was approved by both sides.  **Note**: Financial and reputational consequences are not defined by this specification. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of void</returns>
@@ -2607,18 +2607,18 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// TerminateAgreement - Terminates approved Agreement. Method to finish/close the Agreement while in &#x60;Approved&#x60; state.  The other party gets notified about calling party decision to terminate a \&quot;running\&quot; agreement.  **Note**: Can be invoked at any time after Agreement was approved by both sides.  **Note**: Financial and reputational consequences are not defined by this specification. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<Object>> TerminateAgreementAsyncWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> TerminateAgreementAsyncWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->TerminateAgreement");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->TerminateAgreement");
 
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -2636,14 +2636,14 @@ namespace Golem.MarketApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (agreementId != null)
-                localVarRequestOptions.PathParameters.Add("agreementId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("agreementId", Golem.Common.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
             localVarRequestOptions.Data = requestBody;
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2662,7 +2662,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// UnsubscribeDemand - Stop subscription for previously published Demand. Stop receiving Proposals.  **Note**: this will terminate all pending &#x60;collectOffers&#x60; calls on this subscription. This implies, that client code should not &#x60;unsubscribeDemand&#x60; before it has received all expected/useful inputs from &#x60;collectOffers&#x60;. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <returns></returns>
         public void UnsubscribeDemand (string subscriptionId)
@@ -2673,16 +2673,16 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// UnsubscribeDemand - Stop subscription for previously published Demand. Stop receiving Proposals.  **Note**: this will terminate all pending &#x60;collectOffers&#x60; calls on this subscription. This implies, that client code should not &#x60;unsubscribeDemand&#x60; before it has received all expected/useful inputs from &#x60;collectOffers&#x60;. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse<Object> UnsubscribeDemandWithHttpInfo (string subscriptionId)
+        public Golem.Common.Client.Client.ApiResponse<Object> UnsubscribeDemandWithHttpInfo (string subscriptionId)
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->UnsubscribeDemand");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->UnsubscribeDemand");
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2692,20 +2692,20 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (subscriptionId != null)
-                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.Common.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2723,7 +2723,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// UnsubscribeDemand - Stop subscription for previously published Demand. Stop receiving Proposals.  **Note**: this will terminate all pending &#x60;collectOffers&#x60; calls on this subscription. This implies, that client code should not &#x60;unsubscribeDemand&#x60; before it has received all expected/useful inputs from &#x60;collectOffers&#x60;. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task UnsubscribeDemandAsync (string subscriptionId)
@@ -2735,17 +2735,17 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// UnsubscribeDemand - Stop subscription for previously published Demand. Stop receiving Proposals.  **Note**: this will terminate all pending &#x60;collectOffers&#x60; calls on this subscription. This implies, that client code should not &#x60;unsubscribeDemand&#x60; before it has received all expected/useful inputs from &#x60;collectOffers&#x60;. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<Object>> UnsubscribeDemandAsyncWithHttpInfo (string subscriptionId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> UnsubscribeDemandAsyncWithHttpInfo (string subscriptionId)
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->UnsubscribeDemand");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'subscriptionId' when calling RequestorApi->UnsubscribeDemand");
 
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2762,13 +2762,13 @@ namespace Golem.MarketApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (subscriptionId != null)
-                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.Common.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2787,7 +2787,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// WaitForApproval - Waits for Agreement approval by the Provider. This is a blocking operation. The call may be aborted by Requestor caller code. After the call is aborted or timed out, another &#x60;waitForApproval&#x60; call can be raised on the same Agreement Id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns></returns>
@@ -2799,17 +2799,17 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// WaitForApproval - Waits for Agreement approval by the Provider. This is a blocking operation. The call may be aborted by Requestor caller code. After the call is aborted or timed out, another &#x60;waitForApproval&#x60; call can be raised on the same Agreement Id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public Golem.MarketApi.Client.Client.ApiResponse<Object> WaitForApprovalWithHttpInfo (string agreementId, float? timeout = default(float?))
+        public Golem.Common.Client.Client.ApiResponse<Object> WaitForApprovalWithHttpInfo (string agreementId, float? timeout = default(float?))
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->WaitForApproval");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->WaitForApproval");
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2819,24 +2819,24 @@ namespace Golem.MarketApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.MarketApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (agreementId != null)
-                localVarRequestOptions.PathParameters.Add("agreementId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("agreementId", Golem.Common.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -2854,7 +2854,7 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// WaitForApproval - Waits for Agreement approval by the Provider. This is a blocking operation. The call may be aborted by Requestor caller code. After the call is aborted or timed out, another &#x60;waitForApproval&#x60; call can be raised on the same Agreement Id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of void</returns>
@@ -2867,18 +2867,18 @@ namespace Golem.MarketApi.Client.Api
         /// <summary>
         /// WaitForApproval - Waits for Agreement approval by the Provider. This is a blocking operation. The call may be aborted by Requestor caller code. After the call is aborted or timed out, another &#x60;waitForApproval&#x60; call can be raised on the same Agreement Id. 
         /// </summary>
-        /// <exception cref="Golem.MarketApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.MarketApi.Client.Client.ApiResponse<Object>> WaitForApprovalAsyncWithHttpInfo (string agreementId, float? timeout = default(float?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> WaitForApprovalAsyncWithHttpInfo (string agreementId, float? timeout = default(float?))
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
-                throw new Golem.MarketApi.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->WaitForApproval");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorApi->WaitForApproval");
 
 
-            Golem.MarketApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.MarketApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -2895,17 +2895,17 @@ namespace Golem.MarketApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (agreementId != null)
-                localVarRequestOptions.PathParameters.Add("agreementId", Golem.MarketApi.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("agreementId", Golem.Common.Client.Client.ClientUtils.ParameterToString(agreementId)); // path parameter
             if (timeout != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.MarketApi.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.MarketApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request

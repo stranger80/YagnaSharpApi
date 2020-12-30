@@ -20,7 +20,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using OpenAPIDateConverter = Golem.PaymentApi.Client.Client.OpenAPIDateConverter;
+using OpenAPIDateConverter = Golem.Common.Client.Client.OpenAPIDateConverter;
 
 namespace Golem.PaymentApi.Client.Model
 {
@@ -104,7 +104,7 @@ namespace Golem.PaymentApi.Client.Model
         /// <summary>
         /// Gets or Sets MakeDeposit
         /// </summary>
-        [DataMember(Name="makeDeposit", EmitDefaultValue=false)]
+        [DataMember(Name="makeDeposit", EmitDefaultValue=true)]
         public bool MakeDeposit { get; set; }
 
         /// <summary>

@@ -15,7 +15,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
-using Golem.ActivityApi.Client.Client;
+using Golem.Common.Client.Client;
 using Golem.ActivityApi.Client.Model;
 
 namespace Golem.ActivityApi.Client.Api
@@ -33,7 +33,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="body"></param>
         /// <returns>System.IO.Stream</returns>
@@ -45,7 +45,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="body"></param>
         /// <returns>ApiResponse of System.IO.Stream</returns>
@@ -56,7 +56,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="request"></param>
         /// <returns>OneOfstringCreateActivityResult</returns>
         CreateActivityResult CreateActivity (CreateActivityRequest request);
@@ -67,7 +67,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="request"></param>
         /// <returns>ApiResponse of OneOfstringCreateActivityResult</returns>
         ApiResponse<CreateActivityResult> CreateActivityWithHttpInfo (CreateActivityRequest request);
@@ -77,7 +77,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns></returns>
         void DestroyActivity (string activityId);
@@ -88,7 +88,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>ApiResponse of Object(void)</returns>
         ApiResponse<Object> DestroyActivityWithHttpInfo (string activityId);
@@ -98,7 +98,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// **Note:** This call shall get routed directly to ExeUnit.
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="script"></param>
         /// <returns>string</returns>
@@ -110,7 +110,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// **Note:** This call shall get routed directly to ExeUnit.
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="script"></param>
         /// <returns>ApiResponse of string</returns>
@@ -121,7 +121,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// &#39;This call shall collect ExeScriptCommand result objects received directly from ExeUnit (via the long polling pattern). **Note:** two formats of response are specified (as indicated by the Accept header):   - application/json - standard JSON response, specified below, as code generators handle it properly.   - text/event-stream - an EventSource implementation (as per https://www.w3.org/TR/eventsource/).     This isn&#39;t explicitly specified as code generators generally are unable to handle this.     The streaming events adhere to following format:        event: runtime       data: &lt;RuntimeEvent structure&gt;      This streaming endpoint requires dedicated implementation. &#39; 
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="batchId"></param>
         /// <param name="commandIndex">Wait until command with the specified index finishes. Must be accompanied by a valid \&quot;pollTimeout\&quot; query parameter.  (optional)</param>
@@ -134,7 +134,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// &#39;This call shall collect ExeScriptCommand result objects received directly from ExeUnit (via the long polling pattern). **Note:** two formats of response are specified (as indicated by the Accept header):   - application/json - standard JSON response, specified below, as code generators handle it properly.   - text/event-stream - an EventSource implementation (as per https://www.w3.org/TR/eventsource/).     This isn&#39;t explicitly specified as code generators generally are unable to handle this.     The streaming events adhere to following format:        event: runtime       data: &lt;RuntimeEvent structure&gt;      This streaming endpoint requires dedicated implementation. &#39; 
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="batchId"></param>
         /// <param name="commandIndex">Wait until command with the specified index finishes. Must be accompanied by a valid \&quot;pollTimeout\&quot; query parameter.  (optional)</param>
@@ -155,7 +155,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="body"></param>
         /// <returns>Task of System.IO.Stream</returns>
@@ -167,7 +167,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// 
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="body"></param>
         /// <returns>Task of ApiResponse (System.IO.Stream)</returns>
@@ -178,7 +178,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>Task of OneOfstringCreateActivityResult</returns>
         System.Threading.Tasks.Task<CreateActivityResult> CreateActivityAsync (CreateActivityRequest agreementId);
@@ -189,7 +189,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>Task of ApiResponse (OneOfstringCreateActivityResult)</returns>
         System.Threading.Tasks.Task<ApiResponse<CreateActivityResult>> CreateActivityAsyncWithHttpInfo (CreateActivityRequest agreementId);
@@ -199,7 +199,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of void</returns>
         System.Threading.Tasks.Task DestroyActivityAsync (string activityId);
@@ -210,7 +210,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> DestroyActivityAsyncWithHttpInfo (string activityId);
@@ -220,7 +220,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// **Note:** This call shall get routed directly to ExeUnit.
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="script"></param>
         /// <returns>Task of string</returns>
@@ -232,7 +232,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// **Note:** This call shall get routed directly to ExeUnit.
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="script"></param>
         /// <returns>Task of ApiResponse (string)</returns>
@@ -243,7 +243,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// &#39;This call shall collect ExeScriptCommand result objects received directly from ExeUnit (via the long polling pattern). **Note:** two formats of response are specified (as indicated by the Accept header):   - application/json - standard JSON response, specified below, as code generators handle it properly.   - text/event-stream - an EventSource implementation (as per https://www.w3.org/TR/eventsource/).     This isn&#39;t explicitly specified as code generators generally are unable to handle this.     The streaming events adhere to following format:        event: runtime       data: &lt;RuntimeEvent structure&gt;      This streaming endpoint requires dedicated implementation. &#39; 
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="batchId"></param>
         /// <param name="commandIndex">Wait until command with the specified index finishes. Must be accompanied by a valid \&quot;pollTimeout\&quot; query parameter.  (optional)</param>
@@ -256,7 +256,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <remarks>
         /// &#39;This call shall collect ExeScriptCommand result objects received directly from ExeUnit (via the long polling pattern). **Note:** two formats of response are specified (as indicated by the Accept header):   - application/json - standard JSON response, specified below, as code generators handle it properly.   - text/event-stream - an EventSource implementation (as per https://www.w3.org/TR/eventsource/).     This isn&#39;t explicitly specified as code generators generally are unable to handle this.     The streaming events adhere to following format:        event: runtime       data: &lt;RuntimeEvent structure&gt;      This streaming endpoint requires dedicated implementation. &#39; 
         /// </remarks>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="batchId"></param>
         /// <param name="commandIndex">Wait until command with the specified index finishes. Must be accompanied by a valid \&quot;pollTimeout\&quot; query parameter.  (optional)</param>
@@ -278,7 +278,7 @@ namespace Golem.ActivityApi.Client.Api
     /// </summary>
     public partial class RequestorControlApi : IRequestorControlApi
     {
-        private Golem.ActivityApi.Client.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
+        private Golem.Common.Client.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestorControlApi"/> class.
@@ -294,13 +294,13 @@ namespace Golem.ActivityApi.Client.Api
         /// <returns></returns>
         public RequestorControlApi(String basePath)
         {
-            this.Configuration = Golem.ActivityApi.Client.Client.Configuration.MergeConfigurations(
-                Golem.ActivityApi.Client.Client.GlobalConfiguration.Instance,
-                new Golem.ActivityApi.Client.Client.Configuration { BasePath = basePath }
+            this.Configuration = Golem.Common.Client.Client.Configuration.MergeConfigurations(
+                Golem.Common.Client.Client.GlobalConfiguration.Instance,
+                new Golem.Common.Client.Client.Configuration { BasePath = basePath }
             );
-            this.Client = new Golem.ActivityApi.Client.Client.ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new Golem.ActivityApi.Client.Client.ApiClient(this.Configuration.BasePath);
-            this.ExceptionFactory = Golem.ActivityApi.Client.Client.Configuration.DefaultExceptionFactory;
+            this.Client = new Golem.Common.Client.Client.ApiClient(this.Configuration.BasePath);
+            this.AsynchronousClient = new Golem.Common.Client.Client.ApiClient(this.Configuration.BasePath);
+            this.ExceptionFactory = Golem.Common.Client.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -309,17 +309,17 @@ namespace Golem.ActivityApi.Client.Api
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public RequestorControlApi(Golem.ActivityApi.Client.Client.Configuration configuration)
+        public RequestorControlApi(Golem.Common.Client.Client.Configuration configuration)
         {
             if (configuration == null) throw new ArgumentNullException("configuration");
 
-            this.Configuration = Golem.ActivityApi.Client.Client.Configuration.MergeConfigurations(
-                Golem.ActivityApi.Client.Client.GlobalConfiguration.Instance,
+            this.Configuration = Golem.Common.Client.Client.Configuration.MergeConfigurations(
+                Golem.Common.Client.Client.GlobalConfiguration.Instance,
                 configuration
             );
-            this.Client = new Golem.ActivityApi.Client.Client.ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new Golem.ActivityApi.Client.Client.ApiClient(this.Configuration.BasePath);
-            ExceptionFactory = Golem.ActivityApi.Client.Client.Configuration.DefaultExceptionFactory;
+            this.Client = new Golem.Common.Client.Client.ApiClient(this.Configuration.BasePath);
+            this.AsynchronousClient = new Golem.Common.Client.Client.ApiClient(this.Configuration.BasePath);
+            ExceptionFactory = Golem.Common.Client.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="client">The client interface for synchronous API access.</param>
         /// <param name="asyncClient">The client interface for asynchronous API access.</param>
         /// <param name="configuration">The configuration object.</param>
-        public RequestorControlApi(Golem.ActivityApi.Client.Client.ISynchronousClient client,Golem.ActivityApi.Client.Client.IAsynchronousClient asyncClient, Golem.ActivityApi.Client.Client.IReadableConfiguration configuration)
+        public RequestorControlApi(Golem.Common.Client.Client.ISynchronousClient client,Golem.Common.Client.Client.IAsynchronousClient asyncClient, Golem.Common.Client.Client.IReadableConfiguration configuration)
         {
             if(client == null) throw new ArgumentNullException("client");
             if(asyncClient == null) throw new ArgumentNullException("asyncClient");
@@ -338,18 +338,18 @@ namespace Golem.ActivityApi.Client.Api
             this.Client = client;
             this.AsynchronousClient = asyncClient;
             this.Configuration = configuration;
-            this.ExceptionFactory = Golem.ActivityApi.Client.Client.Configuration.DefaultExceptionFactory;
+            this.ExceptionFactory = Golem.Common.Client.Client.Configuration.DefaultExceptionFactory;
         }
 
         /// <summary>
         /// The client for accessing this underlying API asynchronously.
         /// </summary>
-        public Golem.ActivityApi.Client.Client.IAsynchronousClient AsynchronousClient { get; set; }
+        public Golem.Common.Client.Client.IAsynchronousClient AsynchronousClient { get; set; }
 
         /// <summary>
         /// The client for accessing this underlying API synchronously.
         /// </summary>
-        public Golem.ActivityApi.Client.Client.ISynchronousClient Client { get; set; }
+        public Golem.Common.Client.Client.ISynchronousClient Client { get; set; }
 
         /// <summary>
         /// Gets the base path of the API client.
@@ -364,12 +364,12 @@ namespace Golem.ActivityApi.Client.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public Golem.ActivityApi.Client.Client.IReadableConfiguration Configuration {get; set;}
+        public Golem.Common.Client.Client.IReadableConfiguration Configuration {get; set;}
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
         /// </summary>
-        public Golem.ActivityApi.Client.Client.ExceptionFactory ExceptionFactory
+        public Golem.Common.Client.Client.ExceptionFactory ExceptionFactory
         {
             get
             {
@@ -385,34 +385,34 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Sends encrypted command to secure exe-unit. 
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="body"></param>
         /// <returns>System.IO.Stream</returns>
         public System.IO.Stream CallEncrypted (string activityId, System.IO.Stream body)
         {
-             Golem.ActivityApi.Client.Client.ApiResponse<System.IO.Stream> localVarResponse = CallEncryptedWithHttpInfo(activityId, body);
+             Golem.Common.Client.Client.ApiResponse<System.IO.Stream> localVarResponse = CallEncryptedWithHttpInfo(activityId, body);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Sends encrypted command to secure exe-unit. 
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="body"></param>
         /// <returns>ApiResponse of System.IO.Stream</returns>
-        public Golem.ActivityApi.Client.Client.ApiResponse< System.IO.Stream > CallEncryptedWithHttpInfo (string activityId, System.IO.Stream body)
+        public Golem.Common.Client.Client.ApiResponse< System.IO.Stream > CallEncryptedWithHttpInfo (string activityId, System.IO.Stream body)
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->CallEncrypted");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->CallEncrypted");
 
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'body' when calling RequestorControlApi->CallEncrypted");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'body' when calling RequestorControlApi->CallEncrypted");
 
-            Golem.ActivityApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.ActivityApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/octet-stream"
@@ -424,21 +424,21 @@ namespace Golem.ActivityApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.ActivityApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.ActivityApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (activityId != null)
-                localVarRequestOptions.PathParameters.Add("activityId", Golem.ActivityApi.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("activityId", Golem.Common.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
             localVarRequestOptions.Data = body;
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.ActivityApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -456,13 +456,13 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Sends encrypted command to secure exe-unit. 
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="body"></param>
         /// <returns>Task of System.IO.Stream</returns>
         public async System.Threading.Tasks.Task<System.IO.Stream> CallEncryptedAsync (string activityId, System.IO.Stream body)
         {
-             Golem.ActivityApi.Client.Client.ApiResponse<System.IO.Stream> localVarResponse = await CallEncryptedAsyncWithHttpInfo(activityId, body);
+             Golem.Common.Client.Client.ApiResponse<System.IO.Stream> localVarResponse = await CallEncryptedAsyncWithHttpInfo(activityId, body);
              return localVarResponse.Data;
 
         }
@@ -470,22 +470,22 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Sends encrypted command to secure exe-unit. 
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="body"></param>
         /// <returns>Task of ApiResponse (System.IO.Stream)</returns>
-        public async System.Threading.Tasks.Task<Golem.ActivityApi.Client.Client.ApiResponse<System.IO.Stream>> CallEncryptedAsyncWithHttpInfo (string activityId, System.IO.Stream body)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<System.IO.Stream>> CallEncryptedAsyncWithHttpInfo (string activityId, System.IO.Stream body)
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->CallEncrypted");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->CallEncrypted");
 
             // verify the required parameter 'body' is set
             if (body == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'body' when calling RequestorControlApi->CallEncrypted");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'body' when calling RequestorControlApi->CallEncrypted");
 
 
-            Golem.ActivityApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.ActivityApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/octet-stream"
@@ -504,14 +504,14 @@ namespace Golem.ActivityApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (activityId != null)
-                localVarRequestOptions.PathParameters.Add("activityId", Golem.ActivityApi.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("activityId", Golem.Common.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
             localVarRequestOptions.Data = body;
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.ActivityApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -530,28 +530,28 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Creates new Activity based on given Agreement. **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="request"></param>
         /// <returns>OneOfstringCreateActivityResult</returns>
         public CreateActivityResult CreateActivity (CreateActivityRequest request)
         {
-             Golem.ActivityApi.Client.Client.ApiResponse<CreateActivityResult> localVarResponse = CreateActivityWithHttpInfo(request);
+             Golem.Common.Client.Client.ApiResponse<CreateActivityResult> localVarResponse = CreateActivityWithHttpInfo(request);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Creates new Activity based on given Agreement. **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>ApiResponse of OneOfstringCreateActivityResult</returns>
-        public Golem.ActivityApi.Client.Client.ApiResponse<CreateActivityResult> CreateActivityWithHttpInfo (CreateActivityRequest request)
+        public Golem.Common.Client.Client.ApiResponse<CreateActivityResult> CreateActivityWithHttpInfo (CreateActivityRequest request)
         {
             // verify the required parameter 'agreementId' is set
             if (request == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'request' when calling RequestorControlApi->CreateActivity");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'request' when calling RequestorControlApi->CreateActivity");
 
-            Golem.ActivityApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.ActivityApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -562,10 +562,10 @@ namespace Golem.ActivityApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.ActivityApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.ActivityApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.Data = request;
@@ -574,7 +574,7 @@ namespace Golem.ActivityApi.Client.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.ActivityApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -592,12 +592,12 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Creates new Activity based on given Agreement. **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>Task of OneOfstringCreateActivityResult</returns>
         public async System.Threading.Tasks.Task<CreateActivityResult> CreateActivityAsync (CreateActivityRequest request)
         {
-             Golem.ActivityApi.Client.Client.ApiResponse<CreateActivityResult> localVarResponse = await CreateActivityAsyncWithHttpInfo(request);
+             Golem.Common.Client.Client.ApiResponse<CreateActivityResult> localVarResponse = await CreateActivityAsyncWithHttpInfo(request);
              return localVarResponse.Data;
 
         }
@@ -605,17 +605,17 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Creates new Activity based on given Agreement. **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>Task of ApiResponse (OneOfstringCreateActivityResult)</returns>
-        public async System.Threading.Tasks.Task<Golem.ActivityApi.Client.Client.ApiResponse<CreateActivityResult>> CreateActivityAsyncWithHttpInfo (CreateActivityRequest request)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<CreateActivityResult>> CreateActivityAsyncWithHttpInfo (CreateActivityRequest request)
         {
             // verify the required parameter 'agreementId' is set
             if (request == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'request' when calling RequestorControlApi->CreateActivity");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'request' when calling RequestorControlApi->CreateActivity");
 
 
-            Golem.ActivityApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.ActivityApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -638,7 +638,7 @@ namespace Golem.ActivityApi.Client.Api
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.ActivityApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -657,7 +657,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Destroys given Activity. **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns></returns>
         public void DestroyActivity (string activityId)
@@ -668,16 +668,16 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Destroys given Activity. **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public Golem.ActivityApi.Client.Client.ApiResponse<Object> DestroyActivityWithHttpInfo (string activityId)
+        public Golem.Common.Client.Client.ApiResponse<Object> DestroyActivityWithHttpInfo (string activityId)
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->DestroyActivity");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->DestroyActivity");
 
-            Golem.ActivityApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.ActivityApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -687,20 +687,20 @@ namespace Golem.ActivityApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.ActivityApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.ActivityApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (activityId != null)
-                localVarRequestOptions.PathParameters.Add("activityId", Golem.ActivityApi.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("activityId", Golem.Common.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.ActivityApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -718,7 +718,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Destroys given Activity. **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of void</returns>
         public async System.Threading.Tasks.Task DestroyActivityAsync (string activityId)
@@ -730,17 +730,17 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Destroys given Activity. **Note:** This call shall get routed as a provider event (see ProviderEvent structure).
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.ActivityApi.Client.Client.ApiResponse<Object>> DestroyActivityAsyncWithHttpInfo (string activityId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> DestroyActivityAsyncWithHttpInfo (string activityId)
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->DestroyActivity");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->DestroyActivity");
 
 
-            Golem.ActivityApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.ActivityApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -757,13 +757,13 @@ namespace Golem.ActivityApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (activityId != null)
-                localVarRequestOptions.PathParameters.Add("activityId", Golem.ActivityApi.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("activityId", Golem.Common.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.ActivityApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -782,34 +782,34 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Executes an ExeScript batch within a given Activity. **Note:** This call shall get routed directly to ExeUnit.
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="script"></param>
         /// <returns>string</returns>
         public string Exec (string activityId, ExeScriptRequest script)
         {
-             Golem.ActivityApi.Client.Client.ApiResponse<string> localVarResponse = ExecWithHttpInfo(activityId, script);
+             Golem.Common.Client.Client.ApiResponse<string> localVarResponse = ExecWithHttpInfo(activityId, script);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Executes an ExeScript batch within a given Activity. **Note:** This call shall get routed directly to ExeUnit.
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="script"></param>
         /// <returns>ApiResponse of string</returns>
-        public Golem.ActivityApi.Client.Client.ApiResponse< string > ExecWithHttpInfo (string activityId, ExeScriptRequest script)
+        public Golem.Common.Client.Client.ApiResponse< string > ExecWithHttpInfo (string activityId, ExeScriptRequest script)
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->Exec");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->Exec");
 
             // verify the required parameter 'script' is set
             if (script == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'script' when calling RequestorControlApi->Exec");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'script' when calling RequestorControlApi->Exec");
 
-            Golem.ActivityApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.ActivityApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -820,21 +820,21 @@ namespace Golem.ActivityApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.ActivityApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.ActivityApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (activityId != null)
-                localVarRequestOptions.PathParameters.Add("activityId", Golem.ActivityApi.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("activityId", Golem.Common.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
             localVarRequestOptions.Data = script;
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.ActivityApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -852,13 +852,13 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Executes an ExeScript batch within a given Activity. **Note:** This call shall get routed directly to ExeUnit.
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="script"></param>
         /// <returns>Task of string</returns>
         public async System.Threading.Tasks.Task<string> ExecAsync (string activityId, ExeScriptRequest script)
         {
-             Golem.ActivityApi.Client.Client.ApiResponse<string> localVarResponse = await ExecAsyncWithHttpInfo(activityId, script);
+             Golem.Common.Client.Client.ApiResponse<string> localVarResponse = await ExecAsyncWithHttpInfo(activityId, script);
              return localVarResponse.Data;
 
         }
@@ -866,22 +866,22 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Executes an ExeScript batch within a given Activity. **Note:** This call shall get routed directly to ExeUnit.
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="script"></param>
         /// <returns>Task of ApiResponse (string)</returns>
-        public async System.Threading.Tasks.Task<Golem.ActivityApi.Client.Client.ApiResponse<string>> ExecAsyncWithHttpInfo (string activityId, ExeScriptRequest script)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<string>> ExecAsyncWithHttpInfo (string activityId, ExeScriptRequest script)
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->Exec");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->Exec");
 
             // verify the required parameter 'script' is set
             if (script == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'script' when calling RequestorControlApi->Exec");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'script' when calling RequestorControlApi->Exec");
 
 
-            Golem.ActivityApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.ActivityApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
                 "application/json"
@@ -899,14 +899,14 @@ namespace Golem.ActivityApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (activityId != null)
-                localVarRequestOptions.PathParameters.Add("activityId", Golem.ActivityApi.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("activityId", Golem.Common.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
             localVarRequestOptions.Data = script;
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.ActivityApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -925,36 +925,36 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Queries for ExeScript batch results. &#39;This call shall collect ExeScriptCommand result objects received directly from ExeUnit (via the long polling pattern). **Note:** two formats of response are specified (as indicated by the Accept header):   - application/json - standard JSON response, specified below, as code generators handle it properly.   - text/event-stream - an EventSource implementation (as per https://www.w3.org/TR/eventsource/).     This isn&#39;t explicitly specified as code generators generally are unable to handle this.     The streaming events adhere to following format:        event: runtime       data: &lt;RuntimeEvent structure&gt;      This streaming endpoint requires dedicated implementation. &#39; 
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="batchId"></param>
         /// <param name="commandIndex">Wait until command with the specified index finishes. Must be accompanied by a valid \&quot;pollTimeout\&quot; query parameter.  (optional)</param>
         /// <returns>List&lt;ExeScriptCommandResult&gt;</returns>
         public List<ExeScriptCommandResult> GetExecBatchResults (string activityId, string batchId, decimal? commandIndex = default(decimal?))
         {
-             Golem.ActivityApi.Client.Client.ApiResponse<List<ExeScriptCommandResult>> localVarResponse = GetExecBatchResultsWithHttpInfo(activityId, batchId, commandIndex);
+             Golem.Common.Client.Client.ApiResponse<List<ExeScriptCommandResult>> localVarResponse = GetExecBatchResultsWithHttpInfo(activityId, batchId, commandIndex);
              return localVarResponse.Data;
         }
 
         /// <summary>
         /// Queries for ExeScript batch results. &#39;This call shall collect ExeScriptCommand result objects received directly from ExeUnit (via the long polling pattern). **Note:** two formats of response are specified (as indicated by the Accept header):   - application/json - standard JSON response, specified below, as code generators handle it properly.   - text/event-stream - an EventSource implementation (as per https://www.w3.org/TR/eventsource/).     This isn&#39;t explicitly specified as code generators generally are unable to handle this.     The streaming events adhere to following format:        event: runtime       data: &lt;RuntimeEvent structure&gt;      This streaming endpoint requires dedicated implementation. &#39; 
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="batchId"></param>
         /// <param name="commandIndex">Wait until command with the specified index finishes. Must be accompanied by a valid \&quot;pollTimeout\&quot; query parameter.  (optional)</param>
         /// <returns>ApiResponse of List&lt;ExeScriptCommandResult&gt;</returns>
-        public Golem.ActivityApi.Client.Client.ApiResponse< List<ExeScriptCommandResult> > GetExecBatchResultsWithHttpInfo (string activityId, string batchId, decimal? commandIndex = default(decimal?))
+        public Golem.Common.Client.Client.ApiResponse< List<ExeScriptCommandResult> > GetExecBatchResultsWithHttpInfo (string activityId, string batchId, decimal? commandIndex = default(decimal?))
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->GetExecBatchResults");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->GetExecBatchResults");
 
             // verify the required parameter 'batchId' is set
             if (batchId == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'batchId' when calling RequestorControlApi->GetExecBatchResults");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'batchId' when calling RequestorControlApi->GetExecBatchResults");
 
-            Golem.ActivityApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.ActivityApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -964,26 +964,26 @@ namespace Golem.ActivityApi.Client.Api
                 "application/json"
             };
 
-            var localVarContentType = Golem.ActivityApi.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarContentType = Golem.Common.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            var localVarAccept = Golem.ActivityApi.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            var localVarAccept = Golem.Common.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             if (activityId != null)
-                localVarRequestOptions.PathParameters.Add("activityId", Golem.ActivityApi.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("activityId", Golem.Common.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
             if (batchId != null)
-                localVarRequestOptions.PathParameters.Add("batchId", Golem.ActivityApi.Client.Client.ClientUtils.ParameterToString(batchId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("batchId", Golem.Common.Client.Client.ClientUtils.ParameterToString(batchId)); // path parameter
             if (commandIndex != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.ActivityApi.Client.Client.ClientUtils.ParameterToMultiMap("", "commandIndex", commandIndex));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "commandIndex", commandIndex));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.ActivityApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request
@@ -1001,14 +1001,14 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Queries for ExeScript batch results. &#39;This call shall collect ExeScriptCommand result objects received directly from ExeUnit (via the long polling pattern). **Note:** two formats of response are specified (as indicated by the Accept header):   - application/json - standard JSON response, specified below, as code generators handle it properly.   - text/event-stream - an EventSource implementation (as per https://www.w3.org/TR/eventsource/).     This isn&#39;t explicitly specified as code generators generally are unable to handle this.     The streaming events adhere to following format:        event: runtime       data: &lt;RuntimeEvent structure&gt;      This streaming endpoint requires dedicated implementation. &#39; 
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="batchId"></param>
         /// <param name="commandIndex">Wait until command with the specified index finishes. Must be accompanied by a valid \&quot;pollTimeout\&quot; query parameter.  (optional)</param>
         /// <returns>Task of List&lt;ExeScriptCommandResult&gt;</returns>
         public async System.Threading.Tasks.Task<List<ExeScriptCommandResult>> GetExecBatchResultsAsync (string activityId, string batchId, decimal? commandIndex = default(decimal?))
         {
-             Golem.ActivityApi.Client.Client.ApiResponse<List<ExeScriptCommandResult>> localVarResponse = await GetExecBatchResultsAsyncWithHttpInfo(activityId, batchId, commandIndex);
+             Golem.Common.Client.Client.ApiResponse<List<ExeScriptCommandResult>> localVarResponse = await GetExecBatchResultsAsyncWithHttpInfo(activityId, batchId, commandIndex);
              return localVarResponse.Data;
 
         }
@@ -1016,23 +1016,23 @@ namespace Golem.ActivityApi.Client.Api
         /// <summary>
         /// Queries for ExeScript batch results. &#39;This call shall collect ExeScriptCommand result objects received directly from ExeUnit (via the long polling pattern). **Note:** two formats of response are specified (as indicated by the Accept header):   - application/json - standard JSON response, specified below, as code generators handle it properly.   - text/event-stream - an EventSource implementation (as per https://www.w3.org/TR/eventsource/).     This isn&#39;t explicitly specified as code generators generally are unable to handle this.     The streaming events adhere to following format:        event: runtime       data: &lt;RuntimeEvent structure&gt;      This streaming endpoint requires dedicated implementation. &#39; 
         /// </summary>
-        /// <exception cref="Golem.ActivityApi.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <param name="batchId"></param>
         /// <param name="commandIndex">Wait until command with the specified index finishes. Must be accompanied by a valid \&quot;pollTimeout\&quot; query parameter.  (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;ExeScriptCommandResult&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.ActivityApi.Client.Client.ApiResponse<List<ExeScriptCommandResult>>> GetExecBatchResultsAsyncWithHttpInfo (string activityId, string batchId, decimal? commandIndex = default(decimal?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<ExeScriptCommandResult>>> GetExecBatchResultsAsyncWithHttpInfo (string activityId, string batchId, decimal? commandIndex = default(decimal?))
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->GetExecBatchResults");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'activityId' when calling RequestorControlApi->GetExecBatchResults");
 
             // verify the required parameter 'batchId' is set
             if (batchId == null)
-                throw new Golem.ActivityApi.Client.Client.ApiException(400, "Missing required parameter 'batchId' when calling RequestorControlApi->GetExecBatchResults");
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'batchId' when calling RequestorControlApi->GetExecBatchResults");
 
 
-            Golem.ActivityApi.Client.Client.RequestOptions localVarRequestOptions = new Golem.ActivityApi.Client.Client.RequestOptions();
+            Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
             };
@@ -1049,19 +1049,19 @@ namespace Golem.ActivityApi.Client.Api
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
             
             if (activityId != null)
-                localVarRequestOptions.PathParameters.Add("activityId", Golem.ActivityApi.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("activityId", Golem.Common.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
             if (batchId != null)
-                localVarRequestOptions.PathParameters.Add("batchId", Golem.ActivityApi.Client.Client.ClientUtils.ParameterToString(batchId)); // path parameter
+                localVarRequestOptions.PathParameters.Add("batchId", Golem.Common.Client.Client.ClientUtils.ParameterToString(batchId)); // path parameter
             if (commandIndex != null)
             {
-                localVarRequestOptions.QueryParameters.Add(Golem.ActivityApi.Client.Client.ClientUtils.ParameterToMultiMap("", "commandIndex", commandIndex));
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "commandIndex", commandIndex));
             }
 
             // authentication (app_key) required
             // http basic authentication required
             if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
             {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.ActivityApi.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + Golem.Common.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
             }
 
             // make the HTTP request

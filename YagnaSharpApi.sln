@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YagnaSharpApi", "YagnaSharpApi\YagnaSharpApi.csproj", "{B3085C8A-9983-436A-8B62-CAC6E3DE3582}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YagnaSharpApi", "YagnaSharpApi\YagnaSharpApi.csproj", "{B3085C8A-9983-436A-8B62-CAC6E3DE3582}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Golem.ActivityApi.Client", "Golem.ActivityApi.Client\Golem.ActivityApi.Client.csproj", "{1F54111F-1C89-41C0-A20C-58A53A3A70AC}"
 EndProject
@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Golem.MarketApi.Client", "G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Golem.PaymentApi.Client", "Golem.PaymentApi.Client\Golem.PaymentApi.Client.csproj", "{63E6C8AF-362F-4F59-9725-9C5D552C3ED5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YagnaSharpApi.Examples", "YagnaSharpApi.Examples\YagnaSharpApi.Examples.csproj", "{6E58B24B-1E94-4678-9415-43AD8C467A5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YagnaSharpApi.Examples", "YagnaSharpApi.Examples\YagnaSharpApi.Examples.csproj", "{6E58B24B-1E94-4678-9415-43AD8C467A5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YagnaSharpApi.Tests", "YagnaSharpApi.Tests\YagnaSharpApi.Tests.csproj", "{176C083B-2576-4519-BCD5-F82D8F9E6158}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YagnaSharpApi.Tests", "YagnaSharpApi.Tests\YagnaSharpApi.Tests.csproj", "{176C083B-2576-4519-BCD5-F82D8F9E6158}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Golem.Common.Client", "Golem.Common.Client\Golem.Common.Client.csproj", "{6E57BF78-E5C4-4620-9A7F-8A150E0BFD15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{176C083B-2576-4519-BCD5-F82D8F9E6158}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{176C083B-2576-4519-BCD5-F82D8F9E6158}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{176C083B-2576-4519-BCD5-F82D8F9E6158}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E57BF78-E5C4-4620-9A7F-8A150E0BFD15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E57BF78-E5C4-4620-9A7F-8A150E0BFD15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E57BF78-E5C4-4620-9A7F-8A150E0BFD15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E57BF78-E5C4-4620-9A7F-8A150E0BFD15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

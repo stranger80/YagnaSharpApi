@@ -21,7 +21,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using JsonSubTypes;
-using OpenAPIDateConverter = Golem.ActivityApi.Client.Client.OpenAPIDateConverter;
+using OpenAPIDateConverter = Golem.Common.Client.Client.OpenAPIDateConverter;
 
 namespace Golem.ActivityApi.Client.Model
 {

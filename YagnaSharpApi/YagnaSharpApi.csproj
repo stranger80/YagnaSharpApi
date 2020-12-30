@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Golem.PaymentApi.Client\Golem.PaymentApi.Client.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
 </Project>

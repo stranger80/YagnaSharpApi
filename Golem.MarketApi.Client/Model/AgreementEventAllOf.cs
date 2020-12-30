@@ -20,7 +20,7 @@ using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using OpenAPIDateConverter = Golem.MarketApi.Client.Client.OpenAPIDateConverter;
+using OpenAPIDateConverter = Golem.Common.Client.Client.OpenAPIDateConverter;
 
 namespace Golem.MarketApi.Client.Model
 {
