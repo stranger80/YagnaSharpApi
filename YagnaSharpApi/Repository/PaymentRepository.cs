@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using YagnaSharpApi.Entities;
+using YagnaSharpApi.Entities.Events;
 
 namespace YagnaSharpApi.Repository
 {
@@ -37,6 +38,44 @@ namespace YagnaSharpApi.Repository
             {
                 throw;
             }
+        }
+
+        public async Task<AllocationEntity> GetAllocationAsync(string allocationId)
+        {
+            try
+            {
+                var existingAllocation = await this.RequestorApi.GetAllocationAsync(allocationId);
+
+                var result = this.Mapper.Map<AllocationEntity>(existingAllocation);
+
+                return result;
+            }
+            catch (Exception exc)
+            {
+                throw;
+            }
+        }
+
+        public async Task ReleaseAllocationAsync(string allocationId)
+        {
+            try
+            {
+                await this.RequestorApi.ReleaseAllocationAsync(allocationId);
+            }
+            catch (Exception exc)
+            {
+                throw;
+            }
+        }
+
+        public async IAsyncEnumerable<InvoiceEventEntity> GetInvoiceEventsAsync()
+        {
+            // implement ongoing listening of the Invoice Event flow, 
+            // decode incoming events
+            // for new Invoices - call GetInvoice(invoiceId) to retrieve the Invoice details from payment API
+
+
+            throw new NotImplementedException();
         }
 
     }

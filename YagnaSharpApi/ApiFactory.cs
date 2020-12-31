@@ -10,12 +10,24 @@ namespace YagnaSharpApi
     {
         public ApiConfiguration Configuration { get; set; }
 
-        private Configuration proxyConfig;
+        private Configuration marketProxyConfig;
+        private Configuration activityProxyConfig;
+        private Configuration paymentProxyConfig;
 
         public ApiFactory(ApiConfiguration config)
         {
             this.Configuration = config;
-            this.proxyConfig = new Configuration(
+            this.marketProxyConfig = new Configuration(
+                new Dictionary<string, string>() { { "Authorization", "Bearer " + config.AppKey } },
+                new Dictionary<string, string>(),
+                new Dictionary<string, string>(),
+                config.MarketApiRoot);
+            this.activityProxyConfig = new Configuration(
+                new Dictionary<string, string>() { { "Authorization", "Bearer " + config.AppKey } },
+                new Dictionary<string, string>(),
+                new Dictionary<string, string>(),
+                config.ActivityApiRoot);
+            this.paymentProxyConfig = new Configuration(
                 new Dictionary<string, string>() { { "Authorization", "Bearer " + config.AppKey } },
                 new Dictionary<string, string>(),
                 new Dictionary<string, string>(),
@@ -28,29 +40,34 @@ namespace YagnaSharpApi
 
             if(response.RawContent == "Missing application key")
             {
-                return new Exception("AppKey missing.");
+                return new ApiException("AppKey missing.");
             }
 
-            if (!String.IsNullOrEmpty(response.ErrorText))
+            if (response.StatusCode == 0 && !String.IsNullOrEmpty(response.ErrorText))
             {
-                return new Exception($"Method {methodName} returned error: {response.ErrorText}");
+                return new ApiException($"Method {methodName} returned error: {response.ErrorText}");
             }
 
             switch (response.StatusCode)
             {
                 case System.Net.HttpStatusCode.OK:
                 case System.Net.HttpStatusCode.Created:
+                case System.Net.HttpStatusCode.Accepted:
+                case System.Net.HttpStatusCode.NoContent:
                     return null;
                 default:
                     try
                     {
                         // attempt to decode the error message
                         var errorMessage = JsonConvert.DeserializeObject<Golem.PaymentApi.Client.Model.ErrorMessage>(response.RawContent);
-                        return new Exception($"Method {methodName} returned HTTP status {response.StatusCode} with error message: {errorMessage.Message}");
+                        return new ApiException($"Method {methodName} returned erratic StatusCode", 
+                            response.StatusCode, 
+                            new ErrorMessage() { Message = errorMessage?.Message });
                     }
                     catch (Exception exc)
                     {
-                        return new Exception($"Method {methodName} returned HTTP status {response.StatusCode}");
+                        return new ApiException($"Method {methodName} returned erratic StatusCode", 
+                            response.StatusCode);
                     }
 
             }
@@ -58,7 +75,11 @@ namespace YagnaSharpApi
 
         public Golem.MarketApi.Client.Api.IRequestorApi GetMarketRequestorApi()
         {
-            throw new NotImplementedException();
+            var result = new Golem.MarketApi.Client.Api.RequestorApi(this.marketProxyConfig);
+
+            result.ExceptionFactory = ApiExceptionFactory;
+
+            return result;
         }
 
         public Golem.ActivityApi.Client.Api.IRequestorControlApi GetActivityRequestorControlApi()
@@ -73,7 +94,7 @@ namespace YagnaSharpApi
 
         public Golem.PaymentApi.Client.Api.IRequestorApi GetPaymentRequestorApi()
         {
-            var result = new Golem.PaymentApi.Client.Api.RequestorApi(this.proxyConfig);
+            var result = new Golem.PaymentApi.Client.Api.RequestorApi(this.paymentProxyConfig);
 
             result.ExceptionFactory = ApiExceptionFactory;
 

@@ -37,13 +37,6 @@ namespace Golem.PaymentApi.Client.Model
     [JsonSubtypes.KnownSubType(typeof(InvoiceAcceptedEvent), "InvoiceAcceptedEvent")]
     [JsonSubtypes.KnownSubType(typeof(InvoiceReceivedEvent), "InvoiceReceivedEvent")]
     [JsonSubtypes.KnownSubType(typeof(PaymentReceivedEvent), "PaymentReceivedEvent")]
-    [JsonSubtypes.KnownSubType(typeof(InvoiceReceivedEvent), "InvoiceReceivedEvent")]
-    [JsonSubtypes.KnownSubType(typeof(InvoiceAcceptedEvent), "InvoiceAcceptedEvent")]
-    [JsonSubtypes.KnownSubType(typeof(InvoiceRejectedEvent), "InvoiceRejectedEvent")]
-    [JsonSubtypes.KnownSubType(typeof(InvoiceFailedEvent), "InvoiceFailedEvent")]
-    [JsonSubtypes.KnownSubType(typeof(InvoiceSettledEvent), "InvoiceSettledEvent")]
-    [JsonSubtypes.KnownSubType(typeof(InvoiceCancelledEvent), "InvoiceCancelledEvent")]
-    [JsonSubtypes.KnownSubType(typeof(PaymentReceivedEvent), "PaymentReceivedEvent")]
     public partial class InvoiceEvent :  IEquatable<InvoiceEvent>
     {
         /// <summary>

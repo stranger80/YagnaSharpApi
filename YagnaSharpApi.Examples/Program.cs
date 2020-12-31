@@ -63,14 +63,14 @@ namespace YagnaSharpApi.Examples
             // worst-case time overhead for initialization, e.g. negotiation, file transfer etc.
             var initOverhead = 3 * 60m; // 3 minutes
 
-            using (var engine = new Engine.Engine(
+            using (var executor = new Engine.Executor(
                 package, 
                 3, 
                 initOverhead + frames.Count() * 2,
                 120, 
                 subnetTag))
             {
-                await foreach(var task in engine.Map(Worker, frames.Select(frame => new GolemTask<int, string>(frame*10))))
+                await foreach(var task in executor.Submit(Worker, frames.Select(frame => new GolemTask<int, string>(frame*10))))
                 {
                     Console.WriteLine($"{TextColorConstants.TEXT_COLOR_CYAN}Task computed: {task}, result: {task.Output}{TextColorConstants.TEXT_COLOR_DEFAULT}");
                 }

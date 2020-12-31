@@ -1,4 +1,29 @@
-﻿DemandBuilder
+﻿
+
+## ToDo list
+
+- Implement cancellation token in "collect" methods with long timeouts
+  - Api clients
+  - Repository classes
+- Implement Subscription Entity CollectOffers() 
+- Implement the proposal entity Respond() and Reject()
+- Implement AgreementPool 
+  - including also the Agreement negotiation/confirmation
+- Implement ActivityRepository
+  - Including the Command Result events processing!
+- Implement GFTP StorageProvider
+- Implement WorkerStarter() - fetch a confirmed agreement from the pool and run a worker on this agreement
+- Implement StartWorker() logic - for a given Agreement, start activity and execute an exescript against it, then accept the payment
+- Implement GetInvoiceEventAsync() to continuously listen on the invoiceEvents endpoint (remember to use the afterTimestamp parameter!)
+- Implement ProcessInvoicesAsync() logic
+- Implement AcceptPaymentForAgreement() logic
+
+- Implement the Executor event notification framework
+
+
+## Component notes:
+
+DemandBuilder
   - Construct the properties (incl. task_package) and constraints
 
 SubscriptionEntity

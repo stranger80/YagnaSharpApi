@@ -34,10 +34,6 @@ namespace Golem.MarketApi.Client.Model
     [JsonSubtypes.KnownSubType(typeof(ProposalEvent), "ProposalEvent")]
     [JsonSubtypes.KnownSubType(typeof(ProposalRejectedEvent), "ProposalRejectedEvent")]
     [JsonSubtypes.KnownSubType(typeof(AgreementEvent), "AgreementEvent")]
-    [JsonSubtypes.KnownSubType(typeof(PropertyQueryEvent), "PropertyQueryEvent")]
-    [JsonSubtypes.KnownSubType(typeof(ProposalEvent), "ProposalEvent")]
-    [JsonSubtypes.KnownSubType(typeof(ProposalRejectedEvent), "ProposalRejectedEvent")]
-    [JsonSubtypes.KnownSubType(typeof(AgreementEvent), "AgreementEvent")]
     public partial class Event :  IEquatable<Event>
     {
         /// <summary>

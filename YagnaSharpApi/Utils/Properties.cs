@@ -24,9 +24,13 @@ namespace YagnaSharpApi.Utils
         public const string SRV_COMP_EXPIRATION = "golem.srv.comp.expiration";
         public const string SRV_COMP_TASK_PACKAGE = "golem.srv.comp.task_package";
         public const string SRV_COMP_VM_PACKAGE_FORMAT = "golem.srv.comp.vm.package_format";
+    }
 
+    public class PropertyValues
+    {
+        public const string COM_PRICING_MODEL_LINEAR = "linear";
+        public const string COM_SCHEME_PAYU = "payu";
 
-     
     }
 
     public class Counters

@@ -6,5 +6,6 @@ namespace YagnaSharpApi.Entities
 {
     public class SubscriptionEntity
     {
+        public string SubscriptionId { get; set; }
     }
 }
