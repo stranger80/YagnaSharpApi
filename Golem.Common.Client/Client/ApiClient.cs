@@ -27,6 +27,7 @@ using RestSharp;
 using RestSharp.Deserializers;
 using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
 using RestSharpMethod = RestSharp.Method;
+using System.Threading;
 
 namespace Golem.Common.Client.Client
 {
@@ -450,7 +451,7 @@ namespace Golem.Common.Client.Client
             return result;
         }
 
-        private async Task<ApiResponse<T>> ExecAsync<T>(RestRequest req, IReadableConfiguration configuration)
+        private async Task<ApiResponse<T>> ExecAsync<T>(RestRequest req, IReadableConfiguration configuration, CancellationToken token = default(CancellationToken))
         {
             RestClient client = new RestClient(_baseUrl);
 
@@ -481,7 +482,7 @@ namespace Golem.Common.Client.Client
 
             InterceptRequest(req);
 
-            var response = await client.ExecuteAsync<T>(req);
+            var response = await client.ExecuteAsync<T>(req, token);
 
             InterceptResponse(req, response);
 
@@ -529,10 +530,10 @@ namespace Golem.Common.Client.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public Task<ApiResponse<T>> GetAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public Task<ApiResponse<T>> GetAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken token = default(CancellationToken))
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return ExecAsync<T>(NewRequest(HttpMethod.Get, path, options, config), config);
+            return ExecAsync<T>(NewRequest(HttpMethod.Get, path, options, config), config, token);
         }
 
         /// <summary>
@@ -543,10 +544,10 @@ namespace Golem.Common.Client.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public Task<ApiResponse<T>> PostAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public Task<ApiResponse<T>> PostAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken token = default(CancellationToken))
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return ExecAsync<T>(NewRequest(HttpMethod.Post, path, options, config), config);
+            return ExecAsync<T>(NewRequest(HttpMethod.Post, path, options, config), config, token);
         }
 
         /// <summary>
@@ -557,10 +558,10 @@ namespace Golem.Common.Client.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public Task<ApiResponse<T>> PutAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public Task<ApiResponse<T>> PutAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken token = default(CancellationToken))
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return ExecAsync<T>(NewRequest(HttpMethod.Put, path, options, config), config);
+            return ExecAsync<T>(NewRequest(HttpMethod.Put, path, options, config), config, token);
         }
 
         /// <summary>
@@ -571,10 +572,10 @@ namespace Golem.Common.Client.Client
         /// <param name="configuration">A per-request configuration object. It is assumed that any merge with
         /// GlobalConfiguration has been done before calling this method.</param>
         /// <returns>A Task containing ApiResponse</returns>
-        public Task<ApiResponse<T>> DeleteAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null)
+        public Task<ApiResponse<T>> DeleteAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken token = default(CancellationToken))
         {
             var config = configuration ?? GlobalConfiguration.Instance;
-            return ExecAsync<T>(NewRequest(HttpMethod.Delete, path, options, config), config);
+            return ExecAsync<T>(NewRequest(HttpMethod.Delete, path, options, config), config, token);
         }
 
         /// <summary>

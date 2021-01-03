@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
+using System.Threading;
 using Golem.Common.Client.Client;
 using Golem.MarketApi.Client.Model;
 
@@ -416,7 +417,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of List&lt;AgreementEvent&gt;</returns>
-        System.Threading.Tasks.Task<List<AgreementEvent>> CollectAgreementEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string));
+        System.Threading.Tasks.Task<List<AgreementEvent>> CollectAgreementEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), CancellationToken token = default(CancellationToken));
 
         /// <summary>
         /// CollectAgreementEvents - Collects events related to an Agreement.
@@ -430,7 +431,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;AgreementEvent&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<AgreementEvent>>> CollectAgreementEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string));
+        System.Threading.Tasks.Task<ApiResponse<List<AgreementEvent>>> CollectAgreementEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), CancellationToken token = default(CancellationToken));
         /// <summary>
         /// CollectOffers - Reads Market responses to published Demand.
         /// </summary>
@@ -442,7 +443,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of List&lt;Event&gt;</returns>
-        System.Threading.Tasks.Task<List<Event>> CollectOffersAsync (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?));
+        System.Threading.Tasks.Task<List<Event>> CollectOffersAsync (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?), CancellationToken token = default(CancellationToken));
 
         /// <summary>
         /// CollectOffers - Reads Market responses to published Demand.
@@ -455,7 +456,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of ApiResponse (List&lt;Event&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<Event>>> CollectOffersAsyncWithHttpInfo (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?));
+        System.Threading.Tasks.Task<ApiResponse<List<Event>>> CollectOffersAsyncWithHttpInfo (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?), CancellationToken token = default(CancellationToken));
         /// <summary>
         /// ConfirmAgreement - Sends Agreement proposal to the Provider.
         /// </summary>
@@ -713,7 +714,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="agreementId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task WaitForApprovalAsync (string agreementId, float? timeout = default(float?));
+        System.Threading.Tasks.Task WaitForApprovalAsync (string agreementId, float? timeout = default(float?), CancellationToken token = default(CancellationToken));
 
         /// <summary>
         /// WaitForApproval - Waits for Agreement approval by the Provider.
@@ -725,7 +726,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="agreementId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> WaitForApprovalAsyncWithHttpInfo (string agreementId, float? timeout = default(float?));
+        System.Threading.Tasks.Task<ApiResponse<Object>> WaitForApprovalAsyncWithHttpInfo (string agreementId, float? timeout = default(float?), CancellationToken token = default(CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -1066,9 +1067,9 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of List&lt;AgreementEvent&gt;</returns>
-        public async System.Threading.Tasks.Task<List<AgreementEvent>> CollectAgreementEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public async System.Threading.Tasks.Task<List<AgreementEvent>> CollectAgreementEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), CancellationToken token = default(CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<List<AgreementEvent>> localVarResponse = await CollectAgreementEventsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
+             Golem.Common.Client.Client.ApiResponse<List<AgreementEvent>> localVarResponse = await CollectAgreementEventsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId, token);
              return localVarResponse.Data;
 
         }
@@ -1082,7 +1083,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;AgreementEvent&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<AgreementEvent>>> CollectAgreementEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<AgreementEvent>>> CollectAgreementEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), CancellationToken token = default(CancellationToken))
         {
 
             Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
@@ -1127,7 +1128,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<List<AgreementEvent>>("/agreementEvents", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<List<AgreementEvent>>("/agreementEvents", localVarRequestOptions, this.Configuration, token);
 
             if (this.ExceptionFactory != null)
             {
@@ -1220,9 +1221,9 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of List&lt;Event&gt;</returns>
-        public async System.Threading.Tasks.Task<List<Event>> CollectOffersAsync (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?))
+        public async System.Threading.Tasks.Task<List<Event>> CollectOffersAsync (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?), CancellationToken token = default(CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<List<Event>> localVarResponse = await CollectOffersAsyncWithHttpInfo(subscriptionId, timeout, maxEvents);
+             Golem.Common.Client.Client.ApiResponse<List<Event>> localVarResponse = await CollectOffersAsyncWithHttpInfo(subscriptionId, timeout, maxEvents, token);
              return localVarResponse.Data;
 
         }
@@ -1235,7 +1236,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of ApiResponse (List&lt;Event&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<Event>>> CollectOffersAsyncWithHttpInfo (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<Event>>> CollectOffersAsyncWithHttpInfo (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?), CancellationToken token = default(CancellationToken))
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
@@ -1278,7 +1279,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<List<Event>>("/demands/{subscriptionId}/events", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<List<Event>>("/demands/{subscriptionId}/events", localVarRequestOptions, this.Configuration, token);
 
             if (this.ExceptionFactory != null)
             {
@@ -2858,9 +2859,9 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="agreementId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task WaitForApprovalAsync (string agreementId, float? timeout = default(float?))
+        public async System.Threading.Tasks.Task WaitForApprovalAsync (string agreementId, float? timeout = default(float?), CancellationToken token = default(CancellationToken))
         {
-             await WaitForApprovalAsyncWithHttpInfo(agreementId, timeout);
+             await WaitForApprovalAsyncWithHttpInfo(agreementId, timeout, token);
 
         }
 
@@ -2871,7 +2872,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="agreementId"></param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> WaitForApprovalAsyncWithHttpInfo (string agreementId, float? timeout = default(float?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> WaitForApprovalAsyncWithHttpInfo (string agreementId, float? timeout = default(float?), CancellationToken token = default(CancellationToken))
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
@@ -2910,7 +2911,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/agreements/{agreementId}/wait", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/agreements/{agreementId}/wait", localVarRequestOptions, this.Configuration, token);
 
             if (this.ExceptionFactory != null)
             {

@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
+using System.Threading;
 using Golem.Common.Client.Client;
 using Golem.PaymentApi.Client.Model;
 
@@ -717,7 +718,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of List&lt;DebitNoteEvent&gt;</returns>
-        System.Threading.Tasks.Task<List<DebitNoteEvent>> GetDebitNoteEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string));
+        System.Threading.Tasks.Task<List<DebitNoteEvent>> GetDebitNoteEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), CancellationToken token = default(CancellationToken));
 
         /// <summary>
         /// Get Debit Note events.
@@ -731,7 +732,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;DebitNoteEvent&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<DebitNoteEvent>>> GetDebitNoteEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string));
+        System.Threading.Tasks.Task<ApiResponse<List<DebitNoteEvent>>> GetDebitNoteEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), CancellationToken token = default(CancellationToken));
         /// <summary>
         /// Get Debit Notes known by this node (either issued by this Provider or received by this Requestor).
         /// </summary>
@@ -809,7 +810,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of List&lt;InvoiceEvent&gt;</returns>
-        System.Threading.Tasks.Task<List<InvoiceEvent>> GetInvoiceEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string));
+        System.Threading.Tasks.Task<List<InvoiceEvent>> GetInvoiceEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), CancellationToken token = default(CancellationToken));
 
         /// <summary>
         /// Get Invoice events.
@@ -823,7 +824,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;InvoiceEvent&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<InvoiceEvent>>> GetInvoiceEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string));
+        System.Threading.Tasks.Task<ApiResponse<List<InvoiceEvent>>> GetInvoiceEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), CancellationToken token = default(CancellationToken));
         /// <summary>
         /// Get Invoices known to this node (either issued by this Provider or received by this Requestor).
         /// </summary>
@@ -2228,9 +2229,9 @@ namespace Golem.PaymentApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of List&lt;DebitNoteEvent&gt;</returns>
-        public async System.Threading.Tasks.Task<List<DebitNoteEvent>> GetDebitNoteEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public async System.Threading.Tasks.Task<List<DebitNoteEvent>> GetDebitNoteEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), CancellationToken token = default(CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<List<DebitNoteEvent>> localVarResponse = await GetDebitNoteEventsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
+             Golem.Common.Client.Client.ApiResponse<List<DebitNoteEvent>> localVarResponse = await GetDebitNoteEventsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId, token);
              return localVarResponse.Data;
 
         }
@@ -2244,7 +2245,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;DebitNoteEvent&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<DebitNoteEvent>>> GetDebitNoteEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<DebitNoteEvent>>> GetDebitNoteEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), CancellationToken token = default(CancellationToken))
         {
 
             Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
@@ -2289,7 +2290,7 @@ namespace Golem.PaymentApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<List<DebitNoteEvent>>("/debitNoteEvents", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<List<DebitNoteEvent>>("/debitNoteEvents", localVarRequestOptions, this.Configuration, token);
 
             if (this.ExceptionFactory != null)
             {
@@ -2780,9 +2781,9 @@ namespace Golem.PaymentApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of List&lt;InvoiceEvent&gt;</returns>
-        public async System.Threading.Tasks.Task<List<InvoiceEvent>> GetInvoiceEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public async System.Threading.Tasks.Task<List<InvoiceEvent>> GetInvoiceEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), CancellationToken token = default(CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<List<InvoiceEvent>> localVarResponse = await GetInvoiceEventsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
+             Golem.Common.Client.Client.ApiResponse<List<InvoiceEvent>> localVarResponse = await GetInvoiceEventsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId, token);
              return localVarResponse.Data;
 
         }
@@ -2796,7 +2797,7 @@ namespace Golem.PaymentApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;InvoiceEvent&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<InvoiceEvent>>> GetInvoiceEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<InvoiceEvent>>> GetInvoiceEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), CancellationToken token = default(CancellationToken))
         {
 
             Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
@@ -2841,7 +2842,7 @@ namespace Golem.PaymentApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<List<InvoiceEvent>>("/invoiceEvents", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<List<InvoiceEvent>>("/invoiceEvents", localVarRequestOptions, this.Configuration, token);
 
             if (this.ExceptionFactory != null)
             {

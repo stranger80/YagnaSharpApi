@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using YagnaSharpApi.Entities;
 using YagnaSharpApi.Entities.Events;
@@ -50,12 +51,12 @@ namespace YagnaSharpApi.Repository
         }
 
 
-        public async IAsyncEnumerable<EventEntity> CollectOffersAsync(string subscriptionId, decimal timeout)
+        public async IAsyncEnumerable<EventEntity> CollectOffersAsync(string subscriptionId, decimal timeout, CancellationToken token = default(CancellationToken))
         {
             List<Event> events;
             try
             {
-                events = await this.RequestorApi.CollectOffersAsync(subscriptionId, (float)timeout);
+                events = await this.RequestorApi.CollectOffersAsync(subscriptionId, (float)timeout, null, token);
             }
             catch (Exception exc)
             {

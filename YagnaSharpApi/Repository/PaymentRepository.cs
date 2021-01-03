@@ -74,6 +74,7 @@ namespace YagnaSharpApi.Repository
             // decode incoming events
             // for new Invoices - call GetInvoice(invoiceId) to retrieve the Invoice details from payment API
 
+            yield return null;
 
             throw new NotImplementedException();
         }

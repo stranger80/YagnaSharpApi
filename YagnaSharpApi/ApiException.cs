@@ -20,7 +20,7 @@ namespace YagnaSharpApi
 
         public override string ToString()
         {
-            return $"{base.ToString()}\n\rStatusCode: {this.StatusCode}\n\rError message: {this.ErrorMessage?.Message}";
+            return $"{base.Message}\n\rStatusCode: {this.StatusCode} Error message: {this.ErrorMessage?.Message}";
         }
 
 

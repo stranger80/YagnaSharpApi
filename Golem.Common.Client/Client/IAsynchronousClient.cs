@@ -11,6 +11,7 @@
 
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Golem.Common.Client.Client
@@ -30,7 +31,7 @@ namespace Golem.Common.Client.Client
         /// <param name="configuration">Per-request configurable settings.</param>
         /// <typeparam name="T">The return type.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
-        Task<ApiResponse<T>> GetAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null);
+        Task<ApiResponse<T>> GetAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken token = default(CancellationToken));
         
         /// <summary>
         /// Executes a non-blocking call to some <paramref name="path"/> using the POST http verb.
@@ -40,7 +41,7 @@ namespace Golem.Common.Client.Client
         /// <param name="configuration">Per-request configurable settings.</param>
         /// <typeparam name="T">The return type.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
-        Task<ApiResponse<T>> PostAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null);
+        Task<ApiResponse<T>> PostAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken token = default(CancellationToken));
         
         /// <summary>
         /// Executes a non-blocking call to some <paramref name="path"/> using the PUT http verb.
@@ -50,7 +51,7 @@ namespace Golem.Common.Client.Client
         /// <param name="configuration">Per-request configurable settings.</param>
         /// <typeparam name="T">The return type.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
-        Task<ApiResponse<T>> PutAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null);
+        Task<ApiResponse<T>> PutAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken token = default(CancellationToken));
         
         /// <summary>
         /// Executes a non-blocking call to some <paramref name="path"/> using the DELETE http verb.
@@ -60,7 +61,7 @@ namespace Golem.Common.Client.Client
         /// <param name="configuration">Per-request configurable settings.</param>
         /// <typeparam name="T">The return type.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
-        Task<ApiResponse<T>> DeleteAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null);
+        Task<ApiResponse<T>> DeleteAsync<T>(String path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken token = default(CancellationToken));
         
         /// <summary>
         /// Executes a non-blocking call to some <paramref name="path"/> using the HEAD http verb.
