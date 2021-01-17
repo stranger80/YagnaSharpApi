@@ -2,11 +2,12 @@
 
 ## ToDo list
 
-- Implement cancellation token in "collect" methods with long timeouts
+- (DONE) Implement cancellation token in "collect" methods with long timeouts
   - Api clients
   - Repository classes
-- Implement Subscription Entity CollectOffers() 
-- Implement the proposal entity Respond() and Reject()
+- (DONE) Implement Subscription Entity CollectOffers() 
+- (DONE) Implement the proposal entity Respond() and Reject()
+- (DONE) Refactor the offer finding code to be part of MarketStrategy
 - Implement AgreementPool 
   - including also the Agreement negotiation/confirmation
 - Implement ActivityRepository
@@ -19,6 +20,7 @@
 - Implement AcceptPaymentForAgreement() logic
 
 - Implement the Executor event notification framework
+  - Partially done for MarketStrategy - using C# events
 
 
 ## Component notes:

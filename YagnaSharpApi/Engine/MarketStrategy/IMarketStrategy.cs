@@ -16,7 +16,12 @@ namespace YagnaSharpApi.Engine.MarketStrategy
 
     public interface IMarketStrategy
     {
-        Task DecorateDemandAsync(DemandBuilder demand);
-        Task<float> ScoreOfferAsync(ProposalEntity offer);
+        /// <summary>
+        /// Perform the market subscription and negotiation for a given demand
+        /// </summary>
+        /// <param name="demand"></param>
+        /// <returns></returns>
+        IAsyncEnumerable<(float, ProposalEntity)> FindOffersAsync(DemandBuilder demand);
+        event EventHandler<Events.Event> OnMarketEvent;
     }
 }

@@ -83,7 +83,7 @@ namespace YagnaSharpApi.Tests
 
             try
             {
-                var offersAsync = repo.CollectOffersAsync(subscription.SubscriptionId, 10);
+                var offersAsync = subscription.CollectOffersAsync(10);
 
                 await foreach(var ev in offersAsync)
                 {
@@ -101,7 +101,7 @@ namespace YagnaSharpApi.Tests
             }
             finally
             {
-                await repo.UnsubscribeDemandAsync(subscription.SubscriptionId);
+                await subscription.UnsubscribeAsync();
             }
         }
 
@@ -115,10 +115,7 @@ namespace YagnaSharpApi.Tests
             {
                 var offersAsync = repo.CollectOffersAsync("e2d257c7ee364579b94eab17dddc5428-1400c219dcfefd119a75bdfd2ba5d9374cf0f32be89b3074b562d905ee7c0031", 10);
 
-                await foreach(var ev in offersAsync)
-                {
-
-                }
+                await foreach (var ev in offersAsync) ;
 
                 Assert.Fail("Exception expected...");
             }
@@ -167,24 +164,11 @@ namespace YagnaSharpApi.Tests
 
                 try
                 {
-
                     await Task.Run(async () =>
                     {
                         var offersAsync = repo.CollectOffersAsync(subscription.SubscriptionId, 30, cts.Token);
 
-                        await foreach (var ev in offersAsync)
-                        {
-                            switch (ev)
-                            {
-                                case ProposalEventEntity proposalEvent:
-                                    Assert.IsNotNull(proposalEvent.Proposal);
-                                    break;
-                                case PropertyQueryEventEntity propQueryEvent:
-                                    break;
-                                case ProposalRejectedEventEntity propRejectedEvent:
-                                    break;
-                            };
-                        }
+                        await foreach (var ev in offersAsync);
                     });
 
                     Assert.Fail(); // not expected to finish before cancel

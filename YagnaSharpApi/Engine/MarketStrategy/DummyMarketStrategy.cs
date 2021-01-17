@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YagnaSharpApi.Entities;
+using YagnaSharpApi.Entities.Events;
+using YagnaSharpApi.Repository;
 using YagnaSharpApi.Utils;
 using YagnaSharpApi.Utils.PropertyModel;
 
 namespace YagnaSharpApi.Engine.MarketStrategy
 {
-    public class DummyMarketStrategy : IMarketStrategy
+    public class DummyMarketStrategy : MarketStrategyBase
     {
 
         private IDictionary<string, decimal> maxForCounter = new Dictionary<string, decimal>()
@@ -19,12 +21,13 @@ namespace YagnaSharpApi.Engine.MarketStrategy
             { Counters.CPU_SEC, 0.002m },
         };
 
-        public async Task DecorateDemandAsync(DemandBuilder demand)
+
+        protected override async Task DecorateDemandAsync(DemandBuilder demand)
         {
             demand.Ensure($"({Properties.COM_PRICING_MODEL}={PropertyValues.COM_PRICING_MODEL_LINEAR})");
         }
 
-        public async Task<float> ScoreOfferAsync(ProposalEntity offer)
+        public override async Task<float> ScoreOfferAsync(ProposalEntity offer)
         {
             Com com = Com.FromProperties(offer.Properties);
 

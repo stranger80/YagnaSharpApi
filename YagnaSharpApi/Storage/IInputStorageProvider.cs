@@ -8,7 +8,7 @@ namespace YagnaSharpApi.Storage
 {
     public interface IInputStorageProvider
     {
-        Task<ISource> UploadStream(Stream stream);
+        Task<ISource> UploadStream(IAsyncEnumerable<byte> stream);
         Task<ISource> UploadBytes(byte[] data);
         Task<ISource> UploadFile(string file);
     }

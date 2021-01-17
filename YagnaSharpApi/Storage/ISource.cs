@@ -8,6 +8,6 @@ namespace YagnaSharpApi.Storage
     {
         string DownloadUrl();
 
-        int ContentLength();
+        long ContentLength();
     }
 }

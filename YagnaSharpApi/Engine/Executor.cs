@@ -7,6 +7,7 @@ using YagnaSharpApi.Engine.MarketStrategy;
 using YagnaSharpApi.Entities;
 using YagnaSharpApi.Entities.Events;
 using YagnaSharpApi.Repository;
+using YagnaSharpApi.Storage;
 using YagnaSharpApi.Utils;
 
 namespace YagnaSharpApi.Engine
@@ -15,11 +16,12 @@ namespace YagnaSharpApi.Engine
     {
         private bool disposedValue;
         public IMarketStrategy MarketStrategy { get; set; }
+        public StorageProvider StorageProvider { get; set; }
 
         public Executor(IPackage package, int maxWorkers, decimal budget, int timeout, string subnetTag, IMarketStrategy marketStrategy = null)
         {
             this.MarketStrategy = marketStrategy ?? new DummyMarketStrategy();
-
+            this.StorageProvider = new GftpProvider();
 
         }
 
@@ -51,78 +53,19 @@ namespace YagnaSharpApi.Engine
         /// <param name="repo"></param>
         /// <param name="demand"></param>
         /// <returns></returns>
-        protected async Task FindOffersAsync(MarketRepository repo, DemandBuilder demand /* TODO pass objects to collect stats */)
+        protected async Task FindOffersAsync(DemandBuilder demand /* TODO pass objects to collect stats */)
         {
-            DemandSubscriptionEntity subscription;
-
             try
             {
-                subscription = await repo.SubscribeDemandAsync(demand.Properties, demand.Constraints);
-
+                await foreach(var prop in this.MarketStrategy.FindOffersAsync(demand))
+                {
+                    // TODO add to AgreementPool
+                }
             }
             catch(Exception exc)
             {
-                // TODO log, raise event
-                throw;
+
             }
-
-            var events = repo.CollectOffersAsync(subscription.SubscriptionId, 30.0m);
-
-            try
-            {
-                await foreach (var ev in events)
-                {
-                    switch(ev)
-                    {
-                        case ProposalEventEntity proposalEvent:
-                            float score = 0;
-                            try
-                            {
-                                score = await this.MarketStrategy.ScoreOfferAsync(proposalEvent.Proposal);
-                            }
-                            catch(Exception exc)
-                            {
-
-                            }
-
-                            if(score < MarketStrategyConsts.SCORE_NEUTRAL)
-                            {
-                                // TODO reject proposal and raise event
-                            }
-                            else if(proposalEvent.Proposal.State != ProposalState.Draft)
-                            {
-                                // TODO at this point decide on the payment platform
-                                // ...see if any common payment platforms
-
-                                // if no common platofmrs - reject
-                                // await proposalEvent.Proposal.RejectAsync();
-                                // send event
-
-                                // if common platforms found, set the chosen-platform property
-                                // demand.Add( "chosen-platform", common platform)
-                                // and send the response proposal
-                                // await proposalEvent.Proposal.RespondAsync(demand.Properties, demand.Constraints);
-                                // send event
-
-                            }
-                            else
-                            {
-                                // a confirmed proposal has been received - add the received proposal to "AgreementCandidate pool"
-                            }
-                            break;
-                        case PropertyQueryEventEntity propQueryEvent:
-                            break;
-                        case ProposalRejectedEventEntity propRejectedEvent:
-                            break;
-                    }
-                }
-            }
-            catch (Exception exc)
-            {
-                // TODO log, raise event
-                throw;
-            }
-
         }
 
         protected async Task ProcessInvoicesAsync(PaymentRepository repo /* pass objects to collect stats */)
@@ -133,6 +76,7 @@ namespace YagnaSharpApi.Engine
             }
         }
 
+        #region Dispose
 
         protected virtual void Dispose(bool disposing)
         {
@@ -140,21 +84,11 @@ namespace YagnaSharpApi.Engine
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects)
+                    this.StorageProvider.Dispose();
                 }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
                 disposedValue = true;
             }
         }
-
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~Engine()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
 
         public void Dispose()
         {
@@ -162,5 +96,7 @@ namespace YagnaSharpApi.Engine
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
+        #endregion
     }
 }

@@ -9,7 +9,7 @@ namespace YagnaSharpApi.Storage
     public interface IDestination
     {
         string UploadUrl();
-        Stream DownloadStream();
+        Content DownloadStream();
         Task DownloadFile(string destinationFile);
 
     }

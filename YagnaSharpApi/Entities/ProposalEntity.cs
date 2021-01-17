@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using YagnaSharpApi.Repository;
 
 namespace YagnaSharpApi.Entities
 {
@@ -41,8 +43,26 @@ namespace YagnaSharpApi.Entities
         public DateTime Timestamp { get; set; }
         public ProposalState State { get; set; }
         public string PrevProposalId { get; set; }
-
         public IDictionary<string, object> Properties { get; set; }
         public string Constraints { get; set; }
+
+        public SubscriptionEntity Subscription { get; set; }
+
+        public IMarketRepository Repository { get; set; }
+
+        public async Task<ProposalEntity> RespondAsync(IDictionary<string, object> properties, string constraints)
+        {
+            var prop = await this.Repository.CounterProposalDemandAsync(this.Subscription.SubscriptionId, this.ProposalId, properties, constraints);
+
+            prop.Subscription = this.Subscription;
+
+            return prop;
+        }
+
+        public Task RejectAsync()
+        {
+            return this.Repository.RejectProposalOfferAsync(this.Subscription.SubscriptionId, this.ProposalId);
+        }
+
     }
 }

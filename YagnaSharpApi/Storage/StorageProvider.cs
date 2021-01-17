@@ -6,15 +6,24 @@ using System.Threading.Tasks;
 
 namespace YagnaSharpApi.Storage
 {
-    public abstract class StorageProvider : IInputStorageProvider, IOutputStorageProvider
+    public abstract class StorageProvider : IInputStorageProvider, IOutputStorageProvider, IDisposable
     {
+        private bool disposedValue;
+
         public abstract Task<IDestination> NewDestination(string destinationFile = null);
 
         public Task<ISource> UploadBytes(byte[] data)
         {
             using (var stream = new MemoryStream(data))
             {
-                return UploadStream(stream);
+                async IAsyncEnumerable<byte> GetBytes()
+                {
+                    int b = 0;
+                    while((b = stream.ReadByte()) != -1)
+                        yield return (byte)b;
+                }
+
+                return UploadStream(GetBytes());
             }
         }
 
@@ -22,10 +31,39 @@ namespace YagnaSharpApi.Storage
         {
             using (var stream = new FileStream(file, FileMode.Open))
             {
-                return UploadStream(stream);
+                async IAsyncEnumerable<byte> GetBytes()
+                {
+                    int b = 0;
+                    while ((b = stream.ReadByte()) != -1)
+                        yield return (byte)b;
+                }
+
+                return UploadStream(GetBytes());
             }
         }
 
-        public abstract Task<ISource> UploadStream(Stream stream);
+        public abstract Task<ISource> UploadStream(IAsyncEnumerable<byte> stream);
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects)
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
     }
 }

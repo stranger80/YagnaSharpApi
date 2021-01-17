@@ -12,7 +12,7 @@ using YagnaSharpApi.Entities.Events;
 
 namespace YagnaSharpApi.Repository
 {
-    public class MarketRepository
+    public class MarketRepository : IMarketRepository
     {
         public IRequestorApi RequestorApi { get; set; }
         public IMapper Mapper { get; set; }
@@ -33,7 +33,7 @@ namespace YagnaSharpApi.Repository
 
                 var newSubscriptionId = JsonConvert.DeserializeObject<string>(newSubscriptionIdText);
 
-                var result = new DemandSubscriptionEntity()
+                var result = new DemandSubscriptionEntity(this)
                 {
                     SubscriptionId = newSubscriptionId,
                     DemandId = newSubscriptionId,
@@ -66,7 +66,59 @@ namespace YagnaSharpApi.Repository
             foreach (var ev in events)
             {
                 var evEntity = Mapper.Map<EventEntity>(ev);
+                
+                // Add reference to repository to the Proposal entity
+                switch(evEntity)
+                {
+                    case ProposalEventEntity propEntity:
+                        propEntity.Proposal.Repository = this;
+                        break;
+                    default:
+                        break;
+                }
+
                 yield return evEntity;
+            }
+
+        }
+
+        public async Task<ProposalEntity> CounterProposalDemandAsync(string subscriptionId, string proposalId, IDictionary<string, object> properties, string constraints)
+        {
+            var demand = new DemandOfferBase(properties, constraints);
+
+            try
+            {
+                var newProposalIdText = await this.RequestorApi.CounterProposalDemandAsync(subscriptionId, proposalId, demand);
+
+                var newProposalId = JsonConvert.DeserializeObject<string>(newProposalIdText);
+
+                var result = new ProposalEntity
+                {
+                    PrevProposalId = proposalId,
+                    ProposalId = newProposalId,
+                    Constraints = constraints,
+                    Properties = properties,
+                    // IssuerId - TODO!!!
+                };
+
+                return result;
+            }
+            catch (Exception exc)
+            {
+                throw;
+            }
+
+        }
+
+        public async Task RejectProposalOfferAsync(string subscriptionId, string proposalId)
+        {
+            try
+            {
+                await this.RequestorApi.RejectProposalOfferAsync(subscriptionId, proposalId);
+            }
+            catch (Exception exc)
+            {
+                throw;
             }
 
         }
