@@ -17,12 +17,22 @@ namespace YagnaSharpApi.Engine
         private bool disposedValue;
         public IMarketStrategy MarketStrategy { get; set; }
         public StorageProvider StorageProvider { get; set; }
+        public AgreementPool AgreementPool { get; set; }
+        public IMarketRepository MarketRepository { get; set; }
 
         public Executor(IPackage package, int maxWorkers, decimal budget, int timeout, string subnetTag, IMarketStrategy marketStrategy = null)
         {
-            this.MarketStrategy = marketStrategy ?? new DummyMarketStrategy();
-            this.StorageProvider = new GftpProvider();
+            var apiConfig = new ApiConfiguration();
+            var apiFactory = new ApiFactory(apiConfig);
+            var mapper = Mapper.MapConfig.Config.CreateMapper();
 
+            this.MarketRepository = new MarketRepository(apiFactory.GetMarketRequestorApi(), mapper);
+
+            this.MarketStrategy = marketStrategy ?? new DummyMarketStrategy(this.MarketRepository);
+            this.StorageProvider = new GftpProvider();
+            this.AgreementPool = new AgreementPool();
+
+            // TODO setup event handlers for all the above
         }
 
         public IAsyncEnumerable<GolemTask<TData, TResult>> Submit<TData, TResult>(Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<WorkItem>> worker, IEnumerable<GolemTask<TData, TResult>> data)
@@ -59,7 +69,8 @@ namespace YagnaSharpApi.Engine
             {
                 await foreach(var prop in this.MarketStrategy.FindOffersAsync(demand))
                 {
-                    // TODO add to AgreementPool
+                    // Add to AgreementPool
+                    this.AgreementPool.AddProposal(prop.Item1, prop.Item2);
                 }
             }
             catch(Exception exc)
@@ -84,6 +95,7 @@ namespace YagnaSharpApi.Engine
             {
                 if (disposing)
                 {
+                    this.MarketRepository.Dispose();
                     this.StorageProvider.Dispose();
                 }
                 disposedValue = true;

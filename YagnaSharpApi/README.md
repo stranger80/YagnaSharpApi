@@ -12,9 +12,10 @@
   - including also the Agreement negotiation/confirmation
   - consider generating events - should AgreementPool raise agreement-related events?
 - Finish implementing AgreementEntity
-  - implement AgreementEntity state machine (use state pattern, remember locking/semaphores)
+  - (PARTIALLY DONE) implement AgreementEntity state machine (use state pattern, remember locking/semaphores)
   - how to observe AgreementEvents
-    - Implement OnAgreementEvent hook in MarketRepository and hook all Agreements into this to observe state changing events
+    - (PARTIALLY DONE) Implement OnAgreementEvent hook in MarketRepository and hook all Agreements into this to observe state changing events
+    - (DONE needs testing) in MarketRepository launch a thread to continuously listen to agreement events and dispatch (WITH CANCELLATION TOKEN! )
 - Implement ActivityRepository
   - Including the Command Result events processing!
 - (DONE) Implement GFTP StorageProvider

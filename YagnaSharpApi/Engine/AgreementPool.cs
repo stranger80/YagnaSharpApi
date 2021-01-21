@@ -60,7 +60,7 @@ namespace YagnaSharpApi.Engine
                     return null;
 
                 var task = job(agreement);
-                await SetWorkerAsync(agreement.Id, task);
+                await SetWorkerAsync(agreement.AgreementId, task);
                 return task;
             }
             finally
@@ -112,7 +112,7 @@ namespace YagnaSharpApi.Engine
                 // TODO raise AgreementRejected
             }
 
-            this.Agreements[agreement.Id] = new BufferedAgreement()
+            this.Agreements[agreement.AgreementId] = new BufferedAgreement()
             {
                 Agreement = agreement,
                 WorkerTask = null,

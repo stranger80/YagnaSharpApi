@@ -12,14 +12,20 @@ using YagnaSharpApi.Entities.Events;
 
 namespace YagnaSharpApi.Repository
 {
-    public interface IMarketRepository
+    public interface IMarketRepository : IDisposable
     {
+        
         Task<DemandSubscriptionEntity> SubscribeDemandAsync(IDictionary<string, object> properties, string constraints);
         IAsyncEnumerable<EventEntity> CollectOffersAsync(string subscriptionId, decimal timeout, CancellationToken token = default(CancellationToken));
         Task<ProposalEntity> CounterProposalDemandAsync(string subscriptionId, string proposalId, IDictionary<string, object> properties, string constraints);
         Task RejectProposalOfferAsync(string subscriptionId, string proposalId);
         Task UnsubscribeDemandAsync(string subscriptionId);
         Task<AgreementEntity> CreateAgreementAsync(ProposalEntity proposal, decimal timeout);
+        Task<AgreementEntity> GetAgreement(string agreementId);
+        Task ConfirmAgreementAsync(AgreementEntity agreement);
+        Task<AgreementEntity.StateEnum> WaitForApprovalAsync(AgreementEntity agreement, decimal timeout);
+
+        event EventHandler<AgreementEventEntity> OnAgreementEvent;
 
     }
 }

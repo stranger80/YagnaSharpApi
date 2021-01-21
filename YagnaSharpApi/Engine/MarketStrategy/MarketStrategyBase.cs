@@ -19,6 +19,11 @@ namespace YagnaSharpApi.Engine.MarketStrategy
 
         public event EventHandler<Events.Event> OnMarketEvent;
 
+        public MarketStrategyBase(IMarketRepository repo)
+        {
+            this.Repository = repo;
+        }
+
         public async IAsyncEnumerable<(float, ProposalEntity)> FindOffersAsync(DemandBuilder demand)
         {
             DemandSubscriptionEntity subscription;
@@ -137,8 +142,6 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                 while (more);
             }
         }
-
-
 
         protected abstract Task DecorateDemandAsync(DemandBuilder demand);
 

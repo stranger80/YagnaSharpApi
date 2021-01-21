@@ -12,16 +12,28 @@ using YagnaSharpApi.Entities.Events;
 
 namespace YagnaSharpApi.Repository
 {
-    public class MarketRepository : IMarketRepository
+    public class MarketRepository : IMarketRepository, IDisposable
     {
         public IRequestorApi RequestorApi { get; set; }
         public IMapper Mapper { get; set; }
+
+        protected Dictionary<string, AgreementEntity> AgreementsById = new Dictionary<string, AgreementEntity>();
+        private bool disposedValue;
+        private CancellationTokenSource cancellationTokenSource;
 
         public MarketRepository(IRequestorApi requestorApi, IMapper mapper)
         {
             this.RequestorApi = requestorApi;
             this.Mapper = mapper;
+            this.cancellationTokenSource = new CancellationTokenSource();
+
+            var token = cancellationTokenSource.Token;
+
+            // launch the agreement listening thread
+            Task.Run(async () => { await this.ListenAgreementEvents(token); });
         }
+
+        public event EventHandler<AgreementEventEntity> OnAgreementEvent;
 
         public async Task<DemandSubscriptionEntity> SubscribeDemandAsync(IDictionary<string, object> properties, string constraints)
         {
@@ -146,13 +158,15 @@ namespace YagnaSharpApi.Repository
                 };
 
                 var agreementId = await this.RequestorApi.CreateAgreementAsync(agreementProposal);
+                
+                // immediately fetch whole Agreement object
+                var agreement = await this.RequestorApi.GetAgreementAsync(agreementId);
 
-                var result = new AgreementEntity()
-                {
-                    Id = agreementId,
-                    Proposal = proposal,
-                    Repository = this
-                };
+                var result = this.Mapper.Map<AgreementEntity>(agreement);
+
+                result.Repository = this;
+
+                this.AgreementsById.Add(agreementId, result);
 
                 return result;
             }
@@ -161,6 +175,112 @@ namespace YagnaSharpApi.Repository
                 throw;
             }
 
+        }
+
+        public async Task<AgreementEntity> GetAgreement(string agreementId)
+        {
+            if(this.AgreementsById.ContainsKey(agreementId))
+            {
+                return this.AgreementsById[agreementId];
+            }
+
+            try
+            {
+                var agreement = await this.RequestorApi.GetAgreementAsync(agreementId);
+
+                var result = this.Mapper.Map<AgreementEntity>(agreement);
+
+                result.Repository = this;
+
+                this.AgreementsById.Add(agreementId, result);
+
+                return result;
+            }
+            catch (Exception exc)
+            {
+                throw;
+            }
+        }
+
+        public async Task ConfirmAgreementAsync(AgreementEntity agreement)
+        {
+            try
+            {
+                await this.RequestorApi.ConfirmAgreementAsync(agreement.AgreementId);
+            }
+            catch (Exception exc)
+            {
+                throw;
+            }
+        }
+
+        public async Task<AgreementEntity.StateEnum> WaitForApprovalAsync(AgreementEntity agreement, decimal timeout)
+        {
+            try
+            {
+                var response = await this.RequestorApi.WaitForApprovalAsyncWithHttpInfo(agreement.AgreementId, (float)timeout);
+
+                switch (response.StatusCode)
+                {
+                    case System.Net.HttpStatusCode.NoContent:
+                        return AgreementEntity.StateEnum.Approved;
+                    case System.Net.HttpStatusCode.RequestTimeout:
+                        return AgreementEntity.StateEnum.Pending;
+                    case System.Net.HttpStatusCode.Gone:
+                        return AgreementEntity.StateEnum.Rejected;
+                }
+
+                throw new ApiException("WaitForApproval error: ", response.StatusCode, new ErrorMessage() { Message = response.ErrorText });
+            }
+            catch (Exception exc)
+            {
+                throw;
+            }
+        }
+
+        protected async Task ListenAgreementEvents(CancellationToken token)
+        {
+            var afterTimestamp = DateTime.Now;
+
+            while(!token.IsCancellationRequested)
+            {
+                var events = await this.RequestorApi.CollectAgreementEventsAsync(5, afterTimestamp, token: token);
+
+                foreach(var ev in events)
+                {
+                    var evEntity = Mapper.Map<AgreementEventEntity>(ev);
+
+                    this.OnAgreementEvent?.Invoke(this, evEntity);
+                }
+            }
+        }
+
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this.cancellationTokenSource.Cancel();
+
+                    foreach(var agreement in this.AgreementsById.Values)
+                    {
+                        agreement.Dispose();
+                    }
+
+                    this.cancellationTokenSource.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
 
     }
