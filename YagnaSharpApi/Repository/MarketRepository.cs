@@ -135,5 +135,33 @@ namespace YagnaSharpApi.Repository
             }
         }
 
+        public async Task<AgreementEntity> CreateAgreementAsync(ProposalEntity proposal, decimal timeout = 1000m)
+        {
+            try
+            {
+                var agreementProposal = new AgreementProposal()
+                {
+                    ProposalId = proposal.ProposalId,
+                    ValidTo = DateTime.UtcNow.AddSeconds((double)timeout)
+                };
+
+                var agreementId = await this.RequestorApi.CreateAgreementAsync(agreementProposal);
+
+                var result = new AgreementEntity()
+                {
+                    Id = agreementId,
+                    Proposal = proposal,
+                    Repository = this
+                };
+
+                return result;
+            }
+            catch (Exception exc)
+            {
+                throw;
+            }
+
+        }
+
     }
 }

@@ -105,7 +105,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                                             ProposalId = proposalEvent.Proposal.ProposalId });
 
                                         // if common platforms found, set the chosen-platform property
-                                        // demand.Add( "chosen-platform", common platform)
+                                        // TODO demand.Add( "chosen-platform", common platform)
                                         // and send the response proposal
                                         await proposalEvent.Proposal.RespondAsync(demand.Properties, demand.Constraints);
                                         this.OnMarketEvent?.Invoke(this, new ProposalResponded() { 

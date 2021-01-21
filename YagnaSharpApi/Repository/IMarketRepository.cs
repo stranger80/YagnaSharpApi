@@ -19,5 +19,7 @@ namespace YagnaSharpApi.Repository
         Task<ProposalEntity> CounterProposalDemandAsync(string subscriptionId, string proposalId, IDictionary<string, object> properties, string constraints);
         Task RejectProposalOfferAsync(string subscriptionId, string proposalId);
         Task UnsubscribeDemandAsync(string subscriptionId);
+        Task<AgreementEntity> CreateAgreementAsync(ProposalEntity proposal, decimal timeout);
+
     }
 }

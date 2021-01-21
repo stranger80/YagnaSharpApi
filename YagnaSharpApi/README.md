@@ -10,12 +10,18 @@
 - (DONE) Refactor the offer finding code to be part of MarketStrategy
 - Implement AgreementPool 
   - including also the Agreement negotiation/confirmation
+  - consider generating events - should AgreementPool raise agreement-related events?
+- Finish implementing AgreementEntity
+  - implement AgreementEntity state machine (use state pattern, remember locking/semaphores)
+  - how to observe AgreementEvents
+    - Implement OnAgreementEvent hook in MarketRepository and hook all Agreements into this to observe state changing events
 - Implement ActivityRepository
   - Including the Command Result events processing!
-- Implement GFTP StorageProvider
+- (DONE) Implement GFTP StorageProvider
 - Implement WorkerStarter() - fetch a confirmed agreement from the pool and run a worker on this agreement
 - Implement StartWorker() logic - for a given Agreement, start activity and execute an exescript against it, then accept the payment
 - Implement GetInvoiceEventAsync() to continuously listen on the invoiceEvents endpoint (remember to use the afterTimestamp parameter!)
+  - actually implement this in PaymentRepository as OnInvoiceEvent handler
 - Implement ProcessInvoicesAsync() logic
 - Implement AcceptPaymentForAgreement() logic
 

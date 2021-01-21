@@ -64,5 +64,11 @@ namespace YagnaSharpApi.Entities
             return this.Repository.RejectProposalOfferAsync(this.Subscription.SubscriptionId, this.ProposalId);
         }
 
+        public async Task<AgreementEntity> CreateAgreementAsync()
+        {
+            var agreement = await this.Repository.CreateAgreementAsync(this, 3600); // TODO change default timeout const into a proper config param
+
+            return agreement;
+        }
     }
 }
