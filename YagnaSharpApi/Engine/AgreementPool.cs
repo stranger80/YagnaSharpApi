@@ -95,7 +95,7 @@ namespace YagnaSharpApi.Engine
 
             try
             {
-                agreement = await offer.Proposal.CreateAgreementAsync();
+                //agreement = await offer.Proposal.CreateAgreementAsync();
                 // TODO extract requestor activity properties
                 // TODO extract provider Activity properties
                 // TODO extract provider nodeinfo properties

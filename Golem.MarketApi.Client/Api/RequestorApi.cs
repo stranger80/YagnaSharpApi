@@ -271,7 +271,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns></returns>
-        void RejectProposalOffer (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>));
+        void RejectProposalOffer (string subscriptionId, string proposalId, Reason reason = default(Reason));
 
         /// <summary>
         /// RejectProposalOffer - Rejects Proposal (Offer).
@@ -284,7 +284,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> RejectProposalOfferWithHttpInfo (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>));
+        ApiResponse<Object> RejectProposalOfferWithHttpInfo (string subscriptionId, string proposalId, Reason reason = default(Reason));
         /// <summary>
         /// SubscribeDemand - Publishes Requestor capabilities via Demand.
         /// </summary>
@@ -625,7 +625,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task RejectProposalOfferAsync (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>));
+        System.Threading.Tasks.Task RejectProposalOfferAsync (string subscriptionId, string proposalId, Reason reason = default(Reason));
 
         /// <summary>
         /// RejectProposalOffer - Rejects Proposal (Offer).
@@ -638,7 +638,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> RejectProposalOfferAsyncWithHttpInfo (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>));
+        System.Threading.Tasks.Task<ApiResponse<Object>> RejectProposalOfferAsyncWithHttpInfo (string subscriptionId, string proposalId, Reason reason = default(Reason));
         /// <summary>
         /// SubscribeDemand - Publishes Requestor capabilities via Demand.
         /// </summary>
@@ -2259,9 +2259,9 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns></returns>
-        public void RejectProposalOffer (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public void RejectProposalOffer (string subscriptionId, string proposalId, Reason reason = default(Reason))
         {
-             RejectProposalOfferWithHttpInfo(subscriptionId, proposalId, requestBody);
+             RejectProposalOfferWithHttpInfo(subscriptionId, proposalId, reason);
         }
 
         /// <summary>
@@ -2272,7 +2272,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public Golem.Common.Client.Client.ApiResponse<Object> RejectProposalOfferWithHttpInfo (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public Golem.Common.Client.Client.ApiResponse<Object> RejectProposalOfferWithHttpInfo (string subscriptionId, string proposalId, Reason reason = default(Reason))
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
@@ -2303,7 +2303,7 @@ namespace Golem.MarketApi.Client.Api
                 localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.Common.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
             if (proposalId != null)
                 localVarRequestOptions.PathParameters.Add("proposalId", Golem.Common.Client.Client.ClientUtils.ParameterToString(proposalId)); // path parameter
-            localVarRequestOptions.Data = requestBody;
+            localVarRequestOptions.Data = reason;
 
             // authentication (app_key) required
             // http basic authentication required
@@ -2332,9 +2332,9 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task RejectProposalOfferAsync (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public async System.Threading.Tasks.Task RejectProposalOfferAsync (string subscriptionId, string proposalId, Reason reason = default(Reason))
         {
-             await RejectProposalOfferAsyncWithHttpInfo(subscriptionId, proposalId, requestBody);
+             await RejectProposalOfferAsyncWithHttpInfo(subscriptionId, proposalId, reason);
 
         }
 
@@ -2346,7 +2346,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> RejectProposalOfferAsyncWithHttpInfo (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> RejectProposalOfferAsyncWithHttpInfo (string subscriptionId, string proposalId, Reason reason = default(Reason))
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
@@ -2378,7 +2378,7 @@ namespace Golem.MarketApi.Client.Api
                 localVarRequestOptions.PathParameters.Add("subscriptionId", Golem.Common.Client.Client.ClientUtils.ParameterToString(subscriptionId)); // path parameter
             if (proposalId != null)
                 localVarRequestOptions.PathParameters.Add("proposalId", Golem.Common.Client.Client.ClientUtils.ParameterToString(proposalId)); // path parameter
-            localVarRequestOptions.Data = requestBody;
+            localVarRequestOptions.Data = reason;
 
             // authentication (app_key) required
             // http basic authentication required

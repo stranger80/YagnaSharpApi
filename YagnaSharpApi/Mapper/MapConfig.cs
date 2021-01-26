@@ -28,6 +28,8 @@ namespace YagnaSharpApi.Mapper
                 cfg.CreateMap<Demand, DemandEntity>();
                 cfg.CreateMap<Offer, OfferEntity>();
 
+                cfg.CreateMap<ReasonEntity, Reason>();
+
                 cfg.CreateMap<Agreement, AgreementEntity>();
 
                 cfg.CreateMap<ProposalEvent, ProposalEventEntity>();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using YagnaSharpApi.Entities;
 using YagnaSharpApi.Utils;
@@ -21,7 +22,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
         /// </summary>
         /// <param name="demand"></param>
         /// <returns></returns>
-        IAsyncEnumerable<(float, ProposalEntity)> FindOffersAsync(DemandBuilder demand);
+        IAsyncEnumerable<(float, ProposalEntity)> FindOffersAsync(DemandBuilder demand, CancellationToken cancellationToken = default);
         event EventHandler<Events.Event> OnMarketEvent;
     }
 }

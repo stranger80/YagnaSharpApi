@@ -25,7 +25,7 @@ namespace YagnaSharpApi.Tests
             var config = new ApiConfiguration();
 
             if(withApiKey)
-                config.AppKey = "e3f31abc20ac4ea19513d0d7089b79ac";
+                config.AppKey = Environment.GetEnvironmentVariable("YAGNA_APP_KEY") ?? "e3f31abc20ac4ea19513d0d7089b79ac";
 
             var factory = new ApiFactory(config);
 
@@ -76,18 +76,17 @@ namespace YagnaSharpApi.Tests
 
             var constraints = "(&(golem.inf.mem.gib>0.5)(golem.inf.storage.gib>1)(golem.com.pricing.model=linear))";
 
-            var subscription = await repo.SubscribeDemandAsync(props, constraints);
-
-            Assert.IsNotNull(subscription);
-            Assert.IsNotNull(subscription.SubscriptionId);
-
-            try
+            using (var subscription = await repo.SubscribeDemandAsync(props, constraints))
             {
+
+                Assert.IsNotNull(subscription);
+                Assert.IsNotNull(subscription.SubscriptionId);
+
                 var offersAsync = subscription.CollectOffersAsync(10);
 
-                await foreach(var ev in offersAsync)
+                await foreach (var ev in offersAsync)
                 {
-                    switch(ev)
+                    switch (ev)
                     {
                         case ProposalEventEntity proposalEvent:
                             Assert.IsNotNull(proposalEvent.Proposal);
@@ -98,10 +97,6 @@ namespace YagnaSharpApi.Tests
                             break;
                     };
                 }
-            }
-            finally
-            {
-                await subscription.UnsubscribeAsync();
             }
         }
 
@@ -134,14 +129,14 @@ namespace YagnaSharpApi.Tests
 
             var props = new Dictionary<string, object>()
                 {
-                // { "golem.node.debug.subnet", "community.3" }, // remove this to make sure no offers arrive from market
                 { "golem.node.id.name", "yasharptest" },
                 { "golem.srv.comp.expiration", DateHelper.GetJavascriptTimestamp(DateTime.Now.AddMinutes(10)) },
                 { "golem.srv.comp.task_package",
                     "hash://sha3:9a3b5d67b0b27746283cb5f287c13eab1beaa12d92a9f536b747c7ae:http://3.249.139.167:8000/local-image-c76719083b.gvmi"},
             };
 
-            var constraints = "(&(golem.inf.mem.gib>0.5)(golem.inf.storage.gib>1)(golem.com.pricing.model=linear))";
+            // set impossible constraint to make sure no offer arrives
+            var constraints = "(&(golem.inf.mem.gib>0.5)(golem.inf.storage.gib>1500)(golem.com.pricing.model=linear))";
 
             var subscription = await repo.SubscribeDemandAsync(props, constraints);
 
@@ -179,9 +174,12 @@ namespace YagnaSharpApi.Tests
 
                     Assert.IsTrue(stopWatch.ElapsedMilliseconds < 1000);
                 }
+                finally
+                {
+                    await repo.UnsubscribeDemandAsync(subscription.SubscriptionId);
+                }
             }
 
-            await repo.UnsubscribeDemandAsync(subscription.SubscriptionId);
 
         }
 

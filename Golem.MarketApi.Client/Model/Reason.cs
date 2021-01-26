@@ -28,7 +28,7 @@ namespace Golem.MarketApi.Client.Model
     /// Generic Event reason information structure. 
     /// </summary>
     [DataContract]
-    public partial class Reason : Dictionary<String, Object>,  IEquatable<Reason>
+    public partial class Reason : IEquatable<Reason>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Reason" /> class.

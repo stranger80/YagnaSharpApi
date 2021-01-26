@@ -122,11 +122,12 @@ namespace YagnaSharpApi.Repository
 
         }
 
-        public async Task RejectProposalOfferAsync(string subscriptionId, string proposalId)
+        public async Task RejectProposalOfferAsync(string subscriptionId, string proposalId, ReasonEntity reason)
         {
             try
             {
-                await this.RequestorApi.RejectProposalOfferAsync(subscriptionId, proposalId);
+                var reasonEntity = Mapper.Map<Reason>(reason);
+                await this.RequestorApi.RejectProposalOfferAsync(subscriptionId, proposalId, reasonEntity);
             }
             catch (Exception exc)
             {

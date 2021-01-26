@@ -59,9 +59,9 @@ namespace YagnaSharpApi.Entities
             return prop;
         }
 
-        public Task RejectAsync()
+        public Task RejectAsync(ReasonEntity reason)
         {
-            return this.Repository.RejectProposalOfferAsync(this.Subscription.SubscriptionId, this.ProposalId);
+            return this.Repository.RejectProposalOfferAsync(this.Subscription.SubscriptionId, this.ProposalId, reason);
         }
 
         public async Task<AgreementEntity> CreateAgreementAsync()

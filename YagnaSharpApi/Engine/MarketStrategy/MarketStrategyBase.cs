@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using YagnaSharpApi.Engine.Events;
 using YagnaSharpApi.Entities;
@@ -14,6 +15,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
 {
     public abstract class MarketStrategyBase : IMarketStrategy
     {
+        private bool disposedValue;
 
         public IMarketRepository Repository { get; set; }
 
@@ -24,7 +26,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
             this.Repository = repo;
         }
 
-        public async IAsyncEnumerable<(float, ProposalEntity)> FindOffersAsync(DemandBuilder demand)
+        public async IAsyncEnumerable<(float, ProposalEntity)> FindOffersAsync(DemandBuilder demand, CancellationToken cancellationToken = default)
         {
             DemandSubscriptionEntity subscription;
 
@@ -45,7 +47,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
 
             try
             {
-                events = subscription.CollectOffersAsync(30.0m);
+                events = subscription.CollectOffersAsync(30.0m, cancellationToken);
 
             }
             catch(Exception exc)
@@ -54,7 +56,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                 throw;
             }
 
-            await using var enumerator = events.GetAsyncEnumerator(); // TODO cancellationToken here
+            await using var enumerator = events.GetAsyncEnumerator(cancellationToken); 
             {
 
                 bool more = false;
@@ -67,6 +69,8 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                     catch (Exception exc)
                     {
                         this.OnMarketEvent?.Invoke(this, new CollectFailed() { Reason = exc.ToString() });
+                        subscription.Dispose();
+
                         throw;
                     }
 
@@ -93,7 +97,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                                 if (score < MarketStrategyConsts.SCORE_NEUTRAL)
                                 {
                                     // reject proposal and raise event
-                                    await proposalEvent.Proposal.RejectAsync();
+                                    await proposalEvent.Proposal.RejectAsync(new ReasonEntity() { Message = "" });
                                     this.OnMarketEvent?.Invoke(this, new ProposalRejected() { 
                                         ProposalId = proposalEvent.Proposal.ProposalId });
                                 }
@@ -105,7 +109,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                                         // ...see if any common payment platforms
 
                                         // if no common platofmrs - reject
-                                        await proposalEvent.Proposal.RejectAsync();
+                                        await proposalEvent.Proposal.RejectAsync(new ReasonEntity() { Message = "" });
                                         this.OnMarketEvent?.Invoke(this, new ProposalRejected() { 
                                             ProposalId = proposalEvent.Proposal.ProposalId });
 
@@ -146,5 +150,6 @@ namespace YagnaSharpApi.Engine.MarketStrategy
         protected abstract Task DecorateDemandAsync(DemandBuilder demand);
 
         public abstract Task<float> ScoreOfferAsync(ProposalEntity offer);
+
     }
 }

@@ -36,10 +36,25 @@ namespace YagnaSharpApi.Entities
             };
         }
 
-        public Task UnsubscribeAsync()
+        protected Task UnsubscribeAsync()
         {
             return this.repository.UnsubscribeDemandAsync(this.SubscriptionId);
         }
+
+        protected async override void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    await this.UnsubscribeAsync();
+                    base.Dispose(disposing);
+                }
+
+                disposedValue = true;
+            }
+        }
+
 
     }
 }

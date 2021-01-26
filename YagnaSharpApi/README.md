@@ -8,6 +8,8 @@
 - (DONE) Implement Subscription Entity CollectOffers() 
 - (DONE) Implement the proposal entity Respond() and Reject()
 - (DONE) Refactor the offer finding code to be part of MarketStrategy
+- Implement DummyMarketStrategy
+  - (IN PROGRESS) Write unit tests for MarketStrategyBase
 - Implement AgreementPool 
   - including also the Agreement negotiation/confirmation
   - consider generating events - should AgreementPool raise agreement-related events?
