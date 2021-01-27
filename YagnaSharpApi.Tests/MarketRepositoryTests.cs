@@ -67,7 +67,7 @@ namespace YagnaSharpApi.Tests
 
             var props = new Dictionary<string, object>()
                 {
-                { "golem.node.debug.subnet", "community.3" },
+                { "golem.node.debug.subnet", "devnet-alpha.4" },
                 { "golem.node.id.name", "yasharptest" },
                 { "golem.srv.comp.expiration", DateHelper.GetJavascriptTimestamp(DateTime.Now.AddMinutes(10)) },
                 { "golem.srv.comp.task_package",
@@ -84,12 +84,14 @@ namespace YagnaSharpApi.Tests
 
                 var offersAsync = subscription.CollectOffersAsync(10);
 
+                int cnt = 0;
                 await foreach (var ev in offersAsync)
                 {
                     switch (ev)
                     {
                         case ProposalEventEntity proposalEvent:
                             Assert.IsNotNull(proposalEvent.Proposal);
+                            cnt++;
                             break;
                         case PropertyQueryEventEntity propQueryEvent:
                             break;
@@ -97,6 +99,8 @@ namespace YagnaSharpApi.Tests
                             break;
                     };
                 }
+
+                Assert.IsTrue(cnt > 0);
             }
         }
 
