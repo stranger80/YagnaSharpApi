@@ -45,7 +45,7 @@ namespace YagnaSharpApi.Tests
 
                 demand.Add(new Dictionary<string, object>()
                     {
-                        { "golem.node.debug.subnet", "community.3" },
+                        { "golem.node.debug.subnet", "devnet-alpha.4" },
                         { "golem.node.id.name", "yasharptest" },
                         { "golem.srv.comp.expiration", DateHelper.GetJavascriptTimestamp(DateTime.Now.AddMinutes(10)) },
                         { "golem.srv.comp.task_package",

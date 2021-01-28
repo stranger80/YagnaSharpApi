@@ -9,6 +9,7 @@
 - (DONE) Implement the proposal entity Respond() and Reject()
 - (DONE) Refactor the offer finding code to be part of MarketStrategy
 - Implement DummyMarketStrategy
+  - Add MarketStrategyConditions - supported payment platforms
   - (IN PROGRESS) Write unit tests for MarketStrategyBase
 - Implement AgreementPool 
   - including also the Agreement negotiation/confirmation

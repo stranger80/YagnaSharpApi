@@ -12,6 +12,7 @@ namespace YagnaSharpApi.Repository
 {
     public interface IPaymentRepository
     {
+        Task<IEnumerable<AccountEntity>> GetAccountsAsync();
         Task<AllocationEntity> CreateAllocationAsync(decimal amount, DateTime? expires, bool makeDeposit = false);
         Task<AllocationEntity> GetAllocationAsync(string allocationId);
         Task ReleaseAllocationAsync(string allocationId);

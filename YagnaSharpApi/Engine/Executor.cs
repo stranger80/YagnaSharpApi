@@ -19,6 +19,7 @@ namespace YagnaSharpApi.Engine
         public StorageProvider StorageProvider { get; set; }
         public AgreementPool AgreementPool { get; set; }
         public IMarketRepository MarketRepository { get; set; }
+        public IPaymentRepository PaymentRepository { get; set; }
 
         public Executor(IPackage package, int maxWorkers, decimal budget, int timeout, string subnetTag, IMarketStrategy marketStrategy = null)
         {
@@ -27,6 +28,7 @@ namespace YagnaSharpApi.Engine
             var mapper = Mapper.MapConfig.Config.CreateMapper();
 
             this.MarketRepository = new MarketRepository(apiFactory.GetMarketRequestorApi(), mapper);
+            this.PaymentRepository = new PaymentRepository(apiFactory.GetPaymentRequestorApi(), mapper);
 
             this.MarketStrategy = marketStrategy ?? new DummyMarketStrategy(this.MarketRepository);
             this.StorageProvider = new GftpProvider();
@@ -39,7 +41,7 @@ namespace YagnaSharpApi.Engine
         {
             throw new NotImplementedException();
 
-            // 1. Create Allocation
+            // 1. Create Allocations
 
             // 2. Build Demand
             //    - make sure to include subnet
@@ -55,6 +57,10 @@ namespace YagnaSharpApi.Engine
 
         }
 
+        protected async Task CreateAllocationsAsync()
+        {
+
+        }
 
         /// <summary>
         /// Logic to subscribe the Demand on the market and process incoming Offer proposals

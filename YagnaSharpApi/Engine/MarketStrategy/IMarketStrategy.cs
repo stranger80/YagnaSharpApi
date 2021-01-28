@@ -15,6 +15,11 @@ namespace YagnaSharpApi.Engine.MarketStrategy
         public const float SCORE_TRUSTED = 100.0f;
     }
 
+    public class MarketStrategyConditions
+    {
+        public IEnumerable<string> PaymentPlatforms { get; set; }
+    }
+
     public interface IMarketStrategy
     {
         /// <summary>

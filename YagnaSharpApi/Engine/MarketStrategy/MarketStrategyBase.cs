@@ -97,7 +97,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                                 if (score < MarketStrategyConsts.SCORE_NEUTRAL)
                                 {
                                     // reject proposal and raise event
-                                    await proposalEvent.Proposal.RejectAsync(new ReasonEntity() { Message = "" });
+                                    await proposalEvent.Proposal.RejectAsync(new ReasonEntity() { Message = "Score too low" });
                                     this.OnMarketEvent?.Invoke(this, new ProposalRejected() { 
                                         ProposalId = proposalEvent.Proposal.ProposalId });
                                 }
@@ -108,19 +108,37 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                                         // TODO at this point decide on the payment platform
                                         // ...see if any common payment platforms
 
-                                        // if no common platofmrs - reject
-                                        await proposalEvent.Proposal.RejectAsync(new ReasonEntity() { Message = "" });
-                                        this.OnMarketEvent?.Invoke(this, new ProposalRejected() { 
-                                            ProposalId = proposalEvent.Proposal.ProposalId });
+                                        var commonPlatforms = this.GetCommonPaymentPlatforms(proposalEvent.Proposal);
+
+
+
 
                                         // if common platforms found, set the chosen-platform property
-                                        // TODO demand.Add( "chosen-platform", common platform)
-                                        // and send the response proposal
+                                        if (!commonPlatforms.Any())
+                                        {
+                                            demand.Add(Properties.COM_PAYMENT_CHOSEN_PLATFORM, commonPlatforms.First());
+                                        }
+                                        else // if no common platofmrs - reject
+                                        {
+                                            await proposalEvent.Proposal.RejectAsync(new ReasonEntity() { Message = "No common payment platforms" });
+                                            this.OnMarketEvent?.Invoke(this, new ProposalRejected()
+                                            {
+                                                ProposalId = proposalEvent.Proposal.ProposalId
+                                            });
+                                        }
+
+                                        // TODO handle the ACCEPT TIMEOUT (Debit Note heartbeat)
+
+                                        // ...and send the response proposal
                                         await proposalEvent.Proposal.RespondAsync(demand.Properties, demand.Constraints);
-                                        this.OnMarketEvent?.Invoke(this, new ProposalResponded() { 
-                                            ProposalId = proposalEvent.Proposal.ProposalId });
+                                        this.OnMarketEvent?.Invoke(this, new ProposalResponded()
+                                        {
+                                            ProposalId = proposalEvent.Proposal.ProposalId
+                                        });
+
+
                                     }
-                                    catch(Exception exc)
+                                    catch (Exception exc)
                                     {
                                         this.OnMarketEvent?.Invoke(this, new ProposalFailed() { 
                                             ProposalId = proposalEvent.Proposal.ProposalId,
@@ -145,6 +163,20 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                 }
                 while (more);
             }
+        }
+
+        protected virtual IEnumerable<string> GetCommonPaymentPlatforms(ProposalEntity proposal)
+        {
+            var provPlatforms = proposal.Properties.Keys
+                .Where(key => key.StartsWith(Properties.COM_PAYMENT_PLATFORM_))
+                .Select(key => key.Split(".")[4]).Distinct();
+
+            if(!provPlatforms.Any())
+            {
+                provPlatforms = new string[] { "NGNT" };
+            }
+
+
         }
 
         protected abstract Task DecorateDemandAsync(DemandBuilder demand);
