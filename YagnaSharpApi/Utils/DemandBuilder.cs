@@ -45,5 +45,14 @@ namespace YagnaSharpApi.Utils
                 this.props[key] = props[key];
             }
         }
+
+        /// <summary>
+        /// Add a property to the demand.
+        /// </summary>
+        /// <param name="props"></param>
+        public void Add(string propName, object prop)
+        {
+            this.props[propName] = props[propName];
+        }
     }
 }
