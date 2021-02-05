@@ -50,7 +50,6 @@ namespace YagnaSharpApi.Examples
 
         static async Task MainAsync(string subnetTag)
         { 
-
             var package = VmRequestBuilder.Repo(
                 "9a3b5d67b0b27746283cb5f287c13eab1beaa12d92a9f536b747c7ae",
                 0.5m,

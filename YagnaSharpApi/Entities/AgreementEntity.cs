@@ -40,6 +40,8 @@ namespace YagnaSharpApi.Entities
             } 
         }
 
+        public IList<AgreementEventEntity> Events { get; private set; } = new List<AgreementEventEntity>();
+
         #region Fields
 
         public string AgreementId { get; set; }
@@ -67,6 +69,8 @@ namespace YagnaSharpApi.Entities
 
         protected void HandleAgreementEvent(Events.AgreementEventEntity ev)
         {
+            this.Events.Add(ev);
+
             // TODO finish for whole event type hierarchy
             switch (ev)
             {

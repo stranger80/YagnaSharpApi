@@ -17,6 +17,8 @@ namespace YagnaSharpApi
 
         public string AppKey { get; set; }
 
+        public int InvoiceTimeout { get; set; } = 5 * 60; // 5 minutes invoice timeout
+
         public ApiConfiguration()
         {
             this.MarketApiRoot = DEFAULT_API_URL + DEFAULT_MARKET_URL;

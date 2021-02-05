@@ -4,8 +4,7 @@ using System.Text;
 
 namespace YagnaSharpApi.Entities.Events
 {
-    public class InvoiceReceivedEventEntity : InvoiceEntity
+    public class InvoiceReceivedEventEntity : InvoiceEventEntity
     {
-        public InvoiceEntity Invoice { get; set; }
     }
 }

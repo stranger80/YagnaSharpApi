@@ -52,7 +52,16 @@ namespace YagnaSharpApi.Utils
         /// <param name="props"></param>
         public void Add(string propName, object prop)
         {
-            this.props[propName] = props[propName];
+            this.props[propName] = prop;
+        }
+
+        /// <summary>
+        /// Add a property to the demand.
+        /// </summary>
+        /// <param name="props"></param>
+        public void Add(string propName, DateTime prop)
+        {
+            this.props[propName] = DateHelper.GetJavascriptTimestamp(prop);
         }
     }
 }

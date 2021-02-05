@@ -40,6 +40,12 @@ namespace YagnaSharpApi.Mapper
                     .Include<ProposalEvent, ProposalEventEntity>()
                     .Include<PropertyQueryEvent, PropertyQueryEventEntity>()
                     .Include<ProposalRejectedEvent, ProposalRejectedEventEntity>();
+
+                cfg.CreateMap<InvoiceEvent, InvoiceEventEntity>()
+                    .Include<InvoiceReceivedEvent, InvoiceReceivedEventEntity>();
+
+                cfg.CreateMap<Account, AccountEntity>();
+
             });
         }
 

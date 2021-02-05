@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace YagnaSharpApi.Utils.PropertyModel
@@ -48,7 +49,7 @@ namespace YagnaSharpApi.Utils.PropertyModel
 
             if(props.ContainsKey(Properties.COM_USAGE_VECTOR))
             {
-                result.UsageVector = (string[])props[Properties.COM_USAGE_VECTOR];
+                result.UsageVector = ((object[])props[Properties.COM_USAGE_VECTOR]).Select(o => o.ToString()).ToArray();
             }
 
             if (props.ContainsKey(Properties.COM_SCHEME))

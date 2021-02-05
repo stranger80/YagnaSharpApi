@@ -152,14 +152,12 @@ namespace YagnaSharpApi.Repository
         {
             try
             {
-                var agreementProposal = new AgreementProposal()
-                {
-                    ProposalId = proposal.ProposalId,
-                    ValidTo = DateTime.UtcNow.AddSeconds((double)timeout)
-                };
+                var agreementProposal = new AgreementProposal(proposal.ProposalId, DateTime.UtcNow.AddSeconds((double)timeout));
 
-                var agreementId = await this.RequestorApi.CreateAgreementAsync(agreementProposal);
-                
+                var agreementIdText = await this.RequestorApi.CreateAgreementAsync(agreementProposal);
+
+                var agreementId = JsonConvert.DeserializeObject<string>(agreementIdText);
+
                 // immediately fetch whole Agreement object
                 var agreement = await this.RequestorApi.GetAgreementAsync(agreementId);
 

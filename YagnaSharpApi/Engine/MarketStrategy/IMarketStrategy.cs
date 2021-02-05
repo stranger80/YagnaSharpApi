@@ -23,6 +23,11 @@ namespace YagnaSharpApi.Engine.MarketStrategy
     public interface IMarketStrategy
     {
         /// <summary>
+        /// Market Strategy conditions and parameters
+        /// </summary>
+        MarketStrategyConditions Conditions { get; set; }
+
+        /// <summary>
         /// Perform the market subscription and negotiation for a given demand
         /// </summary>
         /// <param name="demand"></param>

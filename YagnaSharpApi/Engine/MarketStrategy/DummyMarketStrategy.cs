@@ -21,7 +21,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
             { Counters.CPU_SEC, 0.002m },
         };
 
-        public DummyMarketStrategy(IMarketRepository repo) : base(repo)
+        public DummyMarketStrategy(IMarketRepository repo, MarketStrategyConditions conditions) : base(repo, conditions)
         {
         }
 

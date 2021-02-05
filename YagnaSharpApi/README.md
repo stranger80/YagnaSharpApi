@@ -9,25 +9,26 @@
 - (DONE) Implement the proposal entity Respond() and Reject()
 - (DONE) Refactor the offer finding code to be part of MarketStrategy
 - Implement DummyMarketStrategy
-  - Add MarketStrategyConditions - supported payment platforms
-  - (IN PROGRESS) Write unit tests for MarketStrategyBase
+  - (DONE) Add MarketStrategySettings - supported payment platforms
+  - (DONE) Write unit tests for MarketStrategyBase
 - Implement AgreementPool 
-  - including also the Agreement negotiation/confirmation
-  - consider generating events - should AgreementPool raise agreement-related events?
+  - (DONE) including also the Agreement negotiation/confirmation
+  - (DONE) consider generating events - should AgreementPool raise agreement-related events?
 - Finish implementing AgreementEntity
   - (PARTIALLY DONE) implement AgreementEntity state machine (use state pattern, remember locking/semaphores)
   - how to observe AgreementEvents
     - (PARTIALLY DONE) Implement OnAgreementEvent hook in MarketRepository and hook all Agreements into this to observe state changing events
     - (DONE needs testing) in MarketRepository launch a thread to continuously listen to agreement events and dispatch (WITH CANCELLATION TOKEN! )
+- (DONE) Implement GFTP StorageProvider
 - Implement ActivityRepository
   - Including the Command Result events processing!
-- (DONE) Implement GFTP StorageProvider
 - Implement WorkerStarter() - fetch a confirmed agreement from the pool and run a worker on this agreement
 - Implement StartWorker() logic - for a given Agreement, start activity and execute an exescript against it, then accept the payment
-- Implement GetInvoiceEventAsync() to continuously listen on the invoiceEvents endpoint (remember to use the afterTimestamp parameter!)
-  - actually implement this in PaymentRepository as OnInvoiceEvent handler
+- (DONE) Implement GetInvoiceEventAsync() to continuously listen on the invoiceEvents endpoint (remember to use the afterTimestamp parameter!)
 - Implement ProcessInvoicesAsync() logic
-- Implement AcceptPaymentForAgreement() logic
+  - add "agreementsPayable" list to Executor
+  - when invoice arrives, check if agreement in payable list
+  - Implement AcceptPaymentForAgreement() logic
 
 - Implement the Executor event notification framework
   - Partially done for MarketStrategy - using C# events

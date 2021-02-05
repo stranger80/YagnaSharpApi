@@ -26,6 +26,7 @@ namespace YagnaSharpApi.Utils
         public const string ACTIVITY_CAPS_TRANSFER_PROTOCOL = "golem.activity.caps.transfer.protocol";
 
         public const string SRV_COMP_EXPIRATION = "golem.srv.comp.expiration";
+        public const string SRV_COMP_CAPS_MULTI_ACTIVITY = "golem.srv.caps.multi-activity";
         public const string SRV_COMP_TASK_PACKAGE = "golem.srv.comp.task_package";
         public const string SRV_COMP_VM_PACKAGE_FORMAT = "golem.srv.comp.vm.package_format";
     }

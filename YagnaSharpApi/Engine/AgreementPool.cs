@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using YagnaSharpApi.Engine.Events;
 using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine
@@ -31,6 +32,8 @@ namespace YagnaSharpApi.Engine
 
         private SemaphoreSlim lockObject = new SemaphoreSlim(1, 1);
 
+        public event EventHandler<Events.AgreementEvent> OnAgreementEvent;
+
         public AgreementPool()
         {
             this.Agreements = new ConcurrentDictionary<string, BufferedAgreement>();
@@ -39,14 +42,13 @@ namespace YagnaSharpApi.Engine
 
         public void AddProposal(float score, ProposalEntity proposal)
         {
-            this.OfferBuffer.Add(
-                proposal.IssuerId, 
+            this.OfferBuffer[proposal.IssuerId] =  
                 new BufferedProposal() 
                 { 
                     Proposal = proposal, 
                     Score = score, 
                     Timestamp = DateTime.Now 
-                });
+                };
         }
 
         public async Task<Task> UseAgreementAsync(Func<AgreementEntity, Task> job)  // ok this is weird, an async method returning a Task...
@@ -69,6 +71,27 @@ namespace YagnaSharpApi.Engine
             }
         }
 
+        protected T RandomElement<T>(IList<T> list)
+        {
+            var random = new Random();
+            int index = random.Next(list.Count);
+            return list[index];
+        }
+
+        protected BufferedProposal GetRandomBestOffer()
+        {
+            var maxScore = this.OfferBuffer
+                .Max(ofr => ofr.Value.Score);
+
+            var offers = this.OfferBuffer
+                .Where(ofr => ofr.Value.Score == maxScore)
+                .Select(ofr => ofr.Value)
+                .ToList();
+
+            return this.RandomElement(offers);
+
+        }
+
         protected async Task<AgreementEntity> GetAgreementAsync()
         {
             // try to reuse a known available agreement
@@ -88,28 +111,29 @@ namespace YagnaSharpApi.Engine
                 return bufferedAgreement;
             }
 
-            // TODO no existing agreements found - create agreement from a randomly selected offer having maximum score
+            // no existing agreements found - create agreement from a randomly selected offer having maximum score
+            var offer = this.GetRandomBestOffer();
 
-            BufferedProposal offer;
             AgreementEntity agreement = null;
 
             try
             {
-                //agreement = await offer.Proposal.CreateAgreementAsync();
+                agreement = await offer.Proposal.CreateAgreementAsync();
                 // TODO extract requestor activity properties
                 // TODO extract provider Activity properties
                 // TODO extract provider nodeinfo properties
-                // TODO raise AgreementCreated event
+                // raise AgreementCreated event
+                this.OnAgreementEvent?.Invoke(this, new AgreementCreated() { AgreementId = agreement.AgreementId, ProviderId = agreement.Offer.ProviderId });
 
             }
-            catch(ApiException exc)
+            catch (ApiException exc)
             {
-                // TODO raise ProposalFailed event
+                this.OnAgreementEvent?.Invoke(this, new AgreementFailed() { ProposalId = offer.Proposal.ProposalId });
             }
 
-            if(!await agreement.ConfirmAsync())
+            if (!await agreement.ConfirmAsync())
             {
-                // TODO raise AgreementRejected
+                this.OnAgreementEvent?.Invoke(this, new AgreementRejected() { AgreementId = agreement.AgreementId });
             }
 
             this.Agreements[agreement.AgreementId] = new BufferedAgreement()
@@ -119,7 +143,9 @@ namespace YagnaSharpApi.Engine
                 // HasMultiActivity = providerMultiActivity & requestorMultiActivity // TODO 
             };
 
-            // TODO raise AgreementConfirmed event
+            // raise AgreementConfirmed event
+            this.OnAgreementEvent?.Invoke(this, new AgreementConfirmed() { AgreementId = agreement.AgreementId });
+            
             // TODO stats - agreement counter increment
 
             return agreement;

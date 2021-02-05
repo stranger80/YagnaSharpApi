@@ -17,13 +17,16 @@ namespace YagnaSharpApi.Engine.MarketStrategy
     {
         private bool disposedValue;
 
-        public IMarketRepository Repository { get; set; }
+        public IMarketRepository Repository { get; private set; }
+
+        public MarketStrategyConditions Conditions { get; set; }
 
         public event EventHandler<Events.Event> OnMarketEvent;
 
-        public MarketStrategyBase(IMarketRepository repo)
+        public MarketStrategyBase(IMarketRepository repo, MarketStrategyConditions conditions)
         {
             this.Repository = repo;
+            this.Conditions = conditions;
         }
 
         public async IAsyncEnumerable<(float, ProposalEntity)> FindOffersAsync(DemandBuilder demand, CancellationToken cancellationToken = default)
@@ -32,6 +35,9 @@ namespace YagnaSharpApi.Engine.MarketStrategy
 
             try
             {
+                // decorate demand with additional props or constraints necessary to execute the strategy
+                await this.DecorateDemandAsync(demand);
+
                 subscription = await this.Repository.SubscribeDemandAsync(demand.Properties, demand.Constraints);
                 this.OnMarketEvent?.Invoke(this, new SubscriptionCreated() { SubscriptionId = subscription.SubscriptionId });
 
@@ -43,126 +49,141 @@ namespace YagnaSharpApi.Engine.MarketStrategy
             }
 
             IAsyncEnumerable<EventEntity> events;
-            
 
-            try
+            do
             {
-                events = subscription.CollectOffersAsync(30.0m, cancellationToken);
-
-            }
-            catch(Exception exc)
-            {
-                this.OnMarketEvent?.Invoke(this, new CollectFailed() { Reason = exc.ToString() });
-                throw;
-            }
-
-            await using var enumerator = events.GetAsyncEnumerator(cancellationToken); 
-            {
-
-                bool more = false;
-                do
+                try
                 {
-                    try
-                    {
-                        more = await enumerator.MoveNextAsync();
-                    }
-                    catch (Exception exc)
-                    {
-                        this.OnMarketEvent?.Invoke(this, new CollectFailed() { Reason = exc.ToString() });
-                        subscription.Dispose();
+                    events = subscription.CollectOffersAsync(30.0m, cancellationToken);
 
-                        throw;
-                    }
+                }
+                catch (Exception exc)
+                {
+                    this.OnMarketEvent?.Invoke(this, new CollectFailed() { Reason = exc.ToString() });
+                    throw;
+                }
 
-                    if (more)
+                await using var enumerator = events.GetAsyncEnumerator(cancellationToken);
+                {
+
+                    bool more = false;
+                    do
                     {
-                        var ev = enumerator.Current;
-                        switch (ev)
+                        try
                         {
-                            case ProposalEventEntity proposalEvent:
-                                float score = 0;
-                                this.OnMarketEvent?.Invoke(this, new ProposalReceived() { 
-                                    ProposalId = proposalEvent.Proposal.ProposalId, 
-                                    ProviderId = proposalEvent.Proposal.IssuerId });
-                                try
-                                {
-                                    score = await this.ScoreOfferAsync(proposalEvent.Proposal);
-                                }
-                                catch (Exception exc)
-                                {
-                                    this.OnMarketEvent?.Invoke(this, new ProposalRejected() { 
-                                        ProposalId = proposalEvent.Proposal.ProposalId });
-                                }
+                            more = await enumerator.MoveNextAsync();
+                        }
+                        catch (Exception exc)
+                        {
+                            this.OnMarketEvent?.Invoke(this, new CollectFailed() { Reason = exc.ToString() });
+                            subscription.Dispose();
 
-                                if (score < MarketStrategyConsts.SCORE_NEUTRAL)
-                                {
-                                    // reject proposal and raise event
-                                    await proposalEvent.Proposal.RejectAsync(new ReasonEntity() { Message = "Score too low" });
-                                    this.OnMarketEvent?.Invoke(this, new ProposalRejected() { 
-                                        ProposalId = proposalEvent.Proposal.ProposalId });
-                                }
-                                else if (proposalEvent.Proposal.State != ProposalState.Draft)
-                                {
+                            throw;
+                        }
+
+                        if (more)
+                        {
+                            var ev = enumerator.Current;
+                            switch (ev)
+                            {
+                                case ProposalEventEntity proposalEvent:
+                                    float score = 0;
+                                    this.OnMarketEvent?.Invoke(this, new ProposalReceived()
+                                    {
+                                        ProposalId = proposalEvent.Proposal.ProposalId,
+                                        ProviderId = proposalEvent.Proposal.IssuerId
+                                    });
                                     try
                                     {
-                                        // TODO at this point decide on the payment platform
-                                        // ...see if any common payment platforms
-
-                                        var commonPlatforms = this.GetCommonPaymentPlatforms(proposalEvent.Proposal);
-
-
-
-
-                                        // if common platforms found, set the chosen-platform property
-                                        if (!commonPlatforms.Any())
-                                        {
-                                            demand.Add(Properties.COM_PAYMENT_CHOSEN_PLATFORM, commonPlatforms.First());
-                                        }
-                                        else // if no common platofmrs - reject
-                                        {
-                                            await proposalEvent.Proposal.RejectAsync(new ReasonEntity() { Message = "No common payment platforms" });
-                                            this.OnMarketEvent?.Invoke(this, new ProposalRejected()
-                                            {
-                                                ProposalId = proposalEvent.Proposal.ProposalId
-                                            });
-                                        }
-
-                                        // TODO handle the ACCEPT TIMEOUT (Debit Note heartbeat)
-
-                                        // ...and send the response proposal
-                                        await proposalEvent.Proposal.RespondAsync(demand.Properties, demand.Constraints);
-                                        this.OnMarketEvent?.Invoke(this, new ProposalResponded()
-                                        {
-                                            ProposalId = proposalEvent.Proposal.ProposalId
-                                        });
-
-
+                                        score = await this.ScoreOfferAsync(proposalEvent.Proposal);
                                     }
                                     catch (Exception exc)
                                     {
-                                        this.OnMarketEvent?.Invoke(this, new ProposalFailed() { 
-                                            ProposalId = proposalEvent.Proposal.ProposalId,
-                                            Exception = exc
+                                        this.OnMarketEvent?.Invoke(this, new ProposalRejected()
+                                        {
+                                            ProposalId = proposalEvent.Proposal.ProposalId
                                         });
                                     }
-                                }
-                                else
-                                {
-                                    // a confirmed proposal has been received - return the received proposal
-                                    // so that it can be added to "AgreementCandidate pool"
-                                    yield return (score, proposalEvent.Proposal);
-                                }
-                                break;
-                            case PropertyQueryEventEntity propQueryEvent:
-                                break;
-                            case ProposalRejectedEventEntity propRejectedEvent:
-                                break;
-                        }
 
+                                    if (score < MarketStrategyConsts.SCORE_NEUTRAL)
+                                    {
+                                        // reject proposal and raise event
+                                        try
+                                        {
+                                            await proposalEvent.Proposal.RejectAsync(new ReasonEntity() { Message = "Score too low" });
+                                        }
+                                        catch(Exception exc)
+                                        {
+                                            // TODO log warning
+                                        }
+
+                                        this.OnMarketEvent?.Invoke(this, new ProposalRejected()
+                                        {
+                                            ProposalId = proposalEvent.Proposal.ProposalId
+                                        });
+                                    }
+                                    else if (proposalEvent.Proposal.State != ProposalState.Draft)
+                                    {
+                                        try
+                                        {
+                                            // TODO at this point decide on the payment platform
+                                            // ...see if any common payment platforms
+
+                                            var commonPlatforms = this.GetCommonPaymentPlatforms(proposalEvent.Proposal);
+
+                                            // if common platforms found, set the chosen-platform property
+                                            if (commonPlatforms.Any())
+                                            {
+                                                demand.Add(Properties.COM_PAYMENT_CHOSEN_PLATFORM, commonPlatforms.First());
+                                            }
+                                            else // if no common platofmrs - reject
+                                            {
+                                                await proposalEvent.Proposal.RejectAsync(new ReasonEntity() { Message = "No common payment platforms" });
+                                                this.OnMarketEvent?.Invoke(this, new ProposalRejected()
+                                                {
+                                                    ProposalId = proposalEvent.Proposal.ProposalId
+                                                });
+                                            }
+
+                                            // TODO handle the ACCEPT TIMEOUT (Debit Note heartbeat)
+
+                                            // ...and send the response proposal
+                                            await proposalEvent.Proposal.RespondAsync(demand.Properties, demand.Constraints);
+                                            this.OnMarketEvent?.Invoke(this, new ProposalResponded()
+                                            {
+                                                ProposalId = proposalEvent.Proposal.ProposalId
+                                            });
+
+
+                                        }
+                                        catch (Exception exc)
+                                        {
+                                            this.OnMarketEvent?.Invoke(this, new ProposalFailed()
+                                            {
+                                                ProposalId = proposalEvent.Proposal.ProposalId,
+                                                Exception = exc
+                                            });
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // a confirmed proposal has been received - return the received proposal
+                                        // so that it can be added to "AgreementCandidate pool"
+                                        yield return (score, proposalEvent.Proposal);
+                                    }
+                                    break;
+                                case PropertyQueryEventEntity propQueryEvent:
+                                    break;
+                                case ProposalRejectedEventEntity propRejectedEvent:
+                                    break;
+                            }
+
+                        }
                     }
+                    while (more);
                 }
-                while (more);
             }
+            while (!cancellationToken.IsCancellationRequested);
         }
 
         protected virtual IEnumerable<string> GetCommonPaymentPlatforms(ProposalEntity proposal)
@@ -176,6 +197,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                 provPlatforms = new string[] { "NGNT" };
             }
 
+            return this.Conditions?.PaymentPlatforms.Intersect(provPlatforms).ToList();
 
         }
 

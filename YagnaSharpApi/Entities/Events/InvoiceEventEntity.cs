@@ -6,5 +6,6 @@ namespace YagnaSharpApi.Entities.Events
 {
     public class InvoiceEventEntity : EventEntity
     {
+        public InvoiceEntity Invoice { get; set; }
     }
 }
