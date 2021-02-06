@@ -84,7 +84,11 @@ namespace YagnaSharpApi
 
         public Golem.ActivityApi.Client.Api.IRequestorControlApi GetActivityRequestorControlApi()
         {
-            throw new NotImplementedException();
+            var result = new Golem.ActivityApi.Client.Api.RequestorControlApi(this.activityProxyConfig);
+
+            result.ExceptionFactory = ApiExceptionFactory;
+
+            return result;
         }
 
         public Golem.ActivityApi.Client.Api.IRequestorStateApi GetActivityRequestorStateApi()

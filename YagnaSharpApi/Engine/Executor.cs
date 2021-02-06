@@ -105,6 +105,8 @@ namespace YagnaSharpApi.Engine
 
             // 6. 
 
+            yield return null;
+
             throw new NotImplementedException();
 
         }

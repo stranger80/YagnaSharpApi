@@ -53,9 +53,14 @@ namespace YagnaSharpApi.Tests
         {
             var accounts = await paymentRepo.GetAccountsAsync();
 
-            var settings = new MarketStrategySettings()
+            if(!accounts.Any())
             {
-                AcceptedPaymentPlatforms = accounts.Select(acc => acc.Platform).ToList()
+                throw new Exception("No sender accounts found, make sure to run 'yagna payment init --sender'...");
+            }
+
+            var settings = new MarketStrategyConditions()
+            {
+                PaymentPlatforms = accounts.Select(acc => acc.Platform).ToList()
             };
 
 

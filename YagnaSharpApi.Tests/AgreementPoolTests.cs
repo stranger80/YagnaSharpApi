@@ -23,9 +23,7 @@ namespace YagnaSharpApi.Tests
             MapConfig.Init();
         }
 
-
-        [TestMethod]
-        public async Task AgreementPool_NegotiatesAgreements()
+        public async Task DoWithDefaultAgreementPool(Func<AgreementPool, Task> work)
         {
             using (var marketRepo = this.MarketStrategyTests.CreateMarketRepository())
             using (var paymentRepo = this.MarketStrategyTests.CreatePaymentRepository())
@@ -54,7 +52,7 @@ namespace YagnaSharpApi.Tests
                 agreementPool.OnAgreementEvent += (sender, ev) =>
                 {
                     Debug.WriteLine($"Agreement Event {ev} received...");
-                    switch(ev)
+                    switch (ev)
                     {
                         case AgreementCreated acev:
                             isAgreementCreatedEventFired = true;
@@ -79,20 +77,49 @@ namespace YagnaSharpApi.Tests
                         break;
                 }
 
-                // Attempt to negotiate Agreement and execute a dummy job using this agreement
+                await work(agreementPool);
+            }
 
-                var agreementConfirmed = false;
+        }
 
+
+        [TestMethod]
+        public async Task AgreementPool_NegotiatesAgreements()
+        {
+
+            // Attempt to negotiate Agreement and execute a dummy job using this agreement
+            bool isAgreementConfirmedEventFired = false;
+            bool isAgreementCreatedEventFired = false;
+            var agreementConfirmed = false;
+
+            await this.DoWithDefaultAgreementPool(async agreementPool =>
+            {
+                // Hook into events to observe and validate
+                agreementPool.OnAgreementEvent += (sender, ev) =>
+                {
+                    Debug.WriteLine($"Agreement Event {ev} received...");
+                    switch (ev)
+                    {
+                        case AgreementCreated acev:
+                            isAgreementCreatedEventFired = true;
+                            break;
+                        case AgreementConfirmed acev:
+                            isAgreementConfirmedEventFired = true;
+                            break;
+                    }
+                };
+
+                // Trigger agreement negotiation
                 await agreementPool.UseAgreementAsync(async agreement =>
                     {
                         Assert.IsNotNull(agreement);
                         agreementConfirmed = true;
                     });
+            });
 
-                Assert.IsTrue(agreementConfirmed);
-                Assert.IsTrue(isAgreementCreatedEventFired);
-                Assert.IsTrue(isAgreementConfirmedEventFired);
-            }
+            Assert.IsTrue(agreementConfirmed);
+            Assert.IsTrue(isAgreementCreatedEventFired);
+            Assert.IsTrue(isAgreementConfirmedEventFired);
         }
 
     }
