@@ -83,11 +83,11 @@ namespace YagnaSharpApi.Tests
 
                 demand.Add(new Dictionary<string, object>()
                     {
-                        { "golem.node.debug.subnet", "devnet-alpha.4" },
+                        { "golem.node.debug.subnet", TestConstants.SUBNET_TAG },
                         { "golem.node.id.name", "yasharptest" },
                         { "golem.srv.comp.expiration", DateHelper.GetJavascriptTimestamp(DateTime.Now.AddMinutes(10)) },
                         { "golem.srv.comp.task_package",
-                            "hash://sha3:9a3b5d67b0b27746283cb5f287c13eab1beaa12d92a9f536b747c7ae:http://3.249.139.167:8000/local-image-c76719083b.gvmi"},
+                            TestConstants.VM_TASK_PACKAGE},
                     });
 
                 demand.Ensure("(&(golem.inf.mem.gib>0.5)(golem.inf.storage.gib>1)(golem.com.pricing.model=linear))");

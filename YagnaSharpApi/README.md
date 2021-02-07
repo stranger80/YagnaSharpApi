@@ -20,15 +20,29 @@
     - (PARTIALLY DONE) Implement OnAgreementEvent hook in MarketRepository and hook all Agreements into this to observe state changing events
     - (DONE needs testing) in MarketRepository launch a thread to continuously listen to agreement events and dispatch (WITH CANCELLATION TOKEN! )
 - (DONE) Implement GFTP StorageProvider
-- Implement ActivityRepository
+- (PARTIALLY DONE)Implement ActivityRepository
+  - (DONE) Basic API commands
+  - (DONE)ActivityEntity
   - Including the Command Result events processing!
-- Implement WorkerStarter() - fetch a confirmed agreement from the pool and run a worker on this agreement
-- Implement StartWorker() logic - for a given Agreement, start activity and execute an exescript against it, then accept the payment
+- (PARTIALLY DONE) Implement WorkerStarter() - fetch a confirmed agreement from the pool and run a worker on this agreement
+- (PARTIALLY DONE) Implement StartWorker() logic - for a given Agreement, start activity and execute an exescript against it, then accept the payment
 - (DONE) Implement GetInvoiceEventAsync() to continuously listen on the invoiceEvents endpoint (remember to use the afterTimestamp parameter!)
 - Implement ProcessInvoicesAsync() logic
-  - add "agreementsPayable" list to Executor
-  - when invoice arrives, check if agreement in payable list
-  - Implement AcceptPaymentForAgreement() logic
+  - (DONE) add "agreementsPayable" list to Executor
+  - (DONE) when invoice arrives, check if agreement in payable list
+  - (DONE) Implement AcceptPaymentForAgreement() logic
+- Implement ProcessDebitNotes() logic
+  - todo as in Invoices...
+
+- Implement GolemTask logic
+  - Add GolemTask.OnTaskComplete(sender, status) event handler and call the OnTaskComplete from GolemTask.Accept() and Reject()
+  - instead "var commandGenerator = worker(workContext, AsyncEnumerable.ToAsyncEnumerable(data));" 
+    - make an async iterator that calls GolemTask.Start() (and maybe something else to hook to "work queue???")
+  - ...remaining logic as in python...
+
+- Implement Submit() completion logic
+  - Add 'doneQueue' - and add OnTaskComplete observer to add completed GolemTask to doneQueue.
+
 
 - Implement the Executor event notification framework
   - Partially done for MarketStrategy - using C# events

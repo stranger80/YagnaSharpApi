@@ -10,6 +10,11 @@ namespace YagnaSharpApi.Engine
     {
         private List<ExeScriptCommand> commands = new List<ExeScriptCommand>();
 
+        public List<ExeScriptCommand> GetCommands()
+        {
+            return commands;
+        }
+
         public int Deploy()
         {
             commands.Add(

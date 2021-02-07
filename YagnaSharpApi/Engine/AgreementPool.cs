@@ -51,18 +51,18 @@ namespace YagnaSharpApi.Engine
                 };
         }
 
-        public async Task<Task> UseAgreementAsync(Func<AgreementEntity, Task> job)  // ok this is weird, an async method returning a Task...
+        public async Task<Task> UseAgreementAsync(Func<BufferedAgreement, Task> job)  // ok this is weird, an async method returning a Task...
         {
             await this.lockObject.WaitAsync();
             try
             {
-                var agreement = await GetAgreementAsync();
+                var bufferedAgreement = await GetAgreementAsync();
 
-                if (agreement == null)
+                if (bufferedAgreement == null)
                     return null;
 
-                var task = job(agreement);
-                await SetWorkerAsync(agreement.AgreementId, task);
+                var task = job(bufferedAgreement);
+                await SetWorkerAsync(bufferedAgreement.Agreement.AgreementId, task);
                 return task;
             }
             finally
@@ -92,22 +92,21 @@ namespace YagnaSharpApi.Engine
 
         }
 
-        protected async Task<AgreementEntity> GetAgreementAsync()
+        protected async Task<BufferedAgreement> GetAgreementAsync()
         {
             // try to reuse a known available agreement
             Random random = new Random();
 
-            AgreementEntity bufferedAgreement = null;
+            BufferedAgreement bufferedAgreement = null;
 
-            var agreements = this.Agreements.Values
+            var bufferedAgreements = this.Agreements.Values
                 .Where(a => a.WorkerTask == null)
-                .Select(a => a.Agreement)
                 .ToArray();
 
-            if (agreements.Length > 0)
+            if (bufferedAgreements.Length > 0)
             {
-                int ind = random.Next(0, agreements.Length);
-                bufferedAgreement = agreements[ind];
+                int ind = random.Next(0, bufferedAgreements.Length);
+                bufferedAgreement = bufferedAgreements[ind];
                 return bufferedAgreement;
             }
 
@@ -148,7 +147,7 @@ namespace YagnaSharpApi.Engine
             
             // TODO stats - agreement counter increment
 
-            return agreement;
+            return this.Agreements[agreement.AgreementId];
         }
 
         protected async Task SetWorkerAsync(string agreementId, Task job)

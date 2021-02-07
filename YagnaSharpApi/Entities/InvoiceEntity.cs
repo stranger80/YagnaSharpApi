@@ -1,11 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using YagnaSharpApi.Repository;
 
 namespace YagnaSharpApi.Entities
 {
     public class InvoiceEntity
     {
+
+        public IPaymentRepository Repository { get; protected set; }
+
+
+        public InvoiceEntity(IPaymentRepository repo)
+        {
+            this.Repository = repo;
+        }
+
+        #region Fields
+
         /// <summary>
         /// Gets or Sets InvoiceId
         /// </summary>
@@ -66,5 +79,11 @@ namespace YagnaSharpApi.Entities
         /// </summary>
         public DateTime PaymentDueDate { get; set; }
 
+        #endregion
+
+        public async Task AcceptAsync(string amount, AllocationEntity allocation)
+        {
+
+        }
     }
 }

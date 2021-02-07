@@ -58,7 +58,7 @@ namespace YagnaSharpApi.Tests
                                 new DeployCommand(new object())
                             };
 
-                        var activity = await activityRepo.CreateActivityAsync(agreement);
+                        var activity = await activityRepo.CreateActivityAsync(agreement.Agreement);
                         {
                             await foreach (var result in activity.ExecAsync(commands))
                             {

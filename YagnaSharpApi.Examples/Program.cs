@@ -39,6 +39,8 @@ namespace YagnaSharpApi.Examples
                 var outputFile = $"output_{frame}.png";
                 ctx.DownloadFile($"/golem/output/out{frame:04d}.png", outputFile);
                 yield return ctx.Commit();
+                // TODO check if results are valid
+                task.AcceptTask(outputFile);
             }
 
         }
