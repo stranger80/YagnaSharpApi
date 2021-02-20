@@ -42,6 +42,8 @@
     - make an async iterator that calls GolemTask.Start() (and maybe something else to hook to "work queue???")
   - ...remaining logic as in python...
 
+- Implement InvoiceEntity.AcceptAsync()
+
 - Implement Submit() completion logic
   - (DONE) Add 'doneQueue' - and add OnTaskComplete observer to add completed GolemTask to doneQueue.
   - (DONE) Handle task retry in case COmmandResult error or other error is received by the Worker 

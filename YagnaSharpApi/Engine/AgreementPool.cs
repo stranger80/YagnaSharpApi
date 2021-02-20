@@ -189,7 +189,12 @@ namespace YagnaSharpApi.Engine
         /// <returns></returns>
         public async Task TerminateAsync(ReasonEntity reason)
         {
-            throw new NotImplementedException();
+            foreach(var agreement in this.Agreements)
+            {
+                await agreement.Value.Agreement.TerminateAsync(reason);
+            }
+
+            this.Agreements.Clear();
         }
     }
 }

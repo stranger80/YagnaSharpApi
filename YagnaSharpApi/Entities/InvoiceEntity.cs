@@ -83,7 +83,8 @@ namespace YagnaSharpApi.Entities
 
         public async Task AcceptAsync(string amount, AllocationEntity allocation)
         {
-
+            throw new NotImplementedException();
+            //this.Repository.AcceptAsync();
         }
     }
 }

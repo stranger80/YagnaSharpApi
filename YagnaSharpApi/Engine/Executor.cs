@@ -266,6 +266,7 @@ namespace YagnaSharpApi.Engine
 
                      */
 
+                    await this.AgreementPool.TerminateAsync(new ReasonEntity() { Message = "Successfully finished all work" });
 
                     // TODO wait until all work has completed (eg. all invoices paid)
 
