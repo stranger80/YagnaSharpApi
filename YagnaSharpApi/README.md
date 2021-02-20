@@ -31,21 +31,30 @@
   - (DONE) add "agreementsPayable" list to Executor
   - (DONE) when invoice arrives, check if agreement in payable list
   - (DONE) Implement AcceptPaymentForAgreement() logic
-- Implement ProcessDebitNotes() logic
+- TODO Implement ProcessDebitNotes() logic
   - todo as in Invoices...
 
-- Implement GolemTask logic
+- TODO Add to Executor.Dispose() removal of all allocations made...
+
+- (PARTIALLY DONE) Implement GolemTask logic
   - Add GolemTask.OnTaskComplete(sender, status) event handler and call the OnTaskComplete from GolemTask.Accept() and Reject()
   - instead "var commandGenerator = worker(workContext, AsyncEnumerable.ToAsyncEnumerable(data));" 
     - make an async iterator that calls GolemTask.Start() (and maybe something else to hook to "work queue???")
   - ...remaining logic as in python...
 
 - Implement Submit() completion logic
-  - Add 'doneQueue' - and add OnTaskComplete observer to add completed GolemTask to doneQueue.
+  - (DONE) Add 'doneQueue' - and add OnTaskComplete observer to add completed GolemTask to doneQueue.
+  - (DONE) Handle task retry in case COmmandResult error or other error is received by the Worker 
+  - (PARTIALLY DONE) wait for all invoices to be paid
+  - HOW TO make the invoices come faster? TerminateAgreement()?
 
+- TODO troubleshooting
+  - sometimes agreement can be null in AgreementPool.cs line 155... 
+  - Newtonsoft error on deserialize when Subscribing Demand - nondeterministic...
 
-- Implement the Executor event notification framework
+- (PARTIALLY DONE) Implement the Executor event notification framework
   - Partially done for MarketStrategy - using C# events
+  - TODO Add ComputationFinished()
 
 
 ## Component notes:

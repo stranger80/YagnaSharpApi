@@ -32,28 +32,37 @@ namespace YagnaSharpApi.Engine.MarketStrategy
 
         public override async Task<float> ScoreOfferAsync(ProposalEntity offer)
         {
-            Com com = Com.FromProperties(offer.Properties);
-
-            if(com.Scheme != PropertyValues.COM_SCHEME_PAYU)
+            try
             {
+
+                Com com = Com.FromProperties(offer.Properties);
+
+                if(com.Scheme != PropertyValues.COM_SCHEME_PAYU)
+                {
+                    return MarketStrategyConsts.SCORE_REJECTED;
+                }
+
+                var coeffs = com.Linear.Coeffs;
+
+                foreach(var (counter, price) in coeffs.Keys.Select(key => (key, coeffs[key])))
+                {
+                    if(! this.maxForCounter.ContainsKey(counter))
+                    {
+                        return MarketStrategyConsts.SCORE_REJECTED;
+                    }
+                    if(price > this.maxForCounter[counter])
+                    {
+                        return MarketStrategyConsts.SCORE_REJECTED;
+                    }
+                }
+
+                return MarketStrategyConsts.SCORE_NEUTRAL;
+            }
+            catch(Exception exc)
+            {
+                // TODO warning - log exception and troubleshood - sometimes parsing Decimals fails ...
                 return MarketStrategyConsts.SCORE_REJECTED;
             }
-
-            var coeffs = com.Linear.Coeffs;
-
-            foreach(var (counter, price) in coeffs.Keys.Select(key => (key, coeffs[key])))
-            {
-                if(! this.maxForCounter.ContainsKey(counter))
-                {
-                    return MarketStrategyConsts.SCORE_REJECTED;
-                }
-                if(price > this.maxForCounter[counter])
-                {
-                    return MarketStrategyConsts.SCORE_REJECTED;
-                }
-            }
-
-            return MarketStrategyConsts.SCORE_NEUTRAL;
         }
     }
 }

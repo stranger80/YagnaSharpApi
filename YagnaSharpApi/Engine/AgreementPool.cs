@@ -30,6 +30,8 @@ namespace YagnaSharpApi.Engine
         public IDictionary<string, BufferedAgreement> Agreements { get; set; }
         public IDictionary<string, BufferedProposal> OfferBuffer { get; set; }
 
+        private BlockingCollection<BufferedProposal> OfferPipeline { get; set; }
+
         private SemaphoreSlim lockObject = new SemaphoreSlim(1, 1);
 
         public event EventHandler<Events.AgreementEvent> OnAgreementEvent;
@@ -38,17 +40,24 @@ namespace YagnaSharpApi.Engine
         {
             this.Agreements = new ConcurrentDictionary<string, BufferedAgreement>();
             this.OfferBuffer = new ConcurrentDictionary<string, BufferedProposal>();
+
+            this.OfferPipeline = new BlockingCollection<BufferedProposal>();
         }
 
         public void AddProposal(float score, ProposalEntity proposal)
         {
-            this.OfferBuffer[proposal.IssuerId] =  
-                new BufferedProposal() 
-                { 
-                    Proposal = proposal, 
-                    Score = score, 
-                    Timestamp = DateTime.Now 
-                };
+            //this.lockObject.Wait();
+            var bufferedProposal = new BufferedProposal()
+            {
+                Proposal = proposal,
+                Score = score,
+                Timestamp = DateTime.Now
+            };
+
+            this.OfferBuffer[proposal.IssuerId] = bufferedProposal;
+            this.OfferPipeline.Add(bufferedProposal);
+
+            //this.lockObject.Release();
         }
 
         public async Task<Task> UseAgreementAsync(Func<BufferedAgreement, Task> job)  // ok this is weird, an async method returning a Task...
@@ -65,6 +74,11 @@ namespace YagnaSharpApi.Engine
                 await SetWorkerAsync(bufferedAgreement.Agreement.AgreementId, task);
                 return task;
             }
+            catch(Exception exc)
+            {
+                // TODO will this catch exception in StartWorker?
+                throw;
+            }
             finally
             {
                 this.lockObject.Release();
@@ -80,6 +94,12 @@ namespace YagnaSharpApi.Engine
 
         protected BufferedProposal GetRandomBestOffer()
         {
+            // ok, this is a bit naive sync mechanism - to prevent trying to find random candidate 
+            // - wait on a blocking collection, until at least one offer arrives. Once it arrives - select the candidate offer, etc, 
+            // then put the offer back in pipeline collection.
+
+            var firstOffer = this.OfferPipeline.Take();
+            
             var maxScore = this.OfferBuffer
                 .Max(ofr => ofr.Value.Score);
 
@@ -87,6 +107,8 @@ namespace YagnaSharpApi.Engine
                 .Where(ofr => ofr.Value.Score == maxScore)
                 .Select(ofr => ofr.Value)
                 .ToList();
+
+            this.OfferPipeline.Add(firstOffer);
 
             return this.RandomElement(offers);
 

@@ -37,7 +37,7 @@ namespace YagnaSharpApi.Utils
                 if(resp.IsSuccessStatusCode)
                 {
                     var imageUrl = await resp.Content.ReadAsStringAsync();
-                    return $"hash:sha3:{this.ImageHash}:{imageUrl}";
+                    return $"hash:sha3:{this.ImageHash}:{imageUrl?.TrimEnd()}";
                 }
                 else
                 {

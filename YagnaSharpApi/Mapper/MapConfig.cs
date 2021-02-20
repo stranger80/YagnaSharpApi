@@ -32,6 +32,11 @@ namespace YagnaSharpApi.Mapper
 
                 cfg.CreateMap<Agreement, AgreementEntity>();
 
+                // Agreement event hierarchy
+                cfg.CreateMap<AgreementEvent, AgreementEventEntity>();
+                cfg.CreateMap<AgreementTerminatedEvent, AgreementTerminatedEventEntity>();
+                cfg.CreateMap<AgreementApprovedEvent, AgreementApprovedEventEntity>();
+
                 // Proposal event hierarchy
 
                 cfg.CreateMap<ProposalEvent, ProposalEventEntity>();
@@ -42,6 +47,9 @@ namespace YagnaSharpApi.Mapper
                     .Include<ProposalEvent, ProposalEventEntity>()
                     .Include<PropertyQueryEvent, PropertyQueryEventEntity>()
                     .Include<ProposalRejectedEvent, ProposalRejectedEventEntity>();
+                    //.Include<AgreementEvent, AgreementEventEntity>()
+                    //.Include<AgreementApprovedEvent, AgreementApprovedEventEntity>()
+                    //.Include<AgreementTerminatedEvent, AgreementTerminatedEventEntity>()
 
                 // Invoice events hierarchy
 
@@ -49,6 +57,8 @@ namespace YagnaSharpApi.Mapper
 
                 cfg.CreateMap<InvoiceEvent, InvoiceEventEntity>()
                     .Include<InvoiceReceivedEvent, InvoiceReceivedEventEntity>();
+
+                cfg.CreateMap<Invoice, InvoiceEntity>();
 
                 cfg.CreateMap<Account, AccountEntity>();
 

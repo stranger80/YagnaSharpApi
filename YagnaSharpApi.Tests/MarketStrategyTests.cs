@@ -14,46 +14,14 @@ namespace YagnaSharpApi.Tests
     [TestClass]
     public class MarketStrategyTests
     {
-        static MarketStrategyTests()
-        {
-            MapConfig.Init();
-        }
 
-        public MarketRepository CreateMarketRepository(bool withApiKey = true)
-        {
-            var config = new ApiConfiguration();
-
-            if (withApiKey)
-                config.AppKey = Environment.GetEnvironmentVariable("YAGNA_APP_KEY") ?? "e3f31abc20ac4ea19513d0d7089b79ac";
-
-            var factory = new ApiFactory(config);
-
-            var marketApi = factory.GetMarketRequestorApi();
-
-            return new MarketRepository(marketApi, MapConfig.Config.CreateMapper());
-
-        }
-
-        public PaymentRepository CreatePaymentRepository(bool withApiKey = true)
-        {
-            var config = new ApiConfiguration();
-
-            if (withApiKey)
-                config.AppKey = Environment.GetEnvironmentVariable("YAGNA_APP_KEY") ?? "e3f31abc20ac4ea19513d0d7089b79ac";
-
-            var factory = new ApiFactory(config);
-
-            var paymentApi = factory.GetPaymentRequestorApi();
-
-            return new PaymentRepository(paymentApi, MapConfig.Config.CreateMapper());
-
-        }
+        public TestUtils Utils { get; set; } = new TestUtils();
 
         public async Task<DummyMarketStrategy> CreateDummyMarketStrategyAsync(IMarketRepository marketRepo, IPaymentRepository paymentRepo)
         {
             var accounts = await paymentRepo.GetAccountsAsync();
 
-            if(!accounts.Any())
+            if (!accounts.Any())
             {
                 throw new Exception("No sender accounts found, make sure to run 'yagna payment init --sender'...");
             }
@@ -74,8 +42,8 @@ namespace YagnaSharpApi.Tests
         [TestMethod]
         public async Task DummyMarketStrategy_GracefullyReturns_First3Proposals()
         {
-            using (var marketRepo = this.CreateMarketRepository())
-            using (var paymentRepo = this.CreatePaymentRepository())
+            using (var marketRepo = this.Utils.CreateMarketRepository())
+            using (var paymentRepo = this.Utils.CreatePaymentRepository())
             {
                 var marketStrategy = await CreateDummyMarketStrategyAsync(marketRepo, paymentRepo);
 

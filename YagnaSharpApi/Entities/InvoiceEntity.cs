@@ -9,10 +9,10 @@ namespace YagnaSharpApi.Entities
     public class InvoiceEntity
     {
 
-        public IPaymentRepository Repository { get; protected set; }
+        public IPaymentRepository Repository { get; set; }
 
 
-        public InvoiceEntity(IPaymentRepository repo)
+        public InvoiceEntity(IPaymentRepository repo = null)
         {
             this.Repository = repo;
         }

@@ -30,11 +30,11 @@ namespace YagnaSharpApi.Utils.PropertyModel
 
                     var coeffs = (object[])props[Properties.COM_PRICING_MODEL_LINEAR_COEFFS];
 
-                    result.Coeffs.Add(FIXED, Decimal.Parse(coeffs[0].ToString()));
+                    result.Coeffs.Add(FIXED, (decimal)Double.Parse(coeffs[0].ToString()));
 
                     for(int i=0; i<com.UsageVector.Length; i++)
                     {
-                        result.Coeffs.Add(com.UsageVector[i], Decimal.Parse(coeffs[i+1].ToString()));
+                        result.Coeffs.Add(com.UsageVector[i], (decimal)Double.Parse(coeffs[i+1].ToString()));
                     }
                 }
 

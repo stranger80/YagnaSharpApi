@@ -16,6 +16,7 @@ namespace YagnaSharpApi.Tests
     [TestClass]
     public class AgreementPoolTests
     {
+        public TestUtils Utils { get; set; } = new TestUtils();
         public MarketStrategyTests MarketStrategyTests { get; set; } = new MarketStrategyTests();
 
         static AgreementPoolTests()
@@ -25,8 +26,8 @@ namespace YagnaSharpApi.Tests
 
         public async Task DoWithDefaultAgreementPool(Func<AgreementPool, Task> work)
         {
-            using (var marketRepo = this.MarketStrategyTests.CreateMarketRepository())
-            using (var paymentRepo = this.MarketStrategyTests.CreatePaymentRepository())
+            using (var marketRepo = this.Utils.CreateMarketRepository())
+            using (var paymentRepo = this.Utils.CreatePaymentRepository())
             {
                 var marketStrategy = await this.MarketStrategyTests.CreateDummyMarketStrategyAsync(marketRepo, paymentRepo);
 

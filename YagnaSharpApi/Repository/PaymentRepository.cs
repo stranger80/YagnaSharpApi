@@ -62,6 +62,22 @@ namespace YagnaSharpApi.Repository
             }
         }
 
+        public async Task<List<AllocationEntity>> GetAllocationsAsync()
+        {
+            try
+            {
+                var existingAllocations = await this.RequestorApi.GetAllocationsAsync();
+
+                var result = this.Mapper.Map<List<AllocationEntity>>(existingAllocations);
+
+                return result;
+            }
+            catch (Exception exc)
+            {
+                throw;
+            }
+        }
+
         public async Task ReleaseAllocationAsync(string allocationId)
         {
             try
@@ -82,6 +98,7 @@ namespace YagnaSharpApi.Repository
 
                 var props = decorations.Properties.ToDictionary(prop => prop.Key, prop => (object)prop.Value);
 
+                System.Diagnostics.Debug.WriteLine("PaymentRepository: Decorate Demand Async: Adding propd to Demand");
                 demand.Add(props);
                 foreach(var cons in decorations.Constraints)
                     demand.Ensure(cons);
@@ -101,7 +118,7 @@ namespace YagnaSharpApi.Repository
             // decode incoming events
             // for new Invoices - call GetInvoice(invoiceId) to retrieve the Invoice details from payment API
 
-            DateTime afterTimestamp = DateTime.Now;
+            DateTime afterTimestamp = DateTime.UtcNow;
 
             while(!cancellationToken.IsCancellationRequested)
             {
@@ -135,6 +152,8 @@ namespace YagnaSharpApi.Repository
                 var existingInvoice = await this.RequestorApi.GetInvoiceAsync(invoiceId);
 
                 var result = this.Mapper.Map<InvoiceEntity>(existingInvoice);
+
+                result.Repository = this;
 
                 return result;
             }

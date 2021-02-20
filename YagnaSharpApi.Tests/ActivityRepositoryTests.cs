@@ -17,6 +17,8 @@ namespace YagnaSharpApi.Tests
     [TestClass]
     public class ActivityRepositoryTests
     {
+        public TestUtils Utils { get; set; } = new TestUtils();
+
         public MarketStrategyTests MarketStrategyTests { get; set; } = new MarketStrategyTests();
         public AgreementPoolTests AgreementPoolTests { get; set; } = new AgreementPoolTests();
 
@@ -25,26 +27,10 @@ namespace YagnaSharpApi.Tests
             MapConfig.Init();
         }
 
-        public ActivityRepository CreateActivityRepository(bool withApiKey = true)
-        {
-            var config = new ApiConfiguration();
-
-            if (withApiKey)
-                config.AppKey = Environment.GetEnvironmentVariable("YAGNA_APP_KEY") ?? "e3f31abc20ac4ea19513d0d7089b79ac";
-
-            var factory = new ApiFactory(config);
-
-            var controlApi = factory.GetActivityRequestorControlApi();
-
-            return new ActivityRepository(controlApi, MapConfig.Config.CreateMapper());
-
-        }
-
-
         [TestMethod]
         public async Task ActivityRepository_ExecDeployCommand()
         {
-            using (var activityRepo = this.CreateActivityRepository())
+            using (var activityRepo = this.Utils.CreateActivityRepository())
             {
                 // Cretae activity using agreement and run Deploy command. Make sure it completes and succeeds.
                 var commandSuccessful = false;

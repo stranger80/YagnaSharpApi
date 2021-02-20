@@ -239,17 +239,29 @@ namespace YagnaSharpApi.Repository
 
         protected async Task ListenAgreementEvents(CancellationToken token)
         {
-            var afterTimestamp = DateTime.Now;
+            var afterTimestamp = DateTime.UtcNow;
 
             while(!token.IsCancellationRequested)
             {
-                var events = await this.RequestorApi.CollectAgreementEventsAsync(5, afterTimestamp, token: token);
+                var events = await this.RequestorApi.CollectAgreementEventsAsync(30, afterTimestamp, token: token);
 
                 foreach(var ev in events)
                 {
-                    var evEntity = Mapper.Map<AgreementEventEntity>(ev);
+                    if (ev.EventDate > afterTimestamp) // move the afterTimestamp pointer
+                    {
+                        afterTimestamp = ev.EventDate;
+                    }
 
-                    this.OnAgreementEvent?.Invoke(this, evEntity);
+                    try
+                    {
+                        var evEntity = Mapper.Map<AgreementEventEntity>(ev);
+
+                        this.OnAgreementEvent?.Invoke(this, evEntity);
+                    }
+                    catch(Exception exc)
+                    {
+                        throw;
+                    }
                 }
             }
         }

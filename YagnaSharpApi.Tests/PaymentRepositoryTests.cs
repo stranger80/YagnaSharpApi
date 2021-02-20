@@ -17,26 +17,13 @@ namespace YagnaSharpApi.Tests
             MapConfig.Init();
         }
 
-        public PaymentRepository CreatePaymentRepository(bool withApiKey = true)
-        {
-            var config = new ApiConfiguration();
-
-            if(withApiKey)
-                config.AppKey = "e3f31abc20ac4ea19513d0d7089b79ac";
-
-            var factory = new ApiFactory(config);
-
-            var paymentApi = factory.GetPaymentRequestorApi();
-
-            return new PaymentRepository(paymentApi, MapConfig.Config.CreateMapper());
-
-        }
+        public TestUtils Utils { get; set; } = new TestUtils();
 
         [TestMethod]
         
         public async Task PaymentRepository_CreateAllocation_FailsWithNoAppKey()
         {
-            var repo = this.CreatePaymentRepository(false);
+            var repo = this.Utils.CreatePaymentRepository(false);
 
             await Assert.ThrowsExceptionAsync<ApiException>(async () => await repo.CreateAllocationAsync(null, null, 0.1m, DateTime.Now.AddMinutes(5), false));
         }
@@ -44,7 +31,7 @@ namespace YagnaSharpApi.Tests
         [TestMethod]
         public async Task PaymentRepository_CreateAllocation_Succeeds()
         {
-            var repo = this.CreatePaymentRepository();
+            var repo = this.Utils.CreatePaymentRepository();
 
             var allocation = await repo.CreateAllocationAsync(null, null, 0.1m, DateTime.Now.AddMinutes(5), false);
 
@@ -56,7 +43,7 @@ namespace YagnaSharpApi.Tests
         [TestMethod]
         public async Task PaymentRepository_GetAndReleaseAllocation_Succeeds()
         {
-            var repo = this.CreatePaymentRepository();
+            var repo = this.Utils.CreatePaymentRepository();
 
             var allocation = await repo.CreateAllocationAsync(null, null, 0.1m, DateTime.Now.AddMinutes(5), false);
 
@@ -70,6 +57,22 @@ namespace YagnaSharpApi.Tests
             await repo.ReleaseAllocationAsync(allocation.AllocationId);
 
             await Assert.ThrowsExceptionAsync<ApiException>(async () => await repo.GetAllocationAsync(allocation.AllocationId));
+
+        }
+
+        [TestMethod]
+        public async Task PaymentRepository_ReleaseAllAllocations_Succeeds()
+        {
+            var repo = this.Utils.CreatePaymentRepository();
+
+            var allocations = await repo.GetAllocationsAsync();
+
+            Assert.IsNotNull(allocations);
+
+            foreach (var allocation in allocations)
+            {
+                await repo.ReleaseAllocationAsync(allocation.AllocationId);
+            }
 
         }
 
