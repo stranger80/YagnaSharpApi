@@ -44,6 +44,7 @@ namespace YagnaSharpApi.Repository
             }
             catch (Exception exc)
             {
+                System.Diagnostics.Debug.WriteLine($"CreateActivity failed for provider: {agreement.Offer.ProviderId}");
                 throw;
             }
         }

@@ -21,9 +21,9 @@ namespace YagnaSharpApi.Engine
 
 
         public ConcurrentQueue<TaskContext> QueuedTasks { get; set; } = new ConcurrentQueue<TaskContext>();
-        public Dictionary<string, TaskContext> InProgressTasks { get; set; } = new Dictionary<string, TaskContext>();
-        public List<TaskContext> DoneTasks { get; set; } = new List<TaskContext>();
-        public List<TaskContext> FailedTasks { get; set; } = new List<TaskContext>();
+        public ConcurrentDictionary<string, TaskContext> InProgressTasks { get; set; } = new ConcurrentDictionary<string, TaskContext>();
+        public ConcurrentQueue<TaskContext> DoneTasks { get; set; } = new ConcurrentQueue<TaskContext>();
+        public ConcurrentQueue<TaskContext> FailedTasks { get; set; } = new ConcurrentQueue<TaskContext>();
 
         public int MaxRetryCount { get; set; }
         private int taskCounter = 0;
@@ -49,6 +49,7 @@ namespace YagnaSharpApi.Engine
         public void QueueTask(GolemTask<TData, TResult> task)
         {
             started = true;
+            System.Diagnostics.Debug.WriteLine($"Queueing Task {task.Id}");
             this.QueuedTasks.Enqueue(new TaskContext() { Task = task, RetryCount = 0 });
             taskCounter++;
         }
@@ -75,8 +76,8 @@ namespace YagnaSharpApi.Engine
         {
             if(this.InProgressTasks.ContainsKey(task.Id))
             {
-                DoneTasks.Add(this.InProgressTasks[task.Id]);
-                this.InProgressTasks.Remove(task.Id);
+                DoneTasks.Enqueue(this.InProgressTasks[task.Id]);
+                this.InProgressTasks.Remove(task.Id, out TaskContext _);
                 this.eof.Set();
             }
         }
@@ -93,9 +94,9 @@ namespace YagnaSharpApi.Engine
                 }
                 else
                 {
-                    this.FailedTasks.Add(taskContext);
+                    this.FailedTasks.Enqueue(taskContext);
                 }
-                this.InProgressTasks.Remove(task.Id);
+                this.InProgressTasks.Remove(task.Id, out TaskContext _);
             }
         }
 

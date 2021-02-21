@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,7 +7,7 @@ namespace YagnaSharpApi.Utils
 {
     public class DemandBuilder
     {
-        private IDictionary<string, object> props = new Dictionary<string, object>();
+        private IDictionary<string, object> props = new ConcurrentDictionary<string, object>();
         private List<string> constraintRules = new List<string>();
 
         public IDictionary<string, object> Properties { get { return this.props; } }

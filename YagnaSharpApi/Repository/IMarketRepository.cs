@@ -24,6 +24,7 @@ namespace YagnaSharpApi.Repository
         Task<AgreementEntity> GetAgreement(string agreementId);
         Task ConfirmAgreementAsync(AgreementEntity agreement);
         Task<AgreementEntity.StateEnum> WaitForApprovalAsync(AgreementEntity agreement, decimal timeout);
+        Task TerminateAgreementAsync(AgreementEntity agreement, ReasonEntity reason);
 
         event EventHandler<AgreementEventEntity> OnAgreementEvent;
 

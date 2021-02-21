@@ -34,6 +34,8 @@ namespace YagnaSharpApi.Engine
 
         private SemaphoreSlim lockObject = new SemaphoreSlim(1, 1);
 
+        private int proposalCount = 0;
+
         public event EventHandler<Events.AgreementEvent> OnAgreementEvent;
 
         public AgreementPool()
@@ -56,6 +58,7 @@ namespace YagnaSharpApi.Engine
 
             this.OfferBuffer[proposal.IssuerId] = bufferedProposal;
             this.OfferPipeline.Add(bufferedProposal);
+            proposalCount++;
 
             //this.lockObject.Release();
         }
@@ -92,14 +95,16 @@ namespace YagnaSharpApi.Engine
             return list[index];
         }
 
-        protected BufferedProposal GetRandomBestOffer()
+        protected BufferedProposal TakeRandomBestOffer()
         {
             // ok, this is a bit naive sync mechanism - to prevent trying to find random candidate 
             // - wait on a blocking collection, until at least one offer arrives. Once it arrives - select the candidate offer, etc, 
-            // then put the offer back in pipeline collection.
+            // do not put them back.
 
             var firstOffer = this.OfferPipeline.Take();
-            
+
+            //this.OfferPipeline.Add(firstOffer);
+
             var maxScore = this.OfferBuffer
                 .Max(ofr => ofr.Value.Score);
 
@@ -108,9 +113,12 @@ namespace YagnaSharpApi.Engine
                 .Select(ofr => ofr.Value)
                 .ToList();
 
-            this.OfferPipeline.Add(firstOffer);
+            var returnedOffer = this.RandomElement(offers);
 
-            return this.RandomElement(offers);
+            this.OfferBuffer.Remove(returnedOffer.Proposal.IssuerId);
+
+            return returnedOffer;
+
 
         }
 
@@ -133,7 +141,7 @@ namespace YagnaSharpApi.Engine
             }
 
             // no existing agreements found - create agreement from a randomly selected offer having maximum score
-            var offer = this.GetRandomBestOffer();
+            var offer = this.TakeRandomBestOffer();
 
             AgreementEntity agreement = null;
 
@@ -149,12 +157,14 @@ namespace YagnaSharpApi.Engine
             }
             catch (ApiException exc)
             {
-                this.OnAgreementEvent?.Invoke(this, new AgreementFailed() { ProposalId = offer.Proposal.ProposalId });
+                this.OnAgreementEvent?.Invoke(this, new AgreementFailed(offer.Proposal.ProposalId, exc));
+                throw;
             }
 
             if (!await agreement.ConfirmAsync())
             {
                 this.OnAgreementEvent?.Invoke(this, new AgreementRejected() { AgreementId = agreement.AgreementId });
+                return null;
             }
 
             this.Agreements[agreement.AgreementId] = new BufferedAgreement()

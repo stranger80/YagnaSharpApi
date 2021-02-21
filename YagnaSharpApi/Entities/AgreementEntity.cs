@@ -102,7 +102,7 @@ namespace YagnaSharpApi.Entities
 
         public async Task TerminateAsync(ReasonEntity reason)
         {
-            // TODO
+            await this.Repository.TerminateAgreementAsync(this, reason);
         }
 
         protected virtual void Dispose(bool disposing)

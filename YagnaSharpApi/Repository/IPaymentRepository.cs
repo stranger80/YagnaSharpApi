@@ -22,6 +22,7 @@ namespace YagnaSharpApi.Repository
         Task DecorateDemandAsync(IEnumerable<AllocationEntity> allocations, DemandBuilder demand);
 
         IAsyncEnumerable<InvoiceEventEntity> GetInvoiceEventsAsync(CancellationToken cancellationToken = default);
+        Task AcceptInvoiceAsync(InvoiceEntity invoice, string amount, AllocationEntity allocation);
 
     }
 }

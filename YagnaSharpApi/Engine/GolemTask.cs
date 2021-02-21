@@ -30,6 +30,8 @@ namespace YagnaSharpApi.Engine
         public TResult Result { get; protected set; }
         public SmartQueue<TData, TResult> Queue { get; set; }
 
+        private object lockObject = new object();
+
 
         public GolemTask(TData data, DateTime? expires = null, int timeout = 0)
         {
@@ -42,11 +44,22 @@ namespace YagnaSharpApi.Engine
 
         public void Start()
         {
-            this.Started = DateTime.UtcNow;
-            this.State = GolemTastState.Running;
+            lock(lockObject)
+            {
+                this.Started = DateTime.UtcNow;
+                this.State = GolemTastState.Running;
+            }
         }
 
         public void Stop(bool retry = false)
+        {
+            lock (lockObject)
+            {
+                this.DoStop(retry);
+            }
+        }
+
+        private void DoStop(bool retry = false)
         {
             this.Finished = DateTime.UtcNow;
 
@@ -64,7 +77,6 @@ namespace YagnaSharpApi.Engine
         // DO NOT USE this is just for convenience when porting from python
         public static GolemTask<TData, TResult> QueueTask(GolemTask<TData, TResult> task /* , queue*/)
         {
-
             // record the task "handle" and queue reference...???
             task.Start();
             return task;
@@ -72,21 +84,27 @@ namespace YagnaSharpApi.Engine
 
         public void AcceptTask(TResult result)
         {
-            if (this.State != GolemTastState.Running)
-                throw new Exception("Accepted task not in Running state!");
-            this.State = GolemTastState.Accepted;
-            this.OnTaskComplete?.Invoke(this, new TaskAccepted<TResult>(this.Id, result));
-            this.Result = result;
-            this.Stop();
+            lock (lockObject)
+            {
+                if (this.State != GolemTastState.Running)
+                    throw new Exception("Accepted task not in Running state!");
+                this.State = GolemTastState.Accepted;
+                this.OnTaskComplete?.Invoke(this, new TaskAccepted<TResult>(this.Id, result));
+                this.Result = result;
+                this.DoStop();
+            }
         }
 
         public void RejectTask(string reason, bool retry = false)
         {
-            if (this.State != GolemTastState.Running)
-                throw new Exception("Accepted task not in Running state!");
-            this.State = GolemTastState.Rejected;
-            this.OnTaskComplete?.Invoke(this, new TaskRejected(this.Id, reason));
-            this.Stop(retry);
+            lock (lockObject)
+            {
+                if (this.State != GolemTastState.Running)
+                    throw new Exception("Accepted task not in Running state!");
+                this.State = GolemTastState.Rejected;
+                this.OnTaskComplete?.Invoke(this, new TaskRejected(this.Id, reason));
+                this.DoStop(retry);
+            }
         }
     }
 }

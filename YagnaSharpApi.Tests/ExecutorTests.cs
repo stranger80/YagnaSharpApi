@@ -26,22 +26,30 @@ namespace YagnaSharpApi.Tests
             MapConfig.Init();
         }
 
-        static async IAsyncEnumerable<WorkItem> SimpleDeployWorker(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
-        {
-            await foreach (var task in tasks)
-            {
-                ctx.Prepare();  // force the init steps to be added to exescript (DEPLOY/START)
-                yield return ctx.Commit();
-                // always accept
-                task.AcceptTask("dummy");
-            }
-
-        }
 
 
         [TestMethod]
         public async Task Executor_RunsOneWorkerTask()
         {
+            List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
+
+            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            {
+                await foreach (var task in tasks)
+                {
+                    System.Diagnostics.Debug.WriteLine("Starting Task Body...");
+                    ctx.Prepare();  // force the init steps to be added to exescript (DEPLOY/START)
+                    yield return ctx.Commit();
+                    // always accept
+                    System.Diagnostics.Debug.WriteLine("Accepting Task results...");
+                    task.AcceptTask("dummy");
+                    acceptedTasks.Add(task);
+                    System.Diagnostics.Debug.WriteLine("Accepted Task results...");
+                }
+
+            }
+
+
             var package = VmRequestBuilder.Repo(
                 "9a3b5d67b0b27746283cb5f287c13eab1beaa12d92a9f536b747c7ae",
                 0.5m,
@@ -59,25 +67,34 @@ namespace YagnaSharpApi.Tests
                 TestConstants.SUBNET_TAG))
             {
                 executor.OnExecutorEvent += Executor_OnExecutorEvent;
+                var inputTasks = data.Select(item => new GolemTask<int, string>(item * 10)).ToList();
 
-                await foreach (var task in executor.Submit(SimpleDeployWorker, data.Select(item => new GolemTask<int, string>(item * 10))))
+                await foreach (var task in executor.Submit(ProcessGolemTasksAsync, inputTasks))
                 {
                     Console.WriteLine($"{TextColorConstants.TEXT_COLOR_CYAN}Task computed: {task}, result: {task.Result}{TextColorConstants.TEXT_COLOR_DEFAULT}");
                 }
+
+                Assert.AreEqual(data.Count(), acceptedTasks.Count);
             }
-
-
-
-
 
         }
 
         private void Executor_OnExecutorEvent(object sender, Event e)
         {
-            var text = JsonConvert.SerializeObject(e, Formatting.Indented);
+            switch(e)
+            {
+                case ProposalReceived rec:
+                case ProposalRejected rej:
+                case ProposalResponded resp:
+                    break;
+                default:
+                    var text = JsonConvert.SerializeObject(e, Formatting.Indented);
 
-            Debug.WriteLine(e);
-            Debug.WriteLine(text);
+                    Debug.Write(DateTime.UtcNow + " ");
+                    Debug.WriteLine(e);
+                    Debug.WriteLine(text);
+                    break;
+            }
         }
     }
 }

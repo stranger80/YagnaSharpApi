@@ -164,6 +164,18 @@ namespace YagnaSharpApi.Repository
 
         }
 
+        public async Task AcceptInvoiceAsync(InvoiceEntity invoice, string amount, AllocationEntity allocation)
+        {
+            try
+            {
+                var acceptance = new Acceptance(amount, allocation.AllocationId);
+                await this.RequestorApi.AcceptInvoiceAsync(invoice.InvoiceId, acceptance);
+            }
+            catch (Exception exc)
+            {
+                throw;
+            }
+        }
 
         public async Task<IEnumerable<AccountEntity>> GetAccountsAsync()
         {

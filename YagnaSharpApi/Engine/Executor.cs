@@ -83,7 +83,18 @@ namespace YagnaSharpApi.Engine
             this.SubnetTag = subnetTag;
 
             // TODO setup event handlers for all the above
-            this.MarketStrategy.OnMarketEvent += (sender, ev) => { this.OnExecutorEvent?.Invoke(this, ev); };
+            this.MarketStrategy.OnMarketEvent += MarketStrategy_OnMarketEvent;
+            this.AgreementPool.OnAgreementEvent += AgreementPool_OnAgreementEvent; 
+        }
+
+        private void AgreementPool_OnAgreementEvent(object sender, AgreementEvent e)
+        {
+            this.OnExecutorEvent?.Invoke(this, e);
+        }
+
+        private void MarketStrategy_OnMarketEvent(object sender, Event e)
+        {
+            this.OnExecutorEvent?.Invoke(this, e);
         }
 
         public async IAsyncEnumerable<GolemTask<TData, TResult>> Submit<TData, TResult>(Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<WorkItem>> worker, IEnumerable<GolemTask<TData, TResult>> data)
@@ -91,19 +102,23 @@ namespace YagnaSharpApi.Engine
             using (var smartQueue = new SmartQueue<TData, TResult>(2)) // TODO make the retry count configurable
             using (var doneTasks = new BlockingCollection<GolemTask<TData, TResult>>())
             {
-                // wrapper method which hooks into OnTaskCompleted for all iterated GolemTasks (used to wrap the incoming 'data' collection)
-                IEnumerable<GolemTask<TData, TResult>> AttachOnTaskCompletedWrapper(IEnumerable<GolemTask<TData, TResult>> inputTasks)
-                {
-                    foreach (var inputTask in inputTasks)
-                    {
-                        inputTask.OnTaskComplete += (sender, ev) => {
-                            if (ev is TaskAccepted<TResult>) {
-                                doneTasks.Add((GolemTask<TData, TResult>)sender);
-                            }
-                        };
 
-                        yield return inputTask;
-                    }
+                var inputTasks = new List<GolemTask<TData, TResult>>();
+
+                foreach (var inputTask in data)
+                {
+                    // queue task in smart queue
+                    smartQueue.QueueTask(inputTask);
+                    inputTask.Queue = smartQueue;
+
+                    inputTask.OnTaskComplete += (sender, ev) => {
+                        if (ev is TaskAccepted<TResult>)
+                        {
+                            doneTasks.Add((GolemTask<TData, TResult>)sender);
+                        }
+                    };
+
+                    inputTasks.Add(inputTask);
                 }
 
                 // 1. Create Allocations
@@ -148,7 +163,7 @@ namespace YagnaSharpApi.Engine
 
                 // 6. Start the Worker Starter thread on input task collection (wrapped so that a completed task adds itself to the "doneQueue") 
                 // (with cancellation token!)
-                var workerStarterTask = Task.Run(() => WorkerStarter(worker, AttachOnTaskCompletedWrapper(data), smartQueue, this.cancellationTokenSource.Token));
+                var workerStarterTask = Task.Run(() => WorkerStarter(worker, inputTasks, smartQueue, this.cancellationTokenSource.Token));
 
                 var waitUntilDoneTask = Task.Run(() => smartQueue.WaitUntilDone());
 
@@ -198,7 +213,9 @@ namespace YagnaSharpApi.Engine
                                 {
                                     try
                                     {
+                                        System.Diagnostics.Debug.WriteLine($"Waiting to complete Worker task: {completedTask.Id}");
                                         await completedTask;
+                                        System.Diagnostics.Debug.WriteLine($"Completed Worker task: {completedTask.Id}");
                                     }
                                     catch (Exception exc)
                                     {
@@ -220,66 +237,33 @@ namespace YagnaSharpApi.Engine
                         }
 
                     }
-                    /*
-                                while wait_until_done in services or not done_queue.empty():
 
-                now = datetime.now(timezone.utc)
-                if now > self._expires:
-                    raise TimeoutError(f"task timeout exceeded. timeout={self._conf.timeout}")
-                if now > get_offers_deadline and proposals_confirmed == 0:
-                    emit(
-                        events.NoProposalsConfirmed(
-                            num_offers=offers_collected, timeout=self._conf.get_offers_timeout
-                        )
-                    )
-                    get_offers_deadline += self._conf.get_offers_timeout
+                    this.OnExecutorEvent?.Invoke(this, new ComputationFinished());
 
-                if not get_done_task:
-                    get_done_task = loop.create_task(done_queue.get())
-                    services.add(get_done_task)
-
-                done, pending = await asyncio.wait(
-                    services.union(workers), timeout=10, return_when=asyncio.FIRST_COMPLETED
-                )
-
-                for task in done:
-                    # if an exception occurred when a service task was running
-                    if task in services and not task.cancelled() and task.exception():
-                        raise cast(BaseException, task.exception())
-                    if task in workers:
-                        try:
-                            await task
-                        except Exception:
-                            if self._conf.traceback:
-                                traceback.print_exc()
-
-                workers -= done
-                services -= done
-
-                assert get_done_task
-                if get_done_task.done():
-                    yield get_done_task.result()
-                    assert get_done_task not in services
-                    get_done_task = None
-
-            emit(events.ComputationFinished())
-
-                     */
-
-                    await this.AgreementPool.TerminateAsync(new ReasonEntity() { Message = "Successfully finished all work" });
+                    try
+                    {
+                        await this.AgreementPool.TerminateAsync(new ReasonEntity() { Message = "Successfully finished all work" });
+                    }
+                    catch (Exception exc)
+                    {
+                        System.Diagnostics.Debug.WriteLine(exc);
+                    }
 
                     // TODO wait until all work has completed (eg. all invoices paid)
 
-                    while(this.AgreementsToPay.Any())
+                    while (this.AgreementsToPay.Any())
                     {
                         await Task.Delay(1000);
                     }
 
-
-                    // TODO raise ComputationFinished event
+                    System.Diagnostics.Debug.WriteLine("All agreements paid...");
                 }
                 finally
                 {
+                    foreach (var alloc in this.Allocations)
+                    {
+                        await this.PaymentRepository.ReleaseAllocationAsync(alloc.AllocationId);
+                    }
 
                 }
             }
@@ -346,7 +330,7 @@ namespace YagnaSharpApi.Engine
             System.Diagnostics.Debug.WriteLine("Starting WorkerStarter...");
             do
             {
-                while (this.Workers.Count < this.maxWorkers /* && TODO add logic to detect if there is still owrk to be done*/ )
+                while (this.Workers.Count < this.maxWorkers )
                 {
                     System.Diagnostics.Debug.WriteLine("Queueing new Task for exec...");
                     Task newTask = null;
@@ -354,7 +338,7 @@ namespace YagnaSharpApi.Engine
                     try
                     {
                         newTask = await this.AgreementPool.UseAgreementAsync(bufferedAgreement =>
-                            this.StartWorker(bufferedAgreement, worker, data, smartQueue)
+                            this.DoWork(bufferedAgreement, worker, data, smartQueue)
                             );
                         this.Workers.Add(newTask);
 
@@ -362,18 +346,18 @@ namespace YagnaSharpApi.Engine
                     }
                     catch (Exception exc)
                     {
-                        throw;
                         // TODO should we do something to abort the new task?
+                            
                     }
 
                 }
             }
-            while (!cancellationToken.IsCancellationRequested);
+            while (!cancellationToken.IsCancellationRequested && !smartQueue.AreAllTasksProcessed());
 
             System.Diagnostics.Debug.WriteLine("Finishing WorkerStarter...");
         }
 
-        protected async Task StartWorker<TData, TResult>(BufferedAgreement bufferedAgreement, Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<WorkItem>> worker, IEnumerable<GolemTask<TData, TResult>> data, SmartQueue<TData, TResult> smartQueue)
+        protected async Task DoWork<TData, TResult>(BufferedAgreement bufferedAgreement, Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<WorkItem>> worker, IEnumerable<GolemTask<TData, TResult>> data, SmartQueue<TData, TResult> smartQueue)
         {
             this.OnExecutorEvent?.Invoke(this, new WorkerStarted(bufferedAgreement.Agreement.AgreementId));
 
@@ -401,18 +385,10 @@ namespace YagnaSharpApi.Engine
 
             async IAsyncEnumerable<GolemTask<TData, TResult>> QueueTasks(IEnumerable<GolemTask<TData, TResult>> data, SmartQueue<TData, TResult> queue)
             {
-                // queue task in smart queue
-                foreach(var task in data)
-                {
-                    queue.QueueTask(task);
-                    task.Queue = queue;
-                }
-
                 // now get tasks from smartqueue - it will return next task, 
                 // selecting one from either newly queued, or queued for reschedule
                 await foreach(var task in queue.GetTaskForExecutionAsync())
                 {
-                    task.Start();
                     lastTask = task;
                     yield return task;
                 }
@@ -424,12 +400,14 @@ namespace YagnaSharpApi.Engine
             {
                 // TODO batch deadline logic
 
+                // TODO in yapapi there is here a weird logic that attempts to correlate 
+                // the batch of commands created by the worker() delegate with its input GolemTask
+
+                var currentTask = lastTask;
+
                 try
                 {
-                    // TODO in yapapi there is here a weird logic that attempts to correlate 
-                    // the batch of commands created by the worker() delegate with its input GolemTask
-
-                    var currentTask = lastTask;
+                    currentTask.Start();
 
                     this.OnExecutorEvent?.Invoke(this, new TaskStarted<TData>(bufferedAgreement.Agreement.AgreementId, currentTask.Id, currentTask.Data));
 
@@ -457,22 +435,29 @@ namespace YagnaSharpApi.Engine
                     this.OnExecutorEvent?.Invoke(this, new ScriptFinished(bufferedAgreement.Agreement.AgreementId, currentTask.Id));
 
                     await this.AcceptPaymentForAgreement(bufferedAgreement.Agreement.AgreementId, true);
+
                 }
-                catch(CommandExecutionException exc) // in case of command error - throw the exception up...
+                catch (CommandExecutionException exc) // in case of command error - throw the exception up...
                 {
-                    
+                    currentTask.Stop(true); // reschedule failed task
                     throw;
                 }
                 catch(Exception exc)
                 {
+                    currentTask.Stop(true); // reschedule failed task
                     this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement.AgreementId, exc));
                     return;
                 }
-            }
 
+                System.Diagnostics.Debug.WriteLine($"Finished executing batch in Worker Task {Task.CurrentId}..");
+
+            }
+            System.Diagnostics.Debug.WriteLine($"finishing Worker Task {Task.CurrentId}..");
             await this.AcceptPaymentForAgreement(bufferedAgreement.Agreement.AgreementId);
+            System.Diagnostics.Debug.WriteLine($"Accepted payment in Worker Task {Task.CurrentId}..");
 
             this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement.AgreementId));
+            System.Diagnostics.Debug.WriteLine($"finished Worker Task {Task.CurrentId}..");
         }
 
         protected async Task AcceptPaymentForAgreement(string agreementId, bool partial = false)
@@ -509,38 +494,45 @@ namespace YagnaSharpApi.Engine
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                await foreach (var invoiceEvent in this.PaymentRepository.GetInvoiceEventsAsync(cancellationToken))
+                try
                 {
-                    if (this.AgreementsToPay.Contains(invoiceEvent.Invoice?.AgreementId))
+                    await foreach (var invoiceEvent in this.PaymentRepository.GetInvoiceEventsAsync(cancellationToken))
                     {
-                        this.OnExecutorEvent?.Invoke(this, new InvoiceReceived(
-                            invoiceEvent.Invoice.AgreementId,
-                            invoiceEvent.Invoice.InvoiceId,
-                            invoiceEvent.Invoice.Amount));
-                        var allocation = this.GetAllocationForInvoice(invoiceEvent.Invoice);
-
-                        try
+                        if (this.AgreementsToPay.Contains(invoiceEvent.Invoice?.AgreementId))
                         {
-                            await invoiceEvent.Invoice?.AcceptAsync(invoiceEvent.Invoice.Amount, allocation);
-
-                            this.AgreementsToPay.Remove(invoiceEvent.Invoice?.AgreementId);
-                            this.OnExecutorEvent?.Invoke(this, new InvoiceAccepted(
+                            this.OnExecutorEvent?.Invoke(this, new InvoiceReceived(
                                 invoiceEvent.Invoice.AgreementId,
                                 invoiceEvent.Invoice.InvoiceId,
                                 invoiceEvent.Invoice.Amount));
-                        }
-                        catch (Exception exc)
-                        {
-                            this.OnExecutorEvent?.Invoke(this, new PaymentFailed(
-                                invoiceEvent.Invoice.AgreementId,
-                                exc));
+                            var allocation = this.GetAllocationForInvoice(invoiceEvent.Invoice);
 
+                            try
+                            {
+                                await invoiceEvent.Invoice?.AcceptAsync(invoiceEvent.Invoice.Amount, allocation);
+
+                                this.AgreementsToPay.Remove(invoiceEvent.Invoice?.AgreementId);
+                                this.OnExecutorEvent?.Invoke(this, new InvoiceAccepted(
+                                    invoiceEvent.Invoice.AgreementId,
+                                    invoiceEvent.Invoice.InvoiceId,
+                                    invoiceEvent.Invoice.Amount));
+                            }
+                            catch (Exception exc)
+                            {
+                                this.OnExecutorEvent?.Invoke(this, new PaymentFailed(
+                                    invoiceEvent.Invoice.AgreementId,
+                                    exc));
+
+                            }
+                        }
+                        else
+                        {
+                            this.InvoicesByAgreementId[invoiceEvent.Invoice.AgreementId] = invoiceEvent.Invoice;
                         }
                     }
-                    else
-                    {
-                        this.InvoicesByAgreementId[invoiceEvent.Invoice.AgreementId] = invoiceEvent.Invoice;
-                    }
+                }
+                catch(Exception exc)
+                {
+                    // TODO log the warning and start again
                 }
             }
         }

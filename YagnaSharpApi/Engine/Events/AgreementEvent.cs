@@ -4,7 +4,7 @@ using System.Text;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class AgreementEvent
+    public class AgreementEvent : Event
     {
         public string AgreementId { get; set; }
     }

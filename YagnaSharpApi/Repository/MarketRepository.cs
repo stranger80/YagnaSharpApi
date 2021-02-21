@@ -266,6 +266,24 @@ namespace YagnaSharpApi.Repository
             }
         }
 
+        public async Task TerminateAgreementAsync(AgreementEntity agreement, ReasonEntity reason)
+        {
+            try
+            {
+                var reasonDict = new Dictionary<string, object>()
+                {
+                    { "message", reason.Message }
+                };
+
+                await this.RequestorApi.TerminateAgreementAsync(agreement.AgreementId, reasonDict);
+            }
+            catch (Exception exc)
+            {
+                throw;
+            }
+        }
+
+
 
         protected virtual void Dispose(bool disposing)
         {
