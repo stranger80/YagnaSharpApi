@@ -199,7 +199,7 @@ namespace YagnaSharpApi.Engine
                             runningTasks.Add(getDoneTask);
                         }
 
-                        var runningTasksArray = runningTasks.Union(this.Workers).ToArray();
+                        var runningTasksArray = runningTasks.Union(this.Workers).Where(item => item != null).ToArray();
 
                         var completedTaskIndex = Task.WaitAny(runningTasksArray, 1000, this.cancellationTokenSource.Token);
 
@@ -340,9 +340,9 @@ namespace YagnaSharpApi.Engine
                         newTask = await this.AgreementPool.UseAgreementAsync(bufferedAgreement =>
                             this.DoWork(bufferedAgreement, worker, data, smartQueue)
                             );
-                        this.Workers.Add(newTask);
 
-                        
+                        if(newTask != null)
+                            this.Workers.Add(newTask);
                     }
                     catch (Exception exc)
                     {
