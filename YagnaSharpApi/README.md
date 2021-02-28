@@ -23,7 +23,10 @@
 - (PARTIALLY DONE)Implement ActivityRepository
   - (DONE) Basic API commands
   - (DONE)ActivityEntity
-  - Including the Command Result events processing!
+  - TODO Command Result events processing (Server Sent Events)
+    - implement in Api proxy layer, as a separate webmethod, do async only
+    - use sample in: https://makolyte.com/event-driven-dotnet-how-to-consume-an-sse-endpoint-with-httpclient/
+
 - (PARTIALLY DONE) Implement WorkerStarter() - fetch a confirmed agreement from the pool and run a worker on this agreement
 - (PARTIALLY DONE) Implement StartWorker() logic - for a given Agreement, start activity and execute an exescript against it, then accept the payment
 - (DONE) Implement GetInvoiceEventAsync() to continuously listen on the invoiceEvents endpoint (remember to use the afterTimestamp parameter!)
@@ -42,7 +45,7 @@
     - make an async iterator that calls GolemTask.Start() (and maybe something else to hook to "work queue???")
   - ...remaining logic as in python...
 
-- Implement InvoiceEntity.AcceptAsync()
+- (DONE) Implement InvoiceEntity.AcceptAsync()
 
 - Implement Submit() completion logic
   - (DONE) Add 'doneQueue' - and add OnTaskComplete observer to add completed GolemTask to doneQueue.
