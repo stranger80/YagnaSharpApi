@@ -97,6 +97,7 @@ namespace YagnaSharpApi.Engine
                     this.FailedTasks.Enqueue(taskContext);
                 }
                 this.InProgressTasks.Remove(task.Id, out TaskContext _);
+                this.eof.Set(); // ping the WaitUntilDone() as we may no longer want to retry tasks...
             }
         }
 

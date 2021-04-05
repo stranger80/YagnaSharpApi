@@ -25,7 +25,7 @@ namespace YagnaSharpApi.Tests
         {
             var repo = this.Utils.CreatePaymentRepository(false);
 
-            await Assert.ThrowsExceptionAsync<ApiException>(async () => await repo.CreateAllocationAsync(null, null, 0.1m, DateTime.Now.AddMinutes(5), false));
+            await Assert.ThrowsExceptionAsync<ApiException>(async () => await repo.CreateAllocationAsync(null, TestConstants.PAYMENT_PLATFORM, 0.1m, DateTime.Now.AddMinutes(5), false));
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace YagnaSharpApi.Tests
         {
             var repo = this.Utils.CreatePaymentRepository();
 
-            var allocation = await repo.CreateAllocationAsync(null, null, 0.1m, DateTime.Now.AddMinutes(5), false);
+            var allocation = await repo.CreateAllocationAsync(null, TestConstants.PAYMENT_PLATFORM, 0.1m, DateTime.Now.AddMinutes(5), false);
 
             Assert.IsNotNull(allocation);
             Assert.IsNotNull(allocation.AllocationId);
@@ -45,7 +45,7 @@ namespace YagnaSharpApi.Tests
         {
             var repo = this.Utils.CreatePaymentRepository();
 
-            var allocation = await repo.CreateAllocationAsync(null, null, 0.1m, DateTime.Now.AddMinutes(5), false);
+            var allocation = await repo.CreateAllocationAsync(null, TestConstants.PAYMENT_PLATFORM, 0.1m, DateTime.Now.AddMinutes(5), false);
 
             Assert.IsNotNull(allocation);
             Assert.IsNotNull(allocation.AllocationId);
