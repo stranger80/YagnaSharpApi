@@ -44,6 +44,8 @@ namespace YagnaSharpApi.Storage
                 file.WriteByte(b);
             }
 
+            var length = file.Length;
+
             file.Close();
 
             var links = await wrapper.PublishAsync(new string[] { fileName });
@@ -53,7 +55,7 @@ namespace YagnaSharpApi.Storage
                 throw new Exception("Invalid gftp publish response");
             }
 
-            return new GftpSource(file.Length, links.First());
+            return new GftpSource(length, links.First());
         }
 
         protected override void Dispose(bool disposing)
