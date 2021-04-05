@@ -277,13 +277,21 @@ namespace YagnaSharpApi.Engine
 
             foreach(var account in accounts)
             {
-                var allocation = await this.PaymentRepository.CreateAllocationAsync(
-                    account.Address,
-                    account.Platform,
-                    this.Budget, 
-                    this.Expires.AddSeconds(this.Configuration.InvoiceTimeout));
+                try
+                {
+                    var allocation = await this.PaymentRepository.CreateAllocationAsync(
+                        account.Address,
+                        account.Platform,
+                        this.Budget,
+                        this.Expires.AddSeconds(this.Configuration.InvoiceTimeout));
 
-                result.Add(allocation);
+                    result.Add(allocation);
+                    this.OnExecutorEvent?.Invoke(this, new AllocationCreated(allocation.AllocationId));
+                }
+                catch (Exception exc)
+                {
+                    this.OnExecutorEvent?.Invoke(this, new AllocationFailed(exc));
+                }
             }
 
             return result;
