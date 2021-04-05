@@ -42,17 +42,16 @@
     - make an async iterator that calls GolemTask.Start() (and maybe something else to hook to "work queue???")
   - ...remaining logic as in python...
 
-- Implement InvoiceEntity.AcceptAsync()
+- (DONE) Implement InvoiceEntity.AcceptAsync()
+
+- Add timestamp to Event constructor
+
+- Replace BlockingCollection with Channel? or AsyncCollection<>? https://stackoverflow.com/questions/21225361/is-there-anything-like-asynchronous-blockingcollectiont
 
 - Implement Submit() completion logic
   - (DONE) Add 'doneQueue' - and add OnTaskComplete observer to add completed GolemTask to doneQueue.
   - (DONE) Handle task retry in case COmmandResult error or other error is received by the Worker 
   - (PARTIALLY DONE) wait for all invoices to be paid
-  - HOW TO make the invoices come faster? TerminateAgreement()?
-
-- TODO troubleshooting
-  - sometimes agreement can be null in AgreementPool.cs line 155... 
-  - Newtonsoft error on deserialize when Subscribing Demand - nondeterministic...
 
 - (PARTIALLY DONE) Implement the Executor event notification framework
   - Partially done for MarketStrategy - using C# events
