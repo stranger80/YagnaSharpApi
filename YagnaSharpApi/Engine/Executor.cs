@@ -11,6 +11,7 @@ using YagnaSharpApi.Engine.MarketStrategy;
 using YagnaSharpApi.Entities;
 using YagnaSharpApi.Entities.Events;
 using YagnaSharpApi.Exceptions;
+using YagnaSharpApi.Mapper;
 using YagnaSharpApi.Repository;
 using YagnaSharpApi.Storage;
 using YagnaSharpApi.Utils;
@@ -47,6 +48,12 @@ namespace YagnaSharpApi.Engine
 
         private int workerId = 0;
         private int maxWorkers = 0;
+
+
+        static Executor()
+        {
+            MapConfig.Init();
+        }
 
         /// <summary>
         /// 

@@ -70,7 +70,7 @@ namespace YagnaSharpApi.Storage
         {
             var startInfo = new ProcessStartInfo("gftp")
             {
-                CreateNoWindow = false,
+                CreateNoWindow = true,
                 StandardInputEncoding = new UTF8Encoding(false), // no BOM
                 StandardOutputEncoding = new UTF8Encoding(false),  // no BOM
                 RedirectStandardInput = true,

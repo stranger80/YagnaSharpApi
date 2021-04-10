@@ -22,6 +22,8 @@ namespace YagnaSharpApi.Tests
         public TestUtils Utils { get; set; } = new TestUtils();
         public MarketStrategyTests MarketStrategyTests { get; set; } = new MarketStrategyTests();
 
+        public List<Event> EventList { get; set; } = new List<Event>();
+
         static ExecutorTests()
         {
             MapConfig.Init();
@@ -173,6 +175,62 @@ namespace YagnaSharpApi.Tests
             600);
         }
 
+
+        [TestMethod]
+        public async Task Executor_FailsGracefullyForExeScriptLocalError()
+        {
+            List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
+
+            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            {
+                var scenePath = "nonexistent.path";
+                ctx.SendFile(scenePath, "/golem/resource/scene.blend");
+                await foreach (var task in tasks)
+                {
+                    var frame = task.Data;
+                    ctx.SendJson("/golem/work/params.json",
+                        new
+                        {
+                            scene_file = "/golem/resource/scene.blend",
+                            resolution = new[] { 40, 30 },
+                            use_compositing = false,
+                            crops = new[] { new { outfilebasename = "out", borders_x = new[] { 0.0, 1.0 }, borders_y = new[] { 0.0, 1.0 } } },
+                            samples = 100,
+                            frames = new[] { frame },
+                            output_format = "PNG",
+                            RESOURCES_DIR = "/golem/resources",
+                            WORK_DIR = "/golem/work",
+                            OUTPUT_DIR = "/golem/output"
+                        });
+
+                    ctx.Run("/golem/entrypoints/run-blender.sh");
+                    var outputFile = $"output_{frame}.png";
+                    ctx.DownloadFile($"/golem/output/out{frame:d4}.png", outputFile);
+                    yield return ctx.Commit();
+                    // TODO check if results are valid
+                    task.AcceptTask(outputFile);
+                    acceptedTasks.Add(task);
+                }
+
+            }
+
+            // one data set
+            var data = Enumerable.Range(0, 1).Select(item => new GolemTask<int, string>(item * 10)).ToList();
+
+            await this.DoExecutorRunAsync(ProcessGolemTasksAsync, data, () =>
+            {
+                Assert.AreEqual(0, acceptedTasks.Count);
+                
+                // assertion to verify that a WorkerFinished event was observed, which had FileNotFoundException recorded
+                var workerFinishedEvent = this.EventList.LastOrDefault(ev => ev is WorkerFinished) as WorkerFinished;
+
+                Assert.IsNotNull(workerFinishedEvent);
+                Assert.IsNotNull(workerFinishedEvent.Exception);
+                Assert.IsTrue(workerFinishedEvent.Exception is FileNotFoundException);
+            },
+            600);
+        }
+
         private void Executor_OnExecutorEvent(object sender, Event e)
         {
             switch(e)
@@ -189,6 +247,8 @@ namespace YagnaSharpApi.Tests
                     Debug.WriteLine(text);
                     break;
             }
+
+            this.EventList.Add(e);
         }
     }
 }
