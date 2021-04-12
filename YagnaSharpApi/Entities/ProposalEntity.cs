@@ -48,7 +48,12 @@ namespace YagnaSharpApi.Entities
 
         public SubscriptionEntity Subscription { get; set; }
 
-        public IMarketRepository Repository { get; set; }
+        protected IMarketRepository Repository { get; set; }
+
+        public void SetRepository(IMarketRepository repo)
+        {
+            this.Repository = repo;
+        }
 
         public async Task<ProposalEntity> RespondAsync(IDictionary<string, object> properties, string constraints)
         {

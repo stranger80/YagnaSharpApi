@@ -47,8 +47,18 @@ namespace YagnaSharpApi.Entities
             {
                 if (disposing)
                 {
-                    await this.UnsubscribeAsync();
-                    base.Dispose(disposing);
+                    try
+                    {
+                        await this.UnsubscribeAsync();
+                    }
+                    catch(Exception exc)
+                    {
+                        // TODO: log the exception for diagnostic purposes
+                    }
+                    finally 
+                    { 
+                        base.Dispose(disposing);
+                    }
                 }
 
                 disposedValue = true;

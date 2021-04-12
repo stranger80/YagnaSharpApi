@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YagnaSharpApi.Examples", "Y
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YagnaSharpApi.Tests", "YagnaSharpApi.Tests\YagnaSharpApi.Tests.csproj", "{176C083B-2576-4519-BCD5-F82D8F9E6158}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Golem.Common.Client", "Golem.Common.Client\Golem.Common.Client.csproj", "{6E57BF78-E5C4-4620-9A7F-8A150E0BFD15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Golem.Common.Client", "Golem.Common.Client\Golem.Common.Client.csproj", "{6E57BF78-E5C4-4620-9A7F-8A150E0BFD15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YagnaSharpApi.Studio", "YagnaSharpApi.Studio\YagnaSharpApi.Studio.csproj", "{6B2F0184-7AEB-4A24-83B2-0DCE9DAB430B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{6E57BF78-E5C4-4620-9A7F-8A150E0BFD15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E57BF78-E5C4-4620-9A7F-8A150E0BFD15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E57BF78-E5C4-4620-9A7F-8A150E0BFD15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B2F0184-7AEB-4A24-83B2-0DCE9DAB430B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B2F0184-7AEB-4A24-83B2-0DCE9DAB430B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B2F0184-7AEB-4A24-83B2-0DCE9DAB430B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B2F0184-7AEB-4A24-83B2-0DCE9DAB430B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -152,7 +152,7 @@ namespace YagnaSharpApi.Engine
                 // TODO extract provider Activity properties
                 // TODO extract provider nodeinfo properties
                 // raise AgreementCreated event
-                this.OnAgreementEvent?.Invoke(this, new AgreementCreated() { AgreementId = agreement.AgreementId, ProviderId = agreement.Offer.ProviderId });
+                this.OnAgreementEvent?.Invoke(this, new AgreementCreated(agreement, offer.Proposal));
 
             }
             catch (ApiException exc)
@@ -163,7 +163,7 @@ namespace YagnaSharpApi.Engine
 
             if (!await agreement.ConfirmAsync())
             {
-                this.OnAgreementEvent?.Invoke(this, new AgreementRejected() { AgreementId = agreement.AgreementId });
+                this.OnAgreementEvent?.Invoke(this, new AgreementRejected(agreement));
                 return null;
             }
 
@@ -175,7 +175,7 @@ namespace YagnaSharpApi.Engine
             };
 
             // raise AgreementConfirmed event
-            this.OnAgreementEvent?.Invoke(this, new AgreementConfirmed() { AgreementId = agreement.AgreementId });
+            this.OnAgreementEvent?.Invoke(this, new AgreementConfirmed(agreement));
             
             // TODO stats - agreement counter increment
 

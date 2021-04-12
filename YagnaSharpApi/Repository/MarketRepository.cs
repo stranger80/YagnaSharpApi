@@ -83,7 +83,7 @@ namespace YagnaSharpApi.Repository
                 switch(evEntity)
                 {
                     case ProposalEventEntity propEntity:
-                        propEntity.Proposal.Repository = this;
+                        propEntity.Proposal.SetRepository(this);
                         break;
                     default:
                         break;
@@ -163,7 +163,7 @@ namespace YagnaSharpApi.Repository
 
                 var result = this.Mapper.Map<AgreementEntity>(agreement);
 
-                result.Repository = this;
+                result.SetRepository(this);
 
                 this.AgreementsById.Add(agreementId, result);
 
@@ -189,7 +189,7 @@ namespace YagnaSharpApi.Repository
 
                 var result = this.Mapper.Map<AgreementEntity>(agreement);
 
-                result.Repository = this;
+                result.SetRepository(this);
 
                 this.AgreementsById.Add(agreementId, result);
 

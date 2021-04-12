@@ -153,7 +153,7 @@ namespace YagnaSharpApi.Repository
 
                 var result = this.Mapper.Map<InvoiceEntity>(existingInvoice);
 
-                result.Repository = this;
+                result.SetRepository(this);
 
                 return result;
             }

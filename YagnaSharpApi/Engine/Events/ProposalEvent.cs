@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class ProposalEvent : Event
+    public class ProposalEvent : MarketEvent
     {
-        public string ProposalId { get; set; }
+        public ProposalEntity Proposal { get; set; }
     }
 }

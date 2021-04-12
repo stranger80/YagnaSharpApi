@@ -11,6 +11,7 @@ using YagnaSharpApi.Engine.MarketStrategy;
 using YagnaSharpApi.Entities;
 using YagnaSharpApi.Entities.Events;
 using YagnaSharpApi.Exceptions;
+using YagnaSharpApi.Mapper;
 using YagnaSharpApi.Repository;
 using YagnaSharpApi.Storage;
 using YagnaSharpApi.Utils;
@@ -47,6 +48,12 @@ namespace YagnaSharpApi.Engine
 
         private int workerId = 0;
         private int maxWorkers = 0;
+
+
+        static Executor()
+        {
+            MapConfig.Init();
+        }
 
         /// <summary>
         /// 
@@ -99,10 +106,11 @@ namespace YagnaSharpApi.Engine
 
         public async IAsyncEnumerable<GolemTask<TData, TResult>> Submit<TData, TResult>(Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<WorkItem>> worker, IEnumerable<GolemTask<TData, TResult>> data)
         {
+            this.OnExecutorEvent?.Invoke(this, new SubmitStarted());
+
             using (var smartQueue = new SmartQueue<TData, TResult>(2)) // TODO make the retry count configurable
             using (var doneTasks = new BlockingCollection<GolemTask<TData, TResult>>())
             {
-
                 var inputTasks = new List<GolemTask<TData, TResult>>();
 
                 foreach (var inputTask in data)
@@ -116,6 +124,7 @@ namespace YagnaSharpApi.Engine
                         {
                             doneTasks.Add((GolemTask<TData, TResult>)sender);
                         }
+                        this.OnExecutorEvent?.Invoke(sender, ev);
                     };
 
                     inputTasks.Add(inputTask);
@@ -263,10 +272,14 @@ namespace YagnaSharpApi.Engine
                     foreach (var alloc in this.Allocations)
                     {
                         await this.PaymentRepository.ReleaseAllocationAsync(alloc.AllocationId);
+                        this.OnExecutorEvent?.Invoke(this, new AllocationReleased(alloc.AllocationId));
+
                     }
 
                 }
             }
+
+            this.OnExecutorEvent?.Invoke(this, new SubmitFinished());
         }
 
         protected async Task<IEnumerable<AllocationEntity>> CreateAllocationsAsync()
@@ -448,6 +461,7 @@ namespace YagnaSharpApi.Engine
                 catch (CommandExecutionException exc) // in case of command error - throw the exception up...
                 {
                     currentTask.Stop(true); // reschedule failed task
+                    this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement.AgreementId, exc));
                     throw;
                 }
                 catch(Exception exc)
