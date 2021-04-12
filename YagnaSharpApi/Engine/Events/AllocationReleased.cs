@@ -4,9 +4,9 @@ using System.Text;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class AllocationCreated : PaymentEvent
+    public class AllocationReleased : PaymentEvent
     {
-        public AllocationCreated(string allocationId)
+        public AllocationReleased(string allocationId)
         {
             this.AllocationId = allocationId;
         }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class InvoiceAccepted : ExecutorEvent
+    public class InvoiceAccepted : PaymentEvent
     {
         public InvoiceAccepted(string agreementId, string invoiceId, string amount)
         {

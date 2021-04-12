@@ -25,8 +25,10 @@ namespace YagnaSharpApi.Mapper
                     .ForMember(dest => dest.Properties, opt => opt.MapFrom(src => (src.Properties as JObject).ToDictionary()));
 
                 cfg.CreateMap<DemandOfferBase, DemandOfferBaseEntity>();
-                cfg.CreateMap<Demand, DemandEntity>();
-                cfg.CreateMap<Offer, OfferEntity>();
+                cfg.CreateMap<Demand, DemandEntity>()
+                    .ForMember(dest => dest.Properties, opt => opt.MapFrom(src => (src.Properties as JObject).ToDictionary()));
+                cfg.CreateMap<Offer, OfferEntity>()
+                    .ForMember(dest => dest.Properties, opt => opt.MapFrom(src => (src.Properties as JObject).ToDictionary()));
 
                 cfg.CreateMap<ReasonEntity, Reason>();
 

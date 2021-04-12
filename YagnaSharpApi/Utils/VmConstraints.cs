@@ -9,12 +9,14 @@ namespace YagnaSharpApi.Utils
         public decimal MinMemGiB { get; set; }
         public decimal MinStorageGiB { get; set; }
         public int Cores { get; set; }
+        public string RuntimeName { get; set; }
 
-        public VmConstraints(decimal minMemGiB, decimal minStorageGiB, int cores = 1)
+        public VmConstraints(decimal minMemGiB, decimal minStorageGiB, int cores = 1, string runtimeName = PropertyValues.RUNTIME_NAME_VM)
         {
             this.MinMemGiB = minMemGiB;
             this.MinStorageGiB = minStorageGiB;
             this.Cores = cores;
+            this.RuntimeName = runtimeName;
         }
 
 
@@ -22,7 +24,8 @@ namespace YagnaSharpApi.Utils
         {
             var rules = $"({Properties.INF_MEM_GIB}>={this.MinMemGiB})" +
                         $"({Properties.INF_STORAGE_GIB}>={this.MinStorageGiB})" +
-                        $"({Properties.INF_CPU_CORES}>={this.Cores})";
+                        $"({Properties.INF_CPU_CORES}>={this.Cores})" + 
+                        $"({Properties.RUNTIME_NAME}={this.RuntimeName})";
 
             return $"(&{rules})";
 

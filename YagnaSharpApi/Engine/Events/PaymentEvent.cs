@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class SubscriptionFailed : MarketEvent
+    public class PaymentEvent : ExecutorEvent
     {
-        public string Reason { get; set; }
     }
 }

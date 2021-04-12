@@ -10,4 +10,10 @@
     <ProjectReference Include="..\YagnaSharpApi\YagnaSharpApi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Assets\cubes.blend">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class PaymentFailed : ExecutorEvent
+    public class PaymentFailed : PaymentEvent
     {
         public PaymentFailed(string agreementId, Exception exc)
         {

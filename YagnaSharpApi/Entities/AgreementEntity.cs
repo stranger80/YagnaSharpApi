@@ -24,7 +24,7 @@ namespace YagnaSharpApi.Entities
 
         private IMarketRepository repository;
 
-        public IMarketRepository Repository { 
+        protected IMarketRepository Repository { 
             get { 
                 return repository;  
             } 
@@ -57,6 +57,11 @@ namespace YagnaSharpApi.Entities
         /// <param name="repo"></param>
         public AgreementEntity()
         {
+        }
+
+        public void SetRepository(IMarketRepository repo)
+        {
+            this.Repository = repo;
         }
 
         private void Repository_OnAgreementEvent(object sender, Events.AgreementEventEntity e)

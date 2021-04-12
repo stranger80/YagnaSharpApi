@@ -13,6 +13,8 @@ namespace YagnaSharpApi.Utils
         public const string INF_STORAGE_GIB = "golem.inf.storage.gib";
         public const string INF_CPU_CORES = "golem.inf.cpu.cores";
 
+        public const string RUNTIME_NAME = "golem.runtime.name";
+
         public const string COM_PAYMENT_PLATFORM_ = "golem.com.payment.platform."; // platform property prefix
         public const string COM_PAYMENT_CHOSEN_PLATFORM = "golem.com.payment.chosen-platform";
         public const string COM_PAYMENT_DEBIT_NOTE_ACCEPT_TIMEOUT = "golem.com.payment.debit-notes.accept-timeout";
@@ -36,6 +38,8 @@ namespace YagnaSharpApi.Utils
         public const string COM_PRICING_MODEL_LINEAR = "linear";
         public const string COM_SCHEME_PAYU = "payu";
 
+        public const string RUNTIME_NAME_VM = "vm";
+        public const string RUNTIME_NAME_WASMTIME = "wasmtime";
     }
 
     public class Counters

@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
     public class ProposalReceived : ProposalEvent
     {
-        public string ProviderId { get; set; }
+        public ProposalReceived(ProposalEntity prop)
+        {
+            this.Proposal = prop;
+        }
     }
 }

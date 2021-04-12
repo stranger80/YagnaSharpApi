@@ -12,13 +12,13 @@ namespace YagnaSharpApi.Studio.Model
         { 
             get 
             {
-                return this.Event.ToString();
+                return this.Event.GetType().Name;
             }
         }
-        public DateTime Timestamp { 
+        public string Timestamp { 
             get
             {
-                return this.Event.EventDate;
+                return this.Event.EventDate.ToString("yyyy-MM-dd HH:mm:ss.fff");
             }
         }
         public Event Event { get; set; }

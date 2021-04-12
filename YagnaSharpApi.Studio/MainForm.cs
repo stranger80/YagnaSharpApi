@@ -22,6 +22,7 @@ namespace YagnaSharpApi.Studio
         public Config Config { get; set; } = new Config();
 
         public BindingList<EventModel> EventList { get; set; } = new BindingList<EventModel>();
+        public BindingList<OfferModel> OfferList { get; set; } = new BindingList<OfferModel>();
 
         public MainForm()
         {
@@ -29,6 +30,10 @@ namespace YagnaSharpApi.Studio
 
             this.eventModelBindingSource.DataSource = this.EventList;
             this.eventsDataGridView.DataSource = this.eventModelBindingSource;
+
+            this.offerModelbindingSource.DataSource = this.OfferList;
+            this.offersDataGridView.DataSource = this.offerModelbindingSource;
+
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -127,8 +132,56 @@ namespace YagnaSharpApi.Studio
             this.Invoke((MethodInvoker)delegate
             {
                 this.EventList.Add(new EventModel(e));
+
+                this.HandleEvent(e);
             });
             
+        }
+
+        private ProposalStore proposalStore = new ProposalStore();
+
+        protected void HandleEvent(Event ev)
+        {
+            OfferModel HandleProposalEvent(ProposalEvent pev)
+            {
+                var rootProposal = this.proposalStore.GetRootProposal(pev.Proposal);
+
+                var rootOfferModel = this.OfferList.FirstOrDefault(offerModel => offerModel.Id == rootProposal.ProposalId);
+
+                rootOfferModel.Events.Add(pev);
+                // TODO: any other actions on the root Offer Model record
+
+                return rootOfferModel;
+            }
+
+            switch (ev)
+            {
+                case ProposalReceived pr:
+                    this.proposalStore.AddProposal(pr.Proposal);
+
+                    if (pr.Proposal.PrevProposalId == null) // original offer
+                        this.OfferList.Add(new OfferModel(pr.Proposal));
+                    else
+                        HandleProposalEvent(pr);
+                    break;
+                case ProposalResponded presp:
+                    this.proposalStore.AddProposal(presp.CounterProposal);
+                    HandleProposalEvent(presp);
+                    break;
+                case ProposalRejected pr:
+                    HandleProposalEvent(pr);
+                    break;
+                case ProposalFailed pr:
+                    HandleProposalEvent(pr);
+                    break;
+                case AgreementCreated ac:
+                    var rootProposal = this.proposalStore.GetRootProposal(ac.OfferProposal);
+                    var rootOfferModel = this.OfferList.FirstOrDefault(offerModel => offerModel.Id == rootProposal.ProposalId);
+                    rootOfferModel.Events.Add(ac);
+
+                    break;
+
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -162,6 +215,41 @@ namespace YagnaSharpApi.Studio
             }
 
 
+
+        }
+
+        private void eventsDataGridView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+        }
+
+        private void eventsDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            var data = e;
+
+            var selectedItem = this.eventsDataGridView.Rows[e.RowIndex].DataBoundItem as EventModel;
+
+            switch(selectedItem.Event)
+            {
+                case MarketEvent m:
+                    e.CellStyle.ForeColor = Color.DarkGreen;
+                    break;
+                case TaskEvent m:
+                    e.CellStyle.ForeColor = Color.Blue;
+                    break;
+                case PaymentEvent m:
+                    e.CellStyle.ForeColor = Color.Violet;
+                    break;
+                case ExecutorEvent m:
+                    e.CellStyle.ForeColor = Color.Orange;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        private void offerModelbindingSource_CurrentChanged(object sender, EventArgs e)
+        {
 
         }
     }

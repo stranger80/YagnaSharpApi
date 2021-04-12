@@ -39,7 +39,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                 await this.DecorateDemandAsync(demand);
 
                 subscription = await this.Repository.SubscribeDemandAsync(demand.Properties, demand.Constraints);
-                this.OnMarketEvent?.Invoke(this, new SubscriptionCreated() { SubscriptionId = subscription.SubscriptionId });
+                this.OnMarketEvent?.Invoke(this, new SubscriptionCreated(subscription));
 
             }
             catch (Exception exc)
@@ -88,39 +88,31 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                             {
                                 case ProposalEventEntity proposalEvent:
                                     float score = 0;
-                                    this.OnMarketEvent?.Invoke(this, new ProposalReceived()
-                                    {
-                                        ProposalId = proposalEvent.Proposal.ProposalId,
-                                        ProviderId = proposalEvent.Proposal.IssuerId
-                                    });
+                                    this.OnMarketEvent?.Invoke(this, new ProposalReceived(proposalEvent.Proposal));
                                     try
                                     {
                                         score = await this.ScoreOfferAsync(proposalEvent.Proposal);
                                     }
                                     catch (Exception exc)
                                     {
-                                        this.OnMarketEvent?.Invoke(this, new ProposalRejected()
-                                        {
-                                            ProposalId = proposalEvent.Proposal.ProposalId
-                                        });
+                                        this.OnMarketEvent?.Invoke(this, new ProposalRejected(proposalEvent.Proposal, exc));
                                     }
 
                                     if (score < MarketStrategyConsts.SCORE_NEUTRAL)
                                     {
+                                        var reason = new ReasonEntity() { Message = "Score too low" };
+
                                         // reject proposal and raise event
                                         try
                                         {
-                                            await proposalEvent.Proposal.RejectAsync(new ReasonEntity() { Message = "Score too low" });
+                                            await proposalEvent.Proposal.RejectAsync(reason);
                                         }
                                         catch(Exception exc)
                                         {
                                             // TODO log warning
                                         }
 
-                                        this.OnMarketEvent?.Invoke(this, new ProposalRejected()
-                                        {
-                                            ProposalId = proposalEvent.Proposal.ProposalId
-                                        });
+                                        this.OnMarketEvent?.Invoke(this, new ProposalRejected(proposalEvent.Proposal, reason));
                                     }
                                     else if (proposalEvent.Proposal.State != ProposalState.Draft)
                                     {
@@ -138,31 +130,22 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                                             }
                                             else // if no common platofmrs - reject
                                             {
-                                                await proposalEvent.Proposal.RejectAsync(new ReasonEntity() { Message = "No common payment platforms" });
-                                                this.OnMarketEvent?.Invoke(this, new ProposalRejected()
-                                                {
-                                                    ProposalId = proposalEvent.Proposal.ProposalId
-                                                });
+                                                var reason = new ReasonEntity() { Message = "No common payment platforms" };
+                                                await proposalEvent.Proposal.RejectAsync(reason);
+                                                this.OnMarketEvent?.Invoke(this, new ProposalRejected(proposalEvent.Proposal, reason));
                                             }
 
                                             // TODO handle the ACCEPT TIMEOUT (Debit Note heartbeat)
 
                                             // ...and send the response proposal
-                                            await proposalEvent.Proposal.RespondAsync(demand.Properties, demand.Constraints);
-                                            this.OnMarketEvent?.Invoke(this, new ProposalResponded()
-                                            {
-                                                ProposalId = proposalEvent.Proposal.ProposalId
-                                            });
+                                            var counterProposal = await proposalEvent.Proposal.RespondAsync(demand.Properties, demand.Constraints);
+                                            this.OnMarketEvent?.Invoke(this, new ProposalResponded(proposalEvent.Proposal, counterProposal));
 
 
                                         }
                                         catch (Exception exc)
                                         {
-                                            this.OnMarketEvent?.Invoke(this, new ProposalFailed()
-                                            {
-                                                ProposalId = proposalEvent.Proposal.ProposalId,
-                                                Exception = exc
-                                            });
+                                            this.OnMarketEvent?.Invoke(this, new ProposalFailed(proposalEvent.Proposal, exc));
                                         }
                                     }
                                     else

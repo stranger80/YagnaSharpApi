@@ -4,8 +4,7 @@ using System.Text;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class SubscriptionFailed : MarketEvent
+    public class SubmitStarted : ExecutorEvent
     {
-        public string Reason { get; set; }
     }
 }
