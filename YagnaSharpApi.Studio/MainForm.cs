@@ -23,6 +23,7 @@ namespace YagnaSharpApi.Studio
 
         public BindingList<EventModel> EventList { get; set; } = new BindingList<EventModel>();
         public BindingList<OfferModel> OfferList { get; set; } = new BindingList<OfferModel>();
+        public BindingList<AgreementModel> AgreementList { get; set; } = new BindingList<AgreementModel>();
 
         public MainForm()
         {
@@ -179,6 +180,15 @@ namespace YagnaSharpApi.Studio
                     var rootOfferModel = this.OfferList.FirstOrDefault(offerModel => offerModel.Id == rootProposal.ProposalId);
                     rootOfferModel.Events.Add(ac);
 
+                    var agreementModel = new AgreementModel(ac.Agreement);
+                    agreementModel.Events.Add(ac);
+                    this.AgreementList.Add(agreementModel);
+
+                    break;
+
+                case AgreementEvent ae:
+                    var agrModel = this.AgreementList.FirstOrDefault(agr => agr.Agreement.AgreementId == ae.Agreement.AgreementId);
+                    agrModel.Events.Add(ae);
                     break;
 
             }
@@ -249,6 +259,11 @@ namespace YagnaSharpApi.Studio
         }
 
         private void offerModelbindingSource_CurrentChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void agreementModelBindingSource_CurrentChanged(object sender, EventArgs e)
         {
 
         }

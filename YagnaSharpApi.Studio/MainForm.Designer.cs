@@ -46,17 +46,33 @@ namespace YagnaSharpApi.Studio
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.offersDataGridView = new System.Windows.Forms.DataGridView();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.issuerNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.offerProposalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.offerModelbindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.offerEventsDataGridView = new System.Windows.Forms.DataGridView();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.offerDetailsTextBox = new System.Windows.Forms.TextBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.offerEventDetailsTextBox = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.agreementsDataGridView = new System.Windows.Forms.DataGridView();
+            this.idDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.issuerNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stateDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.eventCountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.agreementDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.agreementModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.agreementDetailsTextBox = new System.Windows.Forms.TextBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -74,14 +90,28 @@ namespace YagnaSharpApi.Studio
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.offersDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.offerModelbindingSource)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.offerEventsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
             this.splitContainer4.Panel1.SuspendLayout();
+            this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
+            this.splitContainer5.Panel1.SuspendLayout();
+            this.splitContainer5.Panel2.SuspendLayout();
+            this.splitContainer5.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.agreementsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.agreementModelBindingSource)).BeginInit();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // startButton
@@ -107,8 +137,8 @@ namespace YagnaSharpApi.Studio
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.groupBox2);
-            this.splitContainer2.Size = new System.Drawing.Size(964, 473);
-            this.splitContainer2.SplitterDistance = 422;
+            this.splitContainer2.Size = new System.Drawing.Size(1220, 551);
+            this.splitContainer2.SplitterDistance = 534;
             this.splitContainer2.TabIndex = 0;
             // 
             // groupBox1
@@ -117,7 +147,7 @@ namespace YagnaSharpApi.Studio
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(422, 473);
+            this.groupBox1.Size = new System.Drawing.Size(534, 551);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Events :";
@@ -136,7 +166,7 @@ namespace YagnaSharpApi.Studio
             this.eventsDataGridView.RowHeadersWidth = 51;
             this.eventsDataGridView.RowTemplate.Height = 29;
             this.eventsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.eventsDataGridView.Size = new System.Drawing.Size(416, 447);
+            this.eventsDataGridView.Size = new System.Drawing.Size(528, 525);
             this.eventsDataGridView.TabIndex = 0;
             this.eventsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.eventsDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.eventsDataGridView_CellFormatting);
@@ -174,7 +204,7 @@ namespace YagnaSharpApi.Studio
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(538, 473);
+            this.groupBox2.Size = new System.Drawing.Size(682, 551);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Event details :";
@@ -187,7 +217,7 @@ namespace YagnaSharpApi.Studio
             this.eventDetailTextBox.Name = "eventDetailTextBox";
             this.eventDetailTextBox.ReadOnly = true;
             this.eventDetailTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.eventDetailTextBox.Size = new System.Drawing.Size(532, 447);
+            this.eventDetailTextBox.Size = new System.Drawing.Size(676, 525);
             this.eventDetailTextBox.TabIndex = 0;
             // 
             // tabControl1
@@ -202,7 +232,7 @@ namespace YagnaSharpApi.Studio
             this.tabControl1.Location = new System.Drawing.Point(12, 47);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(978, 512);
+            this.tabControl1.Size = new System.Drawing.Size(1234, 590);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
@@ -211,7 +241,7 @@ namespace YagnaSharpApi.Studio
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(970, 479);
+            this.tabPage1.Size = new System.Drawing.Size(1226, 557);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Events";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -222,9 +252,9 @@ namespace YagnaSharpApi.Studio
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(970, 479);
+            this.tabPage2.Size = new System.Drawing.Size(1226, 557);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Market";
+            this.tabPage2.Text = "Offers";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // splitContainer1
@@ -240,8 +270,8 @@ namespace YagnaSharpApi.Studio
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer1.Size = new System.Drawing.Size(964, 473);
-            this.splitContainer1.SplitterDistance = 500;
+            this.splitContainer1.Size = new System.Drawing.Size(1220, 551);
+            this.splitContainer1.SplitterDistance = 632;
             this.splitContainer1.TabIndex = 0;
             // 
             // splitContainer3
@@ -253,10 +283,25 @@ namespace YagnaSharpApi.Studio
             // 
             // splitContainer3.Panel1
             // 
-            this.splitContainer3.Panel1.Controls.Add(this.offersDataGridView);
-            this.splitContainer3.Size = new System.Drawing.Size(500, 473);
-            this.splitContainer3.SplitterDistance = 250;
+            this.splitContainer3.Panel1.Controls.Add(this.groupBox3);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.groupBox4);
+            this.splitContainer3.Size = new System.Drawing.Size(632, 551);
+            this.splitContainer3.SplitterDistance = 300;
             this.splitContainer3.TabIndex = 0;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.offersDataGridView);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Location = new System.Drawing.Point(0, 0);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(632, 300);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Offers :";
             // 
             // offersDataGridView
             // 
@@ -269,11 +314,11 @@ namespace YagnaSharpApi.Studio
             this.offerProposalDataGridViewTextBoxColumn});
             this.offersDataGridView.DataSource = this.offerModelbindingSource;
             this.offersDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.offersDataGridView.Location = new System.Drawing.Point(0, 0);
+            this.offersDataGridView.Location = new System.Drawing.Point(3, 23);
             this.offersDataGridView.Name = "offersDataGridView";
             this.offersDataGridView.RowHeadersWidth = 51;
             this.offersDataGridView.RowTemplate.Height = 29;
-            this.offersDataGridView.Size = new System.Drawing.Size(500, 250);
+            this.offersDataGridView.Size = new System.Drawing.Size(626, 274);
             this.offersDataGridView.TabIndex = 0;
             // 
             // idDataGridViewTextBoxColumn
@@ -317,6 +362,28 @@ namespace YagnaSharpApi.Studio
             this.offerModelbindingSource.DataSource = typeof(YagnaSharpApi.Studio.Model.OfferModel);
             this.offerModelbindingSource.CurrentChanged += new System.EventHandler(this.offerModelbindingSource_CurrentChanged);
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.offerEventsDataGridView);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox4.Location = new System.Drawing.Point(0, 0);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(632, 247);
+            this.groupBox4.TabIndex = 1;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Offer events :";
+            // 
+            // offerEventsDataGridView
+            // 
+            this.offerEventsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.offerEventsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.offerEventsDataGridView.Location = new System.Drawing.Point(3, 23);
+            this.offerEventsDataGridView.Name = "offerEventsDataGridView";
+            this.offerEventsDataGridView.RowHeadersWidth = 51;
+            this.offerEventsDataGridView.RowTemplate.Height = 29;
+            this.offerEventsDataGridView.Size = new System.Drawing.Size(626, 221);
+            this.offerEventsDataGridView.TabIndex = 0;
+            // 
             // splitContainer4
             // 
             this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -326,38 +393,191 @@ namespace YagnaSharpApi.Studio
             // 
             // splitContainer4.Panel1
             // 
-            this.splitContainer4.Panel1.Controls.Add(this.dataGridView2);
-            this.splitContainer4.Size = new System.Drawing.Size(460, 473);
-            this.splitContainer4.SplitterDistance = 213;
+            this.splitContainer4.Panel1.Controls.Add(this.groupBox5);
+            // 
+            // splitContainer4.Panel2
+            // 
+            this.splitContainer4.Panel2.Controls.Add(this.groupBox6);
+            this.splitContainer4.Size = new System.Drawing.Size(584, 551);
+            this.splitContainer4.SplitterDistance = 300;
             this.splitContainer4.TabIndex = 0;
             // 
-            // dataGridView2
+            // groupBox5
             // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView2.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowHeadersWidth = 51;
-            this.dataGridView2.RowTemplate.Height = 29;
-            this.dataGridView2.Size = new System.Drawing.Size(460, 213);
-            this.dataGridView2.TabIndex = 0;
+            this.groupBox5.Controls.Add(this.offerDetailsTextBox);
+            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox5.Location = new System.Drawing.Point(0, 0);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(584, 300);
+            this.groupBox5.TabIndex = 0;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Offer details :";
+            // 
+            // offerDetailsTextBox
+            // 
+            this.offerDetailsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.offerDetailsTextBox.Location = new System.Drawing.Point(3, 23);
+            this.offerDetailsTextBox.Multiline = true;
+            this.offerDetailsTextBox.Name = "offerDetailsTextBox";
+            this.offerDetailsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.offerDetailsTextBox.Size = new System.Drawing.Size(578, 274);
+            this.offerDetailsTextBox.TabIndex = 0;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.offerEventDetailsTextBox);
+            this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox6.Location = new System.Drawing.Point(0, 0);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(584, 247);
+            this.groupBox6.TabIndex = 0;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Offer event details :";
+            // 
+            // offerEventDetailsTextBox
+            // 
+            this.offerEventDetailsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.offerEventDetailsTextBox.Location = new System.Drawing.Point(3, 23);
+            this.offerEventDetailsTextBox.Multiline = true;
+            this.offerEventDetailsTextBox.Name = "offerEventDetailsTextBox";
+            this.offerEventDetailsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.offerEventDetailsTextBox.Size = new System.Drawing.Size(578, 221);
+            this.offerEventDetailsTextBox.TabIndex = 0;
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.splitContainer5);
             this.tabPage3.Location = new System.Drawing.Point(4, 29);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(970, 479);
+            this.tabPage3.Size = new System.Drawing.Size(1226, 557);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Activity";
+            this.tabPage3.Text = "Agreements";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer5
+            // 
+            this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer5.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer5.Name = "splitContainer5";
+            // 
+            // splitContainer5.Panel1
+            // 
+            this.splitContainer5.Panel1.Controls.Add(this.groupBox7);
+            // 
+            // splitContainer5.Panel2
+            // 
+            this.splitContainer5.Panel2.Controls.Add(this.groupBox8);
+            this.splitContainer5.Size = new System.Drawing.Size(1220, 551);
+            this.splitContainer5.SplitterDistance = 406;
+            this.splitContainer5.TabIndex = 0;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.agreementsDataGridView);
+            this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox7.Location = new System.Drawing.Point(0, 0);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(406, 551);
+            this.groupBox7.TabIndex = 1;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Agreements :";
+            // 
+            // agreementsDataGridView
+            // 
+            this.agreementsDataGridView.AutoGenerateColumns = false;
+            this.agreementsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.agreementsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.idDataGridViewTextBoxColumn1,
+            this.issuerNameDataGridViewTextBoxColumn1,
+            this.stateDataGridViewTextBoxColumn1,
+            this.eventCountDataGridViewTextBoxColumn,
+            this.agreementDataGridViewTextBoxColumn});
+            this.agreementsDataGridView.DataSource = this.agreementModelBindingSource;
+            this.agreementsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.agreementsDataGridView.Location = new System.Drawing.Point(3, 23);
+            this.agreementsDataGridView.Name = "agreementsDataGridView";
+            this.agreementsDataGridView.RowHeadersWidth = 51;
+            this.agreementsDataGridView.RowTemplate.Height = 29;
+            this.agreementsDataGridView.Size = new System.Drawing.Size(400, 525);
+            this.agreementsDataGridView.TabIndex = 0;
+            // 
+            // idDataGridViewTextBoxColumn1
+            // 
+            this.idDataGridViewTextBoxColumn1.DataPropertyName = "Id";
+            this.idDataGridViewTextBoxColumn1.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn1.MinimumWidth = 6;
+            this.idDataGridViewTextBoxColumn1.Name = "idDataGridViewTextBoxColumn1";
+            this.idDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.idDataGridViewTextBoxColumn1.Width = 125;
+            // 
+            // issuerNameDataGridViewTextBoxColumn1
+            // 
+            this.issuerNameDataGridViewTextBoxColumn1.DataPropertyName = "IssuerName";
+            this.issuerNameDataGridViewTextBoxColumn1.HeaderText = "IssuerName";
+            this.issuerNameDataGridViewTextBoxColumn1.MinimumWidth = 6;
+            this.issuerNameDataGridViewTextBoxColumn1.Name = "issuerNameDataGridViewTextBoxColumn1";
+            this.issuerNameDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.issuerNameDataGridViewTextBoxColumn1.Width = 125;
+            // 
+            // stateDataGridViewTextBoxColumn1
+            // 
+            this.stateDataGridViewTextBoxColumn1.DataPropertyName = "State";
+            this.stateDataGridViewTextBoxColumn1.HeaderText = "State";
+            this.stateDataGridViewTextBoxColumn1.MinimumWidth = 6;
+            this.stateDataGridViewTextBoxColumn1.Name = "stateDataGridViewTextBoxColumn1";
+            this.stateDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.stateDataGridViewTextBoxColumn1.Width = 125;
+            // 
+            // eventCountDataGridViewTextBoxColumn
+            // 
+            this.eventCountDataGridViewTextBoxColumn.DataPropertyName = "EventCount";
+            this.eventCountDataGridViewTextBoxColumn.HeaderText = "EventCount";
+            this.eventCountDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.eventCountDataGridViewTextBoxColumn.Name = "eventCountDataGridViewTextBoxColumn";
+            this.eventCountDataGridViewTextBoxColumn.ReadOnly = true;
+            this.eventCountDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // agreementDataGridViewTextBoxColumn
+            // 
+            this.agreementDataGridViewTextBoxColumn.DataPropertyName = "Agreement";
+            this.agreementDataGridViewTextBoxColumn.HeaderText = "Agreement";
+            this.agreementDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.agreementDataGridViewTextBoxColumn.Name = "agreementDataGridViewTextBoxColumn";
+            this.agreementDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // agreementModelBindingSource
+            // 
+            this.agreementModelBindingSource.DataSource = typeof(YagnaSharpApi.Studio.Model.AgreementModel);
+            this.agreementModelBindingSource.CurrentChanged += new System.EventHandler(this.agreementModelBindingSource_CurrentChanged);
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.agreementDetailsTextBox);
+            this.groupBox8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox8.Location = new System.Drawing.Point(0, 0);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(810, 551);
+            this.groupBox8.TabIndex = 0;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Agreement details :";
+            // 
+            // agreementDetailsTextBox
+            // 
+            this.agreementDetailsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.agreementDetailsTextBox.Location = new System.Drawing.Point(3, 23);
+            this.agreementDetailsTextBox.Multiline = true;
+            this.agreementDetailsTextBox.Name = "agreementDetailsTextBox";
+            this.agreementDetailsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.agreementDetailsTextBox.Size = new System.Drawing.Size(804, 525);
+            this.agreementDetailsTextBox.TabIndex = 0;
             // 
             // tabPage4
             // 
             this.tabPage4.Location = new System.Drawing.Point(4, 29);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(970, 479);
+            this.tabPage4.Size = new System.Drawing.Size(1226, 557);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Payments";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -366,7 +586,7 @@ namespace YagnaSharpApi.Studio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1002, 571);
+            this.ClientSize = new System.Drawing.Size(1258, 649);
             this.Controls.Add(this.startButton);
             this.Controls.Add(this.tabControl1);
             this.Name = "MainForm";
@@ -388,15 +608,32 @@ namespace YagnaSharpApi.Studio
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.offersDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.offerModelbindingSource)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.offerEventsDataGridView)).EndInit();
             this.splitContainer4.Panel1.ResumeLayout(false);
+            this.splitContainer4.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.splitContainer5.Panel1.ResumeLayout(false);
+            this.splitContainer5.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
+            this.splitContainer5.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.agreementsDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.agreementModelBindingSource)).EndInit();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -420,13 +657,31 @@ namespace YagnaSharpApi.Studio
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.DataGridView offersDataGridView;
         private System.Windows.Forms.SplitContainer splitContainer4;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView agreementsDataGridView;
         private System.Windows.Forms.BindingSource offerModelbindingSource;
         private System.Windows.Forms.BindingSource agreementModelBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn issuerNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn stateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn offerProposalDataGridViewTextBoxColumn;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.DataGridView offerEventsDataGridView;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox offerDetailsTextBox;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.TextBox offerEventDetailsTextBox;
+        private System.Windows.Forms.SplitContainer splitContainer5;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.TextBox agreementDetailsTextBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn contextMenuStripDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn visibleDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn issuerNameDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stateDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn eventCountDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn agreementDataGridViewTextBoxColumn;
     }
 }
 
