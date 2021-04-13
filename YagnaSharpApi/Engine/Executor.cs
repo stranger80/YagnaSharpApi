@@ -104,7 +104,7 @@ namespace YagnaSharpApi.Engine
             this.OnExecutorEvent?.Invoke(this, e);
         }
 
-        public async IAsyncEnumerable<GolemTask<TData, TResult>> Submit<TData, TResult>(Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<WorkItem>> worker, IEnumerable<GolemTask<TData, TResult>> data)
+        public async IAsyncEnumerable<GolemTask<TData, TResult>> SubmitAsync<TData, TResult>(Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<WorkItem>> worker, IEnumerable<GolemTask<TData, TResult>> data)
         {
             this.OnExecutorEvent?.Invoke(this, new SubmitStarted());
 

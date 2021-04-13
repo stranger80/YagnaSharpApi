@@ -71,7 +71,7 @@ namespace YagnaSharpApi.Examples
                 120, 
                 subnetTag))
             {
-                await foreach(var task in executor.Submit(Worker, frames.Select(frame => new GolemTask<int, string>(frame*10))))
+                await foreach(var task in executor.SubmitAsync(Worker, frames.Select(frame => new GolemTask<int, string>(frame*10))))
                 {
                     Console.WriteLine($"{TextColorConstants.TEXT_COLOR_CYAN}Task computed: {task}, result: {task.Result}{TextColorConstants.TEXT_COLOR_DEFAULT}");
                 }
