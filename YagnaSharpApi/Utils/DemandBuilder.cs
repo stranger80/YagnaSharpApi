@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace YagnaSharpApi.Utils
@@ -8,7 +9,7 @@ namespace YagnaSharpApi.Utils
     public class DemandBuilder
     {
         private IDictionary<string, object> props = new ConcurrentDictionary<string, object>();
-        private List<string> constraintRules = new List<string>();
+        private ConcurrentBag<string> constraintRules = new ConcurrentBag<string>();
 
         public IDictionary<string, object> Properties { get { return this.props; } }
         public string Constraints {
@@ -19,7 +20,7 @@ namespace YagnaSharpApi.Utils
                     case 0:
                         return "()";  // empty constraint
                     case 1:
-                        return this.constraintRules[0]; // one constraint
+                        return this.constraintRules.First(); // one constraint
                     default:
                         return $"(&{String.Join("\n\t", this.constraintRules)})";
                 }

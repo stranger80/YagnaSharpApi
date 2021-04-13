@@ -20,7 +20,7 @@ namespace YagnaSharpApi.Utils
             this.Constraints = constraints;
         }
 
-        public async void DecorateDemand(DemandBuilder builder)
+        public async Task DecorateDemandAsync(DemandBuilder builder)
         {
             var imageUrl = await this.ResolveUrlAsync();
             builder.Ensure(this.Constraints.ToString());

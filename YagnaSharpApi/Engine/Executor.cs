@@ -157,8 +157,9 @@ namespace YagnaSharpApi.Engine
                     demand.Ensure($"({Properties.NODE_DEBUG_SUBNET}={this.SubnetTag})");
                 }
 
-                this.Package.DecorateDemand(demand);
+                await this.Package.DecorateDemandAsync(demand);
                 await this.PaymentRepository.DecorateDemandAsync(allocations, demand);
+
                 // note MarketStrategy does its own decorations on top of the above
 
                 // 3. Create GFTP storage provider

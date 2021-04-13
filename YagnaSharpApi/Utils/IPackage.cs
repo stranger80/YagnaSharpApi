@@ -8,6 +8,6 @@ namespace YagnaSharpApi.Utils
     public interface IPackage
     {
         Task<string> ResolveUrlAsync();
-        void DecorateDemand(DemandBuilder builder);
+        Task DecorateDemandAsync(DemandBuilder builder);
     }
 }

@@ -35,6 +35,11 @@ namespace YagnaSharpApi.Studio
             this.offerModelbindingSource.DataSource = this.OfferList;
             this.offersDataGridView.DataSource = this.offerModelbindingSource;
 
+            this.offerEventsDataGridView.DataSource = this.offerEventBindingSource;
+
+            this.agreementModelBindingSource.DataSource = this.AgreementList;
+            this.agreementsDataGridView.DataSource = this.agreementModelBindingSource;
+
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -212,16 +217,11 @@ namespace YagnaSharpApi.Studio
             {
                 var selectedItem = (row as DataGridViewRow).DataBoundItem as EventModel;
 
-                switch (selectedItem.Event)
-                {
-                    default:
-                        var text = JsonConvert.SerializeObject(selectedItem.Event, Formatting.Indented);
+                var text = JsonConvert.SerializeObject(selectedItem.Event, Formatting.Indented);
 
-                        this.eventDetailTextBox.Text = text;
+                this.eventDetailTextBox.Text = text;
 
-                        break;
-                }
-
+                break;
             }
 
 
@@ -265,6 +265,65 @@ namespace YagnaSharpApi.Studio
 
         private void agreementModelBindingSource_CurrentChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void offersDataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            this.offerDetailsTextBox.Text = String.Empty;
+
+            foreach (var row in this.offersDataGridView.SelectedRows)
+            {
+                var selectedItem = (row as DataGridViewRow).DataBoundItem as OfferModel;
+
+                var text = JsonConvert.SerializeObject(selectedItem.OfferProposal, Formatting.Indented);
+
+                this.offerDetailsTextBox.Text = text;
+
+                this.offerEventBindingSource.DataSource = selectedItem.Events.Select(ev => new EventModel(ev)).ToList();
+
+                break;
+
+            }
+
+        }
+
+        private void offerEventsDataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            this.offerEventDetailsTextBox.Text = String.Empty;
+
+            foreach (var row in this.offerEventsDataGridView.SelectedRows)
+            {
+                var selectedItem = (row as DataGridViewRow).DataBoundItem as EventModel;
+
+                var text = JsonConvert.SerializeObject(selectedItem.Event, Formatting.Indented);
+
+                this.offerEventDetailsTextBox.Text = text;
+
+                break;
+
+            }
+
+        }
+
+        private void offerEventBindingSource_CurrentChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void agreementsDataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            this.agreementDetailsTextBox.Text = String.Empty;
+
+            foreach (var row in this.agreementsDataGridView.SelectedRows)
+            {
+                var selectedItem = (row as DataGridViewRow).DataBoundItem as AgreementModel;
+
+                var text = JsonConvert.SerializeObject(selectedItem.Agreement, Formatting.Indented);
+
+                this.agreementDetailsTextBox.Text = text;
+
+            }
 
         }
     }

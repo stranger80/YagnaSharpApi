@@ -90,7 +90,7 @@ namespace YagnaSharpApi.Repository
             }
         }
 
-        public async Task DecorateDemandAsync(IEnumerable<AllocationEntity> allocations, DemandBuilder demand)
+        public async Task<DemandBuilder> DecorateDemandAsync(IEnumerable<AllocationEntity> allocations, DemandBuilder demand)
         {
             try
             {
@@ -103,6 +103,7 @@ namespace YagnaSharpApi.Repository
                 foreach(var cons in decorations.Constraints)
                     demand.Ensure(cons);
 
+                return demand;
             }
             catch (Exception exc)
             {

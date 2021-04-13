@@ -37,7 +37,6 @@ namespace YagnaSharpApi.Engine.MarketStrategy
             {
                 // decorate demand with additional props or constraints necessary to execute the strategy
                 await this.DecorateDemandAsync(demand);
-
                 subscription = await this.Repository.SubscribeDemandAsync(demand.Properties, demand.Constraints);
                 this.OnMarketEvent?.Invoke(this, new SubscriptionCreated(subscription));
 
