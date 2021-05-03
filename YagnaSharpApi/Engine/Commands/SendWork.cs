@@ -6,9 +6,8 @@ using YagnaSharpApi.Storage;
 
 namespace YagnaSharpApi.Engine.Commands
 {
-    public abstract class SendWork : WorkItem
+    public abstract class SendWork : IndexedWorkItem
     {
-        public int Index { get; set; }
         protected ISource src;
         protected string destPath;
         protected IInputStorageProvider storage;
@@ -33,7 +32,7 @@ namespace YagnaSharpApi.Engine.Commands
 
         public override void Register(ExeScriptBuilder commands)
         {
-            this.Index = commands.Transfer(this.src.DownloadUrl(), $"container:{this.destPath}");
+            this.CommandIndex = commands.Transfer(this.src.DownloadUrl(), $"container:{this.destPath}");
         }
     }
 }

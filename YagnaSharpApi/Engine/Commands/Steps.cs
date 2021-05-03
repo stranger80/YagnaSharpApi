@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Golem.ActivityApi.Client.Model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,25 @@ namespace YagnaSharpApi.Engine.Commands
             foreach (var step in steps)
             {
                 await step.Post();
+            }
+        }
+
+        public override void StoreResult(ExeScriptCommandResult result)
+        {
+            foreach (var step in steps)
+            {
+                step.StoreResult(result);
+            }
+        }
+
+        public override IEnumerable<ExeScriptCommandResult> GetResults()
+        {
+            foreach(var step in this.steps)
+            {
+                foreach(var result in step.GetResults())
+                {
+                    yield return result;
+                }
             }
         }
     }
