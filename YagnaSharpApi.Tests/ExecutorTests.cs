@@ -72,8 +72,13 @@ namespace YagnaSharpApi.Tests
                 await foreach (var task in tasks)
                 {
                     System.Diagnostics.Debug.WriteLine("Starting Task Body...");
-                    ctx.Prepare();  // force the init steps to be added to exescript (DEPLOY/START)
+                    var initStep = ctx.Prepare();  // force the init steps to be added to exescript (DEPLOY/START)
                     yield return ctx.Commit();
+
+                    // assert that the command results have been recorded
+                    Assert.IsNotNull(initStep.DeployResult);
+                    Assert.IsNotNull(initStep.StartResult);
+
                     // always accept
                     System.Diagnostics.Debug.WriteLine("Accepting Task results...");
                     task.AcceptTask("dummy");

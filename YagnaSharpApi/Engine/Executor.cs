@@ -283,6 +283,27 @@ namespace YagnaSharpApi.Engine
             this.OnExecutorEvent?.Invoke(this, new SubmitFinished());
         }
 
+        /// <summary>
+        /// Runs a service of type specified by generic parameter, 
+        /// in a number of instances indicated by numInstances param.
+        /// 
+        /// 
+        /// </summary>
+        /// <typeparam name="Service"></typeparam>
+        /// <param name="numInstances"></param>
+        /// <returns>Collection of Instances of the Service class which had been launched.</returns>
+        public async IAsyncEnumerable<Service> RunServiceAsync<Service>(int numInstances = 1) 
+            where Service : ServiceBase, new()
+        {
+            // TODO : handle the long running service execution
+            for (int i = 0; i < numInstances; i++)
+            {
+                var service = new Service();
+
+                yield return service;
+            }
+        }
+
         protected async Task<IEnumerable<AllocationEntity>> CreateAllocationsAsync()
         {
             var result = new List<AllocationEntity>();
@@ -447,6 +468,8 @@ namespace YagnaSharpApi.Engine
 
                     await foreach (var result in commandResults)
                     {
+                        batch.StoreResult(result);
+
                         // TODO raise command executed event
                         if (result.Result == Golem.ActivityApi.Client.Model.ExeScriptCommandResult.ResultEnum.Error)
                             throw new CommandExecutionException(commands[result.Index], result); 
