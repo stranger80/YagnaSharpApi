@@ -40,7 +40,7 @@ namespace YagnaSharpApi.Examples
 
             yield return ctx.Commit(); 
 
-            var deployResult = deployStep.Result;
+            var deployResult = await deployStep;
 
             this.rpcEndpointUrl = deployResult.Stdout; // just as simplistic example, in reality Deploy would return a JSON which would need ot be parsed
         }
