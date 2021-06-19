@@ -6,7 +6,7 @@ namespace YagnaSharpApi.Utils
 {
     public class VmRequestBuilder
     {
-        protected const string DEFAULT_REPO_URL = "http://3.249.139.167:8000";
+        protected const string DEFAULT_REPO_URL = "http://yacn2.dev.golem.network:8000";//"http://3.249.139.167:8000";
 
         public static IPackage Repo(string imageHash, decimal minMemGiB = 0.5m, decimal minStorageGiB = 2.0m)
         {

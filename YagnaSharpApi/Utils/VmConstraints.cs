@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace YagnaSharpApi.Utils
@@ -22,9 +23,9 @@ namespace YagnaSharpApi.Utils
 
         public override string ToString()
         {
-            var rules = $"({Properties.INF_MEM_GIB}>={this.MinMemGiB})" +
-                        $"({Properties.INF_STORAGE_GIB}>={this.MinStorageGiB})" +
-                        $"({Properties.INF_CPU_CORES}>={this.Cores})" + 
+            var rules = $"({Properties.INF_MEM_GIB}>={this.MinMemGiB.ToString(CultureInfo.InvariantCulture)})" +
+                        $"({Properties.INF_STORAGE_GIB}>={this.MinStorageGiB.ToString(CultureInfo.InvariantCulture)})" +
+                        $"({Properties.INF_CPU_CORES}>={this.Cores.ToString(CultureInfo.InvariantCulture)})" + 
                         $"({Properties.RUNTIME_NAME}={this.RuntimeName})";
 
             return $"(&{rules})";

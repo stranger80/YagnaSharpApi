@@ -47,7 +47,7 @@ namespace YagnaSharpApi.Examples
 
         static void Main(string[] args)
         {
-            Task.Run(async () => await MainAsync(args[0]));
+            Task.Run(async () => await MainAsync(args[0])).Wait();
         }
 
         static async Task MainAsync(string subnetTag)
