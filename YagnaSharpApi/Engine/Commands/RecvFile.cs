@@ -6,9 +6,8 @@ using YagnaSharpApi.Storage;
 
 namespace YagnaSharpApi.Engine.Commands
 {
-    public class RecvFile : WorkItem
+    public class RecvFile : IndexedWorkItem
     {
-        public int Index { get; set; }
         protected IOutputStorageProvider storage;
         protected string srcPath;
         protected string destPath;
@@ -28,7 +27,7 @@ namespace YagnaSharpApi.Engine.Commands
 
         public override void Register(ExeScriptBuilder commands)
         {
-            this.Index = commands.Transfer($"container:{this.srcPath}", this.destSlot.UploadUrl());
+            this.CommandIndex = commands.Transfer($"container:{this.srcPath}", this.destSlot.UploadUrl());
         }
 
         public async override Task Post()
