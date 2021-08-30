@@ -25,7 +25,7 @@ namespace YagnaSharpApi.Tests
             var config = new ApiConfiguration();
 
             if(withApiKey)
-                config.AppKey = Environment.GetEnvironmentVariable("YAGNA_APP_KEY") ?? "e3f31abc20ac4ea19513d0d7089b79ac";
+                config.AppKey = Environment.GetEnvironmentVariable("YAGNA_APPKEY") ?? "e3f31abc20ac4ea19513d0d7089b79ac";
 
             var factory = new ApiFactory(config);
 

@@ -15,14 +15,13 @@ namespace YagnaSharpApi.Engine.Commands
 
         private ExeScriptCommandResult Result;
 
+        public IndexedWorkItem()
+        {
+            this.resultTaskCompletionSource = new TaskCompletionSource<ExeScriptCommandResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+        }
 
         public TaskAwaiter<ExeScriptCommandResult> GetAwaiter()
         {
-            if (this.resultTaskCompletionSource == null)
-            {
-                this.resultTaskCompletionSource = new TaskCompletionSource<ExeScriptCommandResult>(TaskCreationOptions.RunContinuationsAsynchronously);
-            }
-
             return this.resultTaskCompletionSource.Task.GetAwaiter();
         }
 
@@ -33,7 +32,7 @@ namespace YagnaSharpApi.Engine.Commands
                 this.Result = result;
                 if (this.resultTaskCompletionSource != null)
                 {
-                    this.resultTaskCompletionSource.SetResult(result);
+                    this.resultTaskCompletionSource.TrySetResult(result);
                 }
             }
         }

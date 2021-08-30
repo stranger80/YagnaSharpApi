@@ -15,6 +15,7 @@ using YagnaSharpApi.Mapper;
 using YagnaSharpApi.Repository;
 using YagnaSharpApi.Storage;
 using YagnaSharpApi.Utils;
+using Golem.ActivityApi.Client.Model;
 
 namespace YagnaSharpApi.Engine
 {
@@ -31,7 +32,11 @@ namespace YagnaSharpApi.Engine
         public IActivityRepository ActivityRepository { get; set; }
         public IPaymentRepository PaymentRepository { get; set; }
 
-
+        protected Engine Engine;
+        /// <summary>
+        /// Indicates if the Engine has been created by Executor (in which case it must also be disposed by Executor)
+        /// </summary>
+        protected bool shouldDisposeEngine = false; 
         protected IDictionary<string, InvoiceEntity> InvoicesByAgreementId = new ConcurrentDictionary<string, InvoiceEntity>();
         protected HashSet<string> AgreementsToPay = new HashSet<string>();
         protected ConcurrentBag<AllocationEntity> Allocations = new ConcurrentBag<AllocationEntity>();
@@ -55,8 +60,18 @@ namespace YagnaSharpApi.Engine
             MapConfig.Init();
         }
 
+
+
+
+        public Executor(Engine engine, IPackage package, int maxWorkers, decimal budget, int timeout, string subnetTag, ApiConfiguration config = default, IMarketStrategy marketStrategy = null)
+            : this(package, maxWorkers, budget, timeout, subnetTag, config, marketStrategy, engine)
+        {
+            
+        }
+
+
         /// <summary>
-        /// 
+        /// Obsolete constructor
         /// </summary>
         /// <param name="package"></param>
         /// <param name="maxWorkers"></param>
@@ -64,7 +79,7 @@ namespace YagnaSharpApi.Engine
         /// <param name="timeout">in seconds</param>
         /// <param name="subnetTag"></param>
         /// <param name="marketStrategy"></param>
-        public Executor(IPackage package, int maxWorkers, decimal budget, int timeout, string subnetTag, ApiConfiguration config = default, IMarketStrategy marketStrategy = null)
+        public Executor(IPackage package, int maxWorkers, decimal budget, int timeout, string subnetTag, ApiConfiguration config = default, IMarketStrategy marketStrategy = null, Engine engine = null)
         {
             this.Configuration = config ?? new ApiConfiguration();
             var apiFactory = new ApiFactory(this.Configuration);
@@ -88,6 +103,16 @@ namespace YagnaSharpApi.Engine
 
             this.maxWorkers = maxWorkers;
             this.SubnetTag = subnetTag;
+
+            if (engine == null)
+            {
+                // TODO it is deprecated to use the Executor as standalone
+                this.Engine = new Engine(budget, subnetTag, config, marketStrategy);
+            }
+            else
+            {
+                this.Engine = engine;
+            }
 
             // TODO setup event handlers for all the above
             this.MarketStrategy.OnMarketEvent += MarketStrategy_OnMarketEvent;
@@ -131,7 +156,7 @@ namespace YagnaSharpApi.Engine
                 }
 
                 // 1. Create Allocations
-                var allocations = await this.CreateAllocationsAsync();
+                var allocations = await this.Engine.CreateAllocationsAsync();
 
                 if (!allocations.Any())
                     throw new Exception("No payment accounts. Did you forget to run 'yagna payment init --sender'?");
@@ -169,7 +194,7 @@ namespace YagnaSharpApi.Engine
                 var findOffersTask = Task.Run(() => FindOffersAsync(demand, this.cancellationTokenSource.Token));
 
                 // 5. Start ProcessInvoices thread (with cancellation token!)
-                var processInvoicesTask = Task.Run(() => ProcessInvoicesAsync(this.cancellationTokenSource.Token));
+                var processInvoicesTask = Task.Run(() => this.Engine.ProcessInvoicesAsync(this.cancellationTokenSource.Token));
 
                 // 6. Start the Worker Starter thread on input task collection (wrapped so that a completed task adds itself to the "doneQueue") 
                 // (with cancellation token!)
@@ -304,34 +329,6 @@ namespace YagnaSharpApi.Engine
             }
         }
 
-        protected async Task<IEnumerable<AllocationEntity>> CreateAllocationsAsync()
-        {
-            var result = new List<AllocationEntity>();
-
-            var accounts = await this.PaymentRepository.GetAccountsAsync();
-
-            foreach(var account in accounts)
-            {
-                try
-                {
-                    var allocation = await this.PaymentRepository.CreateAllocationAsync(
-                        account.Address,
-                        account.Platform,
-                        this.Budget,
-                        this.Expires.AddSeconds(this.Configuration.InvoiceTimeout));
-
-                    result.Add(allocation);
-                    this.OnExecutorEvent?.Invoke(this, new AllocationCreated(allocation.AllocationId));
-                }
-                catch (Exception exc)
-                {
-                    this.OnExecutorEvent?.Invoke(this, new AllocationFailed(exc));
-                }
-            }
-
-            return result;
-        }
-
         /// <summary>
         /// Logic to subscribe the Demand on the market and process incoming Offer proposals
         /// NOTE: this also includes "negotiation" of the payment platform.
@@ -407,7 +404,7 @@ namespace YagnaSharpApi.Engine
             ActivityEntity activity = null;
             try
             {
-                activity = await this.ActivityRepository.CreateActivityAsync(bufferedAgreement.Agreement);
+                activity = await this.Engine.CreateActivityAsync(bufferedAgreement.Agreement);
             }
             catch(Exception exc)
             {
@@ -418,7 +415,7 @@ namespace YagnaSharpApi.Engine
 
             this.OnExecutorEvent?.Invoke(this, new ActivityCreated(bufferedAgreement.Agreement.AgreementId, activity.ActivityId));
 
-            var workContext = new WorkContext($"worker-{this.workerId++}", this.StorageProvider /* , TODO add NodeInfo here */);
+            var workContext = new WorkContext($"worker-{this.workerId++}", this.StorageProvider, new NodeInfo(bufferedAgreement.Agreement));
 
             // "wrap" the data task collection with logic that for each fetched task will put the task into the queue 
             // that monitors task execution, handles retries, etc. 
@@ -471,7 +468,7 @@ namespace YagnaSharpApi.Engine
                         batch.StoreResult(result);
 
                         // TODO raise command executed event
-                        if (result.Result == Golem.ActivityApi.Client.Model.ExeScriptCommandResult.ResultEnum.Error)
+                        if (result.Result == ExeScriptCommandResult.ResultEnum.Error)
                             throw new CommandExecutionException(commands[result.Index], result); 
                     }
 
@@ -479,7 +476,7 @@ namespace YagnaSharpApi.Engine
                     await batch.Post();
                     this.OnExecutorEvent?.Invoke(this, new ScriptFinished(bufferedAgreement.Agreement.AgreementId, currentTask.Id));
 
-                    await this.AcceptPaymentForAgreement(bufferedAgreement.Agreement.AgreementId, true);
+                    await this.Engine.AcceptPaymentForAgreement(bufferedAgreement.Agreement.AgreementId, true);
 
                 }
                 catch (CommandExecutionException exc) // in case of command error - throw the exception up...
@@ -499,29 +496,11 @@ namespace YagnaSharpApi.Engine
 
             }
             System.Diagnostics.Debug.WriteLine($"finishing Worker Task {Task.CurrentId}..");
-            await this.AcceptPaymentForAgreement(bufferedAgreement.Agreement.AgreementId);
+            await this.Engine.AcceptPaymentForAgreement(bufferedAgreement.Agreement.AgreementId);
             System.Diagnostics.Debug.WriteLine($"Accepted payment in Worker Task {Task.CurrentId}..");
 
             this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement.AgreementId));
             System.Diagnostics.Debug.WriteLine($"finished Worker Task {Task.CurrentId}..");
-        }
-
-        protected async Task AcceptPaymentForAgreement(string agreementId, bool partial = false)
-        {
-            this.OnExecutorEvent?.Invoke(this, new PaymentPrepared(agreementId));
-
-            if (!this.InvoicesByAgreementId.ContainsKey(agreementId))
-            {
-                this.AgreementsToPay.Add(agreementId);
-                this.OnExecutorEvent?.Invoke(this, new PaymentQueued(agreementId));
-                return;
-            }
-            InvoiceEntity invoice = this.InvoicesByAgreementId[agreementId];
-            this.InvoicesByAgreementId.Remove(agreementId);
-
-            var allocation = this.GetAllocationForInvoice(invoice);
-            await invoice.AcceptAsync(invoice.Amount, allocation);
-            this.OnExecutorEvent?.Invoke(this, new PaymentAccepted(agreementId, invoice.InvoiceId, invoice.Amount));
         }
 
         protected AllocationEntity GetAllocationForInvoice(InvoiceEntity invoice)
@@ -536,58 +515,6 @@ namespace YagnaSharpApi.Engine
             return result;
         }
 
-        protected async Task ProcessInvoicesAsync(CancellationToken cancellationToken /* pass objects to collect stats */)
-        {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                try
-                {
-                    await foreach (var invoiceEvent in this.PaymentRepository.GetInvoiceEventsAsync(cancellationToken))
-                    {
-                        if (this.AgreementsToPay.Contains(invoiceEvent.Invoice?.AgreementId))
-                        {
-                            this.OnExecutorEvent?.Invoke(this, new InvoiceReceived(
-                                invoiceEvent.Invoice.AgreementId,
-                                invoiceEvent.Invoice.InvoiceId,
-                                invoiceEvent.Invoice.Amount));
-                            var allocation = this.GetAllocationForInvoice(invoiceEvent.Invoice);
-
-                            try
-                            {
-                                await invoiceEvent.Invoice?.AcceptAsync(invoiceEvent.Invoice.Amount, allocation);
-
-                                this.AgreementsToPay.Remove(invoiceEvent.Invoice?.AgreementId);
-                                this.OnExecutorEvent?.Invoke(this, new InvoiceAccepted(
-                                    invoiceEvent.Invoice.AgreementId,
-                                    invoiceEvent.Invoice.InvoiceId,
-                                    invoiceEvent.Invoice.Amount));
-                            }
-                            catch (Exception exc)
-                            {
-                                this.OnExecutorEvent?.Invoke(this, new PaymentFailed(
-                                    invoiceEvent.Invoice.AgreementId,
-                                    exc));
-
-                            }
-                        }
-                        else
-                        {
-                            this.InvoicesByAgreementId[invoiceEvent.Invoice.AgreementId] = invoiceEvent.Invoice;
-                        }
-                    }
-                }
-                catch(Exception exc)
-                {
-                    // TODO log the warning and start again
-                }
-            }
-        }
-
-        protected async Task ProcessDebitNotesAsync(CancellationToken cancellationToken /* pass objects to collect stats */)
-        {
-            // TODO
-        }
-
 
 
         #region Dispose
@@ -598,6 +525,9 @@ namespace YagnaSharpApi.Engine
             {
                 if (disposing)
                 {
+                    if (this.shouldDisposeEngine)
+                        this.Engine.Dispose();
+
                     this.cancellationTokenSource.Cancel();
 
                     this.MarketRepository.Dispose();

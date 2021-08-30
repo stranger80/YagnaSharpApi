@@ -48,7 +48,17 @@ namespace YagnaSharpApi.Engine
         {
             commands.Add(
                 new RunCommand(
-                    new RunCommandBody(entryPoint, args.ToList())
+                    new RunCommandBody(entryPoint, args.ToList(), new Capture()  // default settings of stdout/stderr
+                    {
+                        Stdout = new CaptureMode()
+                        {
+                            Stream = new CaptureStreamBody()
+                        },
+                        Stderr = new CaptureMode()
+                        {
+                            Stream = new CaptureStreamBody()
+                        }
+                    })
                     )
                 );
 

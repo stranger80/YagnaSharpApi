@@ -13,11 +13,15 @@ namespace YagnaSharpApi.Engine
         protected StorageProvider storage;
         protected bool started = false;
         protected List<WorkItem> pendingSteps = new List<WorkItem>();
+        public NodeInfo NodeInfo { get; set; }
 
-        public WorkContext(string ctxId, StorageProvider storage)
+        public string ProviderName { get => this.NodeInfo?.Name; } 
+
+        public WorkContext(string ctxId, StorageProvider storage, NodeInfo nodeInfo)
         {
             this.CtxId = ctxId;
             this.storage = storage;
+            this.NodeInfo = nodeInfo;
         }
 
         /// <summary>
@@ -95,9 +99,9 @@ namespace YagnaSharpApi.Engine
             return recvFile;
         }
 
-        public WorkItem Commit()
+        public BatchWorkItem Commit()
         {
-            var result = new Steps(this.pendingSteps);
+            var result = new BatchWorkItem(this.pendingSteps);
             this.pendingSteps = new List<WorkItem>();
             return result;
         }

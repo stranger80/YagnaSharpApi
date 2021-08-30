@@ -40,24 +40,32 @@ namespace Golem.ActivityApi.Client.Model
         /// </summary>
         /// <param name="entryPoint">entryPoint (required).</param>
         /// <param name="args">args.</param>
-        public RunCommandBody(string entryPoint = default(string), List<string> args = default(List<string>))
+        /// <param name="capture">capture.</param>
+        public RunCommandBody(string entryPoint = default(string), List<string> args = default(List<string>), Capture capture = default(Capture))
         {
             // to ensure "entryPoint" is required (not null)
-            this.EntryPoint = entryPoint ?? throw new ArgumentNullException("entryPoint is a required property for RunCommandBody and cannot be null");;
+            this.EntryPoint = entryPoint ?? throw new ArgumentNullException("entryPoint is a required property for RunCommandBody and cannot be null");
             this.Args = args;
+            this.Capture = capture;
         }
         
         /// <summary>
         /// Gets or Sets EntryPoint
         /// </summary>
-        [DataMember(Name="entry_point", EmitDefaultValue=false)]
+        [DataMember(Name = "entry_point", IsRequired = true, EmitDefaultValue = false)]
         public string EntryPoint { get; set; }
 
         /// <summary>
         /// Gets or Sets Args
         /// </summary>
-        [DataMember(Name="args", EmitDefaultValue=false)]
+        [DataMember(Name = "args", EmitDefaultValue = false)]
         public List<string> Args { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Capture
+        /// </summary>
+        [DataMember(Name = "capture", EmitDefaultValue = false)]
+        public Capture Capture { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -69,6 +77,7 @@ namespace Golem.ActivityApi.Client.Model
             sb.Append("class RunCommandBody {\n");
             sb.Append("  EntryPoint: ").Append(EntryPoint).Append("\n");
             sb.Append("  Args: ").Append(Args).Append("\n");
+            sb.Append("  Capture: ").Append(Capture).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -113,6 +122,11 @@ namespace Golem.ActivityApi.Client.Model
                     this.Args != null &&
                     input.Args != null &&
                     this.Args.SequenceEqual(input.Args)
+                ) && 
+                (
+                    this.Capture == input.Capture ||
+                    (this.Capture != null &&
+                    this.Capture.Equals(input.Capture))
                 );
         }
 
@@ -129,6 +143,8 @@ namespace Golem.ActivityApi.Client.Model
                     hashCode = hashCode * 59 + this.EntryPoint.GetHashCode();
                 if (this.Args != null)
                     hashCode = hashCode * 59 + this.Args.GetHashCode();
+                if (this.Capture != null)
+                    hashCode = hashCode * 59 + this.Capture.GetHashCode();
                 return hashCode;
             }
         }

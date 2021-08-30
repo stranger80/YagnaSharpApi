@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using YagnaSharpApi.Engine.Commands;
 
 namespace YagnaSharpApi.Engine.Events
 {
@@ -9,10 +10,13 @@ namespace YagnaSharpApi.Engine.Events
     {
         public string AgreementId { get; set; }
 
-        public ScriptFinished(string agreementId, string taskId)
+        public WorkItem CommandBatch { get; set; }
+
+        public ScriptFinished(string agreementId, string taskId, WorkItem commandBatch = default(WorkItem))
         {
             this.AgreementId = agreementId;
             this.TaskId = taskId;
+            this.CommandBatch = commandBatch;
         }
     }
 }
