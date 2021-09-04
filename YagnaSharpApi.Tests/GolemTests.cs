@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using YagnaSharpApi.Engine;
 using YagnaSharpApi.Engine.Commands;
@@ -12,48 +13,45 @@ using YagnaSharpApi.Engine.Events;
 using YagnaSharpApi.Engine.MarketStrategy;
 using YagnaSharpApi.Mapper;
 using YagnaSharpApi.Repository;
+using YagnaSharpApi.Tests.Services;
 using YagnaSharpApi.Utils;
 
 namespace YagnaSharpApi.Tests
 {
     [TestClass]
-    [Obsolete]
-    public class ExecutorTests
+    public class GolemTests
     {
         public TestUtils Utils { get; set; } = new TestUtils();
         public MarketStrategyTests MarketStrategyTests { get; set; } = new MarketStrategyTests();
 
         public List<Event> EventList { get; set; } = new List<Event>();
 
-        static ExecutorTests()
+        static GolemTests()
         {
             MapConfig.Init();
         }
 
-        protected async Task DoExecutorRunAsync<Input, Output>(
+        protected async Task DoGolemRunTaskAsync<Input, Output>(
             Func<WorkContext, IAsyncEnumerable<GolemTask<Input, Output>>, IAsyncEnumerable<WorkItem>> workerFunc,
             IEnumerable<GolemTask<Input, Output>> data,
             Action assertions,
             int timeoutSeconds = 360)
         {
-            var package = VmRequestBuilder.Repo(
-                "9a3b5d67b0b27746283cb5f287c13eab1beaa12d92a9f536b747c7ae",
+            var payload = VmRequestBuilder.Repo(
+                TestConstants.VM_TASK_DEFAULT_PAYLOAD_HASH,
                 0.5m,
                 2.0m
                 );
 
 
-            using (var executor = new Engine.Executor(
-                package,
-                1,
-                data.Count() * 5,
-                timeoutSeconds, 
+            using (var golem = new Engine.Golem(
+                1.0m, 
                 TestConstants.SUBNET_TAG))
             {
-                executor.OnExecutorEvent += Executor_OnExecutorEvent;
+                golem.OnExecutorEvent += Golem_OnExecutorEvent;
                 var inputTasks = data.ToList();
 
-                await foreach (var task in executor.SubmitAsync(workerFunc, inputTasks))
+                await foreach (var task in golem.ExecuteTasksAsync(workerFunc, inputTasks, payload))
                 {
                     Console.WriteLine($"{TextColorConstants.TEXT_COLOR_CYAN}Task computed: {task}, result: {task.Result}{TextColorConstants.TEXT_COLOR_DEFAULT}");
                 }
@@ -64,7 +62,43 @@ namespace YagnaSharpApi.Tests
         }
 
         [TestMethod]
-        public async Task Executor_RunsOneWorkerNoActionTask()
+        public async Task Golem_RunsOneWorkerOneActionTask()
+        {
+            var acceptedTasks = new List<GolemTask<object, string>>();
+
+            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<object, string>> tasks)
+            {
+                await foreach (var task in tasks)
+                {
+                    System.Diagnostics.Debug.WriteLine("Starting Task Body...");
+
+                    ctx.Run("/bin/sh", "-c", "date");
+                    var workItem = ctx.Commit();
+                    yield return workItem;
+
+                    var results = await workItem;
+
+                    // always accept
+                    System.Diagnostics.Debug.WriteLine("Accepting Task results...");
+                    
+                    task.AcceptTask(results[^1]?.Stdout);
+                    acceptedTasks.Add(task);
+                    System.Diagnostics.Debug.WriteLine("Accepted Task results...");
+                }
+
+            }
+
+            // one data set
+            var data = Enumerable.Range(0, 1).Select(item => new GolemTask<object, string>(null)).ToList();
+
+            await this.DoGolemRunTaskAsync(ProcessGolemTasksAsync, data, () =>
+            {
+                Assert.AreEqual(data.Count(), acceptedTasks.Count);
+            });
+        }
+
+        [TestMethod]
+        public async Task Golem_RunsOneWorkerNoActionTask()
         {
             List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
 
@@ -92,14 +126,14 @@ namespace YagnaSharpApi.Tests
             // one data set
             var data = Enumerable.Range(0, 1).Select(item => new GolemTask<int, string>(item * 10)).ToList();
 
-            await this.DoExecutorRunAsync(ProcessGolemTasksAsync, data, () =>
+            await this.DoGolemRunTaskAsync(ProcessGolemTasksAsync, data, () =>
             {
                 Assert.AreEqual(data.Count(), acceptedTasks.Count);
             });
         }
 
         [TestMethod]
-        public async Task Executor_RunsOneWorkerFileTransferInOutTask()
+        public async Task Golem_RunsOneWorkerTaskFileTransferInOutTask()
         {
             List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
 
@@ -123,7 +157,7 @@ namespace YagnaSharpApi.Tests
             // one data set
             var data = Enumerable.Range(0, 1).Select(item => new GolemTask<int, string>(item * 10)).ToList();
 
-            await this.DoExecutorRunAsync(ProcessGolemTasksAsync, data, () =>
+            await this.DoGolemRunTaskAsync(ProcessGolemTasksAsync, data, () =>
             {
                 Assert.AreEqual(data.Count(), acceptedTasks.Count);
                 Assert.IsTrue(File.Exists("output.file"));
@@ -133,7 +167,7 @@ namespace YagnaSharpApi.Tests
         }
 
         [TestMethod]
-        public async Task Executor_RunsOneWorkerBlenderFrameTask()
+        public async Task Golem_RunsOneWorkerTaskBlenderFrameTask()
         {
             List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
 
@@ -173,7 +207,7 @@ namespace YagnaSharpApi.Tests
             // one data set
             var data = Enumerable.Range(0, 1).Select(item => new GolemTask<int, string>(item * 10)).ToList();
 
-            await this.DoExecutorRunAsync(ProcessGolemTasksAsync, data, () =>
+            await this.DoGolemRunTaskAsync(ProcessGolemTasksAsync, data, () =>
             {
                 Assert.AreEqual(data.Count(), acceptedTasks.Count);
                 Assert.IsTrue(File.Exists("output_0.png"));
@@ -183,7 +217,7 @@ namespace YagnaSharpApi.Tests
 
 
         [TestMethod]
-        public async Task Executor_FailsGracefullyForExeScriptLocalError()
+        public async Task Golem_FailsTaskGracefullyForExeScriptLocalError()
         {
             List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
 
@@ -223,10 +257,10 @@ namespace YagnaSharpApi.Tests
             // one data set
             var data = Enumerable.Range(0, 1).Select(item => new GolemTask<int, string>(item * 10)).ToList();
 
-            await this.DoExecutorRunAsync(ProcessGolemTasksAsync, data, () =>
+            await this.DoGolemRunTaskAsync(ProcessGolemTasksAsync, data, () =>
             {
                 Assert.AreEqual(0, acceptedTasks.Count);
-                
+
                 // assertion to verify that a WorkerFinished event was observed, which had FileNotFoundException recorded
                 var workerFinishedEvent = this.EventList.LastOrDefault(ev => ev is WorkerFinished) as WorkerFinished;
 
@@ -237,7 +271,44 @@ namespace YagnaSharpApi.Tests
             600);
         }
 
-        private void Executor_OnExecutorEvent(object sender, Event e)
+        [TestMethod]
+        public async Task Golem_RunsOneService()
+        {
+
+            using (var golem = new Engine.Golem(
+                1.0m,
+                TestConstants.SUBNET_TAG))
+            {
+                var events = new List<Event>();
+
+                // add event listener to collect events - we will be making assertions on events later
+                golem.OnExecutorEvent += (sender, e) => { events.Add(e); };
+
+                var cluster = await golem.RunServicesAsync<DateService>();
+
+                var startDate = DateTime.Now;
+
+                while (DateTime.Now < startDate.AddSeconds(30))
+                {
+                    foreach (var instance in cluster.Instances)
+                        Debug.WriteLine($"Instance {instance.Id} is {instance.State} on {instance.ProviderName}");
+                    Thread.Sleep(5000);
+                }
+
+                Assert.IsTrue(events.Any(ev => ev is ScriptFinished));
+                Assert.IsTrue(
+                    (events.LastOrDefault(ev => ev is ScriptFinished) as ScriptFinished)?
+                    .CommandBatch
+                    .GetResults()
+                    .LastOrDefault()?
+                    .Stdout != null);
+
+            }
+
+        }
+
+
+        private void Golem_OnExecutorEvent(object sender, Event e)
         {
             switch(e)
             {

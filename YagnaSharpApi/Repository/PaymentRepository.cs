@@ -27,7 +27,7 @@ namespace YagnaSharpApi.Repository
             this.Mapper = mapper;
         }
 
-        public async Task<AllocationEntity> CreateAllocationAsync(string address, string platform, decimal amount, DateTime? expires, bool makeDeposit = false)
+        public async Task<AllocationEntity> CreateAllocationAsync(string address, string platform, decimal amount, DateTime? expires = null, bool makeDeposit = false)
         {
             var allocationTimeout = expires ?? DateTime.Now.AddMinutes(30);
             var allocation = new Allocation(address, platform, $"{amount}", allocationTimeout, makeDeposit);

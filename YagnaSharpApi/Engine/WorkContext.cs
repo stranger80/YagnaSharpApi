@@ -13,49 +13,95 @@ namespace YagnaSharpApi.Engine
         protected StorageProvider storage;
         protected bool started = false;
         protected List<WorkItem> pendingSteps = new List<WorkItem>();
+        public NodeInfo NodeInfo { get; set; }
 
-        public WorkContext(string ctxId, StorageProvider storage)
+        public string ProviderName { get => this.NodeInfo?.Name; } 
+
+        public WorkContext(string ctxId, StorageProvider storage, NodeInfo nodeInfo)
         {
             this.CtxId = ctxId;
             this.storage = storage;
+            this.NodeInfo = nodeInfo;
         }
 
-        public void Prepare()
+        /// <summary>
+        /// Adds an InitStep to the batch, if the batch hasn't yet included a starting command.
+        /// Otherwise it returns null.
+        /// </summary>
+        /// <returns></returns>
+        public InitStep Prepare()
         {
             if(! this.started)
             {
-                this.pendingSteps.Add(new InitStep());
+                var initStep = new InitStep();
+                this.pendingSteps.Add(initStep);
                 this.started = true;
+                return initStep;
             }
+            return null;
         }
 
-        public void SendJson(string destPath, object data)
+        /// <summary>
+        /// Adds DeployStep to the batch (if not started yet).
+        /// </summary>
+        public IndexedWorkItem Deploy()
+        {
+            if (!this.started)
+            {
+                var deployStep = new DeployStep();
+                this.pendingSteps.Add(deployStep);
+                return deployStep;
+            }
+            return null;
+        }
+
+        public IndexedWorkItem Start()
+        {
+            if (!this.started)
+            {
+                var startStep = new StartStep();
+                this.pendingSteps.Add(startStep);
+                this.started = true;
+                return startStep;
+            }
+            return null;
+        }
+
+        public IndexedWorkItem SendJson(string destPath, object data)
         {
             this.Prepare();
-            this.pendingSteps.Add(new SendJson(this.storage, data, destPath));
+            var sendJson = new SendJson(this.storage, data, destPath);
+            this.pendingSteps.Add(sendJson);
+            return sendJson;
         }
 
-        public void SendFile(string srcPath, string destPath)
+        public IndexedWorkItem SendFile(string srcPath, string destPath)
         {
             this.Prepare();
-            this.pendingSteps.Add(new SendFile(this.storage, srcPath, destPath));
+            var sendFile = new SendFile(this.storage, srcPath, destPath);
+            this.pendingSteps.Add(sendFile);
+            return sendFile;
         }
 
-        public void Run(string cmd, params string[] args)
+        public IndexedWorkItem Run(string cmd, params string[] args)
         {
             this.Prepare();
-            this.pendingSteps.Add(new Run(cmd, args));
+            var run = new Run(cmd, args);
+            this.pendingSteps.Add(run);
+            return run;
         }
 
-        public void DownloadFile(string srcPath, string destPath)
+        public IndexedWorkItem DownloadFile(string srcPath, string destPath)
         {
             this.Prepare();
-            this.pendingSteps.Add(new RecvFile(this.storage, srcPath, destPath));
+            var recvFile = new RecvFile(this.storage, srcPath, destPath);
+            this.pendingSteps.Add(recvFile);
+            return recvFile;
         }
 
-        public WorkItem Commit()
+        public BatchWorkItem Commit()
         {
-            var result = new Steps(this.pendingSteps);
+            var result = new BatchWorkItem(this.pendingSteps);
             this.pendingSteps = new List<WorkItem>();
             return result;
         }

@@ -4,9 +4,8 @@ using System.Text;
 
 namespace YagnaSharpApi.Engine.Commands
 {
-    public class Run : WorkItem
+    public class Run : IndexedWorkItem
     {
-        public int Index { get; private set; }
         private string cmd;
         private string[] args;
 
@@ -18,7 +17,7 @@ namespace YagnaSharpApi.Engine.Commands
 
         public override void Register(ExeScriptBuilder commands)
         {
-            this.Index = commands.Run(cmd, args);
+            this.CommandIndex = commands.Run(cmd, args);
         }
     }
 }

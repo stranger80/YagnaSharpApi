@@ -62,7 +62,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                     throw;
                 }
 
-                await using var enumerator = events.GetAsyncEnumerator(cancellationToken);
+                await using (var enumerator = events.GetAsyncEnumerator(cancellationToken))
                 {
 
                     bool more = false;
@@ -106,7 +106,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                                         {
                                             await proposalEvent.Proposal.RejectAsync(reason);
                                         }
-                                        catch(Exception exc)
+                                        catch (Exception exc)
                                         {
                                             // TODO log warning
                                         }
