@@ -38,7 +38,7 @@ namespace YagnaSharpApi.Tests
             int timeoutSeconds = 360)
         {
             var payload = VmRequestBuilder.Repo(
-                "d646d7b93083d817846c2ae5c62c72ca0507782385a2e29291a3d376",
+                TestConstants.VM_TASK_DEFAULT_PAYLOAD_HASH,
                 0.5m,
                 2.0m
                 );
@@ -95,6 +95,180 @@ namespace YagnaSharpApi.Tests
             {
                 Assert.AreEqual(data.Count(), acceptedTasks.Count);
             });
+        }
+
+        [TestMethod]
+        public async Task Golem_RunsOneWorkerNoActionTask()
+        {
+            List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
+
+            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            {
+                await foreach (var task in tasks)
+                {
+                    System.Diagnostics.Debug.WriteLine("Starting Task Body...");
+                    var initStep = ctx.Prepare();  // force the init steps to be added to exescript (DEPLOY/START)
+                    yield return ctx.Commit();
+
+                    // assert that the command results have been recorded
+                    Assert.IsNotNull(initStep.DeployResult);
+                    Assert.IsNotNull(initStep.StartResult);
+
+                    // always accept
+                    System.Diagnostics.Debug.WriteLine("Accepting Task results...");
+                    task.AcceptTask("dummy");
+                    acceptedTasks.Add(task);
+                    System.Diagnostics.Debug.WriteLine("Accepted Task results...");
+                }
+
+            }
+
+            // one data set
+            var data = Enumerable.Range(0, 1).Select(item => new GolemTask<int, string>(item * 10)).ToList();
+
+            await this.DoGolemRunTaskAsync(ProcessGolemTasksAsync, data, () =>
+            {
+                Assert.AreEqual(data.Count(), acceptedTasks.Count);
+            });
+        }
+
+        [TestMethod]
+        public async Task Golem_RunsOneWorkerTaskFileTransferInOutTask()
+        {
+            List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
+
+            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            {
+                await foreach (var task in tasks)
+                {
+                    System.Diagnostics.Debug.WriteLine("Starting Task Body...");
+                    ctx.SendFile("Assets/cubes.blend", "/golem/resource/scene.blend");
+                    ctx.DownloadFile($"/golem/resource/scene.blend", "output.file");
+                    yield return ctx.Commit();
+                    // always accept
+                    System.Diagnostics.Debug.WriteLine("Accepting Task results...");
+                    task.AcceptTask("dummy");
+                    acceptedTasks.Add(task);
+                    System.Diagnostics.Debug.WriteLine("Accepted Task results...");
+                }
+
+            }
+
+            // one data set
+            var data = Enumerable.Range(0, 1).Select(item => new GolemTask<int, string>(item * 10)).ToList();
+
+            await this.DoGolemRunTaskAsync(ProcessGolemTasksAsync, data, () =>
+            {
+                Assert.AreEqual(data.Count(), acceptedTasks.Count);
+                Assert.IsTrue(File.Exists("output.file"));
+                Assert.AreEqual(new FileInfo("Assets\\cubes.blend").Length, new FileInfo("output.file").Length);
+
+            });
+        }
+
+        [TestMethod]
+        public async Task Golem_RunsOneWorkerTaskBlenderFrameTask()
+        {
+            List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
+
+            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            {
+                var scenePath = "Assets/cubes.blend";
+                ctx.SendFile(scenePath, "/golem/resource/scene.blend");
+                await foreach (var task in tasks)
+                {
+                    var frame = task.Data;
+                    ctx.SendJson("/golem/work/params.json",
+                        new
+                        {
+                            scene_file = "/golem/resource/scene.blend",
+                            resolution = new[] { 40, 30 },
+                            use_compositing = false,
+                            crops = new[] { new { outfilebasename = "out", borders_x = new[] { 0.0, 1.0 }, borders_y = new[] { 0.0, 1.0 } } },
+                            samples = 100,
+                            frames = new[] { frame },
+                            output_format = "PNG",
+                            RESOURCES_DIR = "/golem/resources",
+                            WORK_DIR = "/golem/work",
+                            OUTPUT_DIR = "/golem/output"
+                        });
+
+                    ctx.Run("/golem/entrypoints/run-blender.sh");
+                    var outputFile = $"output_{frame}.png";
+                    ctx.DownloadFile($"/golem/output/out{frame:d4}.png", outputFile);
+                    yield return ctx.Commit();
+                    // TODO check if results are valid
+                    task.AcceptTask(outputFile);
+                    acceptedTasks.Add(task);
+                }
+
+            }
+
+            // one data set
+            var data = Enumerable.Range(0, 1).Select(item => new GolemTask<int, string>(item * 10)).ToList();
+
+            await this.DoGolemRunTaskAsync(ProcessGolemTasksAsync, data, () =>
+            {
+                Assert.AreEqual(data.Count(), acceptedTasks.Count);
+                Assert.IsTrue(File.Exists("output_0.png"));
+            },
+            600);
+        }
+
+
+        [TestMethod]
+        public async Task Golem_FailsTaskGracefullyForExeScriptLocalError()
+        {
+            List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
+
+            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            {
+                var scenePath = "nonexistent.path";
+                ctx.SendFile(scenePath, "/golem/resource/scene.blend");
+                await foreach (var task in tasks)
+                {
+                    var frame = task.Data;
+                    ctx.SendJson("/golem/work/params.json",
+                        new
+                        {
+                            scene_file = "/golem/resource/scene.blend",
+                            resolution = new[] { 40, 30 },
+                            use_compositing = false,
+                            crops = new[] { new { outfilebasename = "out", borders_x = new[] { 0.0, 1.0 }, borders_y = new[] { 0.0, 1.0 } } },
+                            samples = 100,
+                            frames = new[] { frame },
+                            output_format = "PNG",
+                            RESOURCES_DIR = "/golem/resources",
+                            WORK_DIR = "/golem/work",
+                            OUTPUT_DIR = "/golem/output"
+                        });
+
+                    ctx.Run("/golem/entrypoints/run-blender.sh");
+                    var outputFile = $"output_{frame}.png";
+                    ctx.DownloadFile($"/golem/output/out{frame:d4}.png", outputFile);
+                    yield return ctx.Commit();
+                    // TODO check if results are valid
+                    task.AcceptTask(outputFile);
+                    acceptedTasks.Add(task);
+                }
+
+            }
+
+            // one data set
+            var data = Enumerable.Range(0, 1).Select(item => new GolemTask<int, string>(item * 10)).ToList();
+
+            await this.DoGolemRunTaskAsync(ProcessGolemTasksAsync, data, () =>
+            {
+                Assert.AreEqual(0, acceptedTasks.Count);
+
+                // assertion to verify that a WorkerFinished event was observed, which had FileNotFoundException recorded
+                var workerFinishedEvent = this.EventList.LastOrDefault(ev => ev is WorkerFinished) as WorkerFinished;
+
+                Assert.IsNotNull(workerFinishedEvent);
+                Assert.IsNotNull(workerFinishedEvent.Exception);
+                Assert.IsTrue(workerFinishedEvent.Exception is FileNotFoundException);
+            },
+            600);
         }
 
         [TestMethod]

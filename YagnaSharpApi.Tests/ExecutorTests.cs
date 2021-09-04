@@ -17,6 +17,7 @@ using YagnaSharpApi.Utils;
 namespace YagnaSharpApi.Tests
 {
     [TestClass]
+    [Obsolete]
     public class ExecutorTests
     {
         public TestUtils Utils { get; set; } = new TestUtils();

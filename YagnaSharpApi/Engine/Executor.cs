@@ -19,6 +19,7 @@ using Golem.ActivityApi.Client.Model;
 
 namespace YagnaSharpApi.Engine
 {
+    [Obsolete]
     public class Executor : IDisposable
     {
         private bool disposedValue;

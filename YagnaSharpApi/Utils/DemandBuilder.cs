@@ -9,7 +9,7 @@ namespace YagnaSharpApi.Utils
     public class DemandBuilder
     {
         private IDictionary<string, object> props = new ConcurrentDictionary<string, object>();
-        private ConcurrentBag<string> constraintRules = new ConcurrentBag<string>();
+        private ConcurrentQueue<string> constraintRules = new ConcurrentQueue<string>();
 
         public IDictionary<string, object> Properties { get { return this.props; } }
         public string Constraints {
@@ -33,7 +33,7 @@ namespace YagnaSharpApi.Utils
         /// <param name="constraints"></param>
         public void Ensure(string constraint)
         {
-            this.constraintRules.Add(constraint);
+            this.constraintRules.Enqueue(constraint);
         }
 
         /// <summary>
