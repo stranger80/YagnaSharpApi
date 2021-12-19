@@ -201,7 +201,7 @@ namespace YagnaSharpApi.Engine
             return await this.ActivityRepository.CreateActivityAsync(agreement);
         }
 
-        public async Task ProcessBatchesAsync(AgreementEntity agreement, ActivityEntity activity, IAsyncEnumerable<WorkItem> commandGenerator, string taskId)
+        public async Task ProcessBatchesAsync(AgreementEntity agreement, ActivityEntity activity, IAsyncEnumerable<Command> commandGenerator, string taskId)
         {
 
             await using (var iter = commandGenerator.GetAsyncEnumerator())
@@ -212,10 +212,10 @@ namespace YagnaSharpApi.Engine
                 {
                     var batch = iter.Current;
 
-                    await batch.Prepare();
+                    await batch.BeforeAsync();
 
                     var commandsBuilder = new ExeScriptBuilder();
-                    batch.Register(commandsBuilder);
+                    batch.Evaluate(commandsBuilder);
 
                     var commands = commandsBuilder.GetCommands();
 
@@ -234,7 +234,7 @@ namespace YagnaSharpApi.Engine
                     }
 
                     this.OnExecutorEvent?.Invoke(this, new GettingResults(agreement.AgreementId, taskId));
-                    await batch.Post();
+                    await batch.AfterAsync();
                     this.OnExecutorEvent?.Invoke(this, new ScriptFinished(agreement.AgreementId, taskId, batch));
 
                     await this.AcceptPaymentForAgreement(agreement.AgreementId, true);

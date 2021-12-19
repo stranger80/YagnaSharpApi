@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace YagnaSharpApi.Engine.Commands
 {
-    public class BatchWorkItem : WorkItem
+    public class BatchCommand : Command
     {
-        protected IEnumerable<WorkItem> steps;
+        protected IEnumerable<Command> steps;
 
         private TaskCompletionSource<ExeScriptCommandResult[]> resultTaskCompletionSource;
 
         private ExeScriptCommandResult[] Results;
 
-        public BatchWorkItem(IEnumerable<WorkItem> steps)
+        public BatchCommand(IEnumerable<Command> steps)
         {
             this.steps = steps;
             this.Results = new ExeScriptCommandResult[steps.Count()];
@@ -35,27 +35,27 @@ namespace YagnaSharpApi.Engine.Commands
         }
 
 
-        public async override Task Prepare()
+        public async override Task BeforeAsync()
         {
             foreach(var step in steps)
             {
-                await step.Prepare();
+                await step.BeforeAsync();
             }
         }
 
-        public override void Register(ExeScriptBuilder commands)
+        public override void Evaluate(ExeScriptBuilder commands)
         {
             foreach (var step in steps)
             {
-                step.Register(commands);
+                step.Evaluate(commands);
             }
         }
 
-        public async override Task Post()
+        public async override Task AfterAsync()
         {
             foreach (var step in steps)
             {
-                await step.Post();
+                await step.AfterAsync();
             }
         }
 

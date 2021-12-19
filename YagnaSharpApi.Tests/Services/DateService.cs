@@ -20,7 +20,7 @@ namespace YagnaSharpApi.Tests.Services
             return VmRequestBuilder.Repo("d646d7b93083d817846c2ae5c62c72ca0507782385a2e29291a3d376"); 
         }
 
-        public async override IAsyncEnumerable<WorkItem> OnStartupAsync(WorkContext ctx)
+        public async override IAsyncEnumerable<Command> OnStartupAsync(WorkContext ctx)
         {
             ctx.Run("/bin/sh",
             "-c",
@@ -29,7 +29,7 @@ namespace YagnaSharpApi.Tests.Services
             yield return ctx.Commit();
         }
 
-        public async override IAsyncEnumerable<WorkItem> OnRunAsync(WorkContext ctx, [EnumeratorCancellation] CancellationToken cancellationToken)
+        public async override IAsyncEnumerable<Command> OnRunAsync(WorkContext ctx, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -50,7 +50,7 @@ namespace YagnaSharpApi.Tests.Services
             }
         }
 
-        public async override IAsyncEnumerable<WorkItem> OnShutdownAsync(WorkContext ctx, Exception error = null)
+        public async override IAsyncEnumerable<Command> OnShutdownAsync(WorkContext ctx, Exception error = null)
         {
             yield break;
         }

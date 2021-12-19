@@ -4,9 +4,9 @@ using System.Text;
 
 namespace YagnaSharpApi.Engine.Commands
 {
-    public class DeployStep : IndexedWorkItem
+    public class DeployStep : IndexedCommand
     {
-        public override void Register(ExeScriptBuilder commands)
+        public override void Evaluate(ExeScriptBuilder commands)
         {
             this.CommandIndex = commands.Deploy();
         }

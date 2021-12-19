@@ -10,10 +10,10 @@ namespace YagnaSharpApi.Examples
 {
 
 
-    class BlenderExample
+    public class BlenderExample : IGolemExample
     {
 
-        static async IAsyncEnumerable<WorkItem> Worker(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+        static async IAsyncEnumerable<Command> Worker(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
         {
             var scenePath = /* scriptDir + */ "/cubes.blend";
             ctx.SendFile(scenePath, "/golem/resource/scene.blend");
@@ -71,6 +71,13 @@ namespace YagnaSharpApi.Examples
                     Console.WriteLine($"{TextColorConstants.TEXT_COLOR_CYAN}Task computed: {task}, result: {task.Result}{TextColorConstants.TEXT_COLOR_DEFAULT}");
                 }
             }
+        }
+
+
+
+        public async Task RunExampleAsync()
+        {
+            await MainAsync(null);
         }
     }
 }

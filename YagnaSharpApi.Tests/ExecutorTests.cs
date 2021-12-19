@@ -31,7 +31,7 @@ namespace YagnaSharpApi.Tests
         }
 
         protected async Task DoExecutorRunAsync<Input, Output>(
-            Func<WorkContext, IAsyncEnumerable<GolemTask<Input, Output>>, IAsyncEnumerable<WorkItem>> workerFunc,
+            Func<WorkContext, IAsyncEnumerable<GolemTask<Input, Output>>, IAsyncEnumerable<Command>> workerFunc,
             IEnumerable<GolemTask<Input, Output>> data,
             Action assertions,
             int timeoutSeconds = 360)
@@ -68,7 +68,7 @@ namespace YagnaSharpApi.Tests
         {
             List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
 
-            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            async IAsyncEnumerable<Command> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
             {
                 await foreach (var task in tasks)
                 {
@@ -103,7 +103,7 @@ namespace YagnaSharpApi.Tests
         {
             List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
 
-            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            async IAsyncEnumerable<Command> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
             {
                 await foreach (var task in tasks)
                 {
@@ -137,7 +137,7 @@ namespace YagnaSharpApi.Tests
         {
             List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
 
-            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            async IAsyncEnumerable<Command> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
             {
                 var scenePath = "Assets/cubes.blend";
                 ctx.SendFile(scenePath, "/golem/resource/scene.blend");
@@ -187,7 +187,7 @@ namespace YagnaSharpApi.Tests
         {
             List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
 
-            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            async IAsyncEnumerable<Command> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
             {
                 var scenePath = "nonexistent.path";
                 ctx.SendFile(scenePath, "/golem/resource/scene.blend");

@@ -31,7 +31,45 @@ namespace YagnaSharpApi.Engine
         /// <param name="budget"></param>
         /// <returns></returns>        
         public async IAsyncEnumerable<GolemTask<TData, TResult>> ExecuteTasksAsync<TData, TResult>(
-            Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<WorkItem>> worker, 
+            Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<Script>> worker,
+            IEnumerable<GolemTask<TData, TResult>> data,
+            IPackage payload,
+            int? maxWorkers = null,
+            int? timeout = null,
+            decimal? budget = null)
+        {
+            using (var executor = new Executor(payload, maxWorkers ?? 1, budget ?? this.Budget, timeout ?? 360, this.SubnetTag, this.Configuration, this.MarketStrategy, this))
+            {
+                executor.OnExecutorEvent += Executor_OnExecutorEvent;
+                try
+                {
+                    await foreach (var result in executor.SubmitAsync(worker, data))
+                        yield return result;
+                }
+                finally
+                {
+                    executor.OnExecutorEvent -= Executor_OnExecutorEvent;
+                }
+
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TData"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="worker"></param>
+        /// <param name="data"></param>
+        /// <param name="payload"></param>
+        /// <param name="maxWorkers"></param>
+        /// <param name="timeout"></param>
+        /// <param name="budget"></param>
+        /// <returns></returns>        
+        [Obsolete]
+        public async IAsyncEnumerable<GolemTask<TData, TResult>> ExecuteTasksAsync<TData, TResult>(
+            Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<Command>> worker, 
             IEnumerable<GolemTask<TData, TResult>> data,
             IPackage payload,
             int? maxWorkers = null,

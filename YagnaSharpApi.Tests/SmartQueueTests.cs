@@ -13,7 +13,7 @@ namespace YagnaSharpApi.Tests
     {
 
 
-        async IAsyncEnumerable<WorkItem> TestWorkerAllSuccessful(IAsyncEnumerable<GolemTask<int, int>> tasks)
+        async IAsyncEnumerable<Command> TestWorkerAllSuccessful(IAsyncEnumerable<GolemTask<int, int>> tasks)
         {
             await foreach (var task in tasks)
             {
@@ -24,7 +24,7 @@ namespace YagnaSharpApi.Tests
 
         }
 
-        async IAsyncEnumerable<WorkItem> TestWorkerRejectOddItems(IAsyncEnumerable<GolemTask<int, int>> tasks)
+        async IAsyncEnumerable<Command> TestWorkerRejectOddItems(IAsyncEnumerable<GolemTask<int, int>> tasks)
         {
             await foreach (var task in tasks)
             {

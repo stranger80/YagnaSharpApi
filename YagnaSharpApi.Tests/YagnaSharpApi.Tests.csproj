@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\YagnaSharpApi.Examples\YagnaSharpApi.Examples.csproj" />
     <ProjectReference Include="..\YagnaSharpApi\YagnaSharpApi.csproj" />
   </ItemGroup>
 

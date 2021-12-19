@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace YagnaSharpApi.Engine.Commands
 {
-    public abstract class WorkItem
+    public abstract class Command
     {
-        public virtual async Task Prepare()
+        public virtual async Task BeforeAsync()
         {
 
         }
 
-        public abstract void Register(ExeScriptBuilder commands);
+        public abstract void Evaluate(ExeScriptBuilder commands);
 
-        public virtual async Task Post()
+        public virtual async Task AfterAsync()
         {
 
         }

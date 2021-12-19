@@ -11,13 +11,15 @@ namespace YagnaSharpApi.Utils
         public const string GVMKIT_SQUASH = "gvmkit-squash";
         public string RepoUrl { get; set; }
         public string ImageHash { get; set; }
+        public string ImageUrl { get; set; }
         public VmConstraints Constraints { get; set; }
 
-        public VmPackage(string repoUrl, string imageHash, VmConstraints constraints)
+        public VmPackage(string repoUrl, string imageHash, VmConstraints constraints, string imageUrl = null)
         {
             this.RepoUrl = repoUrl;
             this.ImageHash = imageHash;
             this.Constraints = constraints;
+            this.ImageUrl = imageUrl;
         }
 
         public async Task DecorateDemandAsync(DemandBuilder builder)
@@ -29,19 +31,26 @@ namespace YagnaSharpApi.Utils
 
         public async Task<string> ResolveUrlAsync()
         {
-            using (var client = new HttpClient())
+            if (this.ImageUrl != null)
             {
-                var linkUrl = $"{this.RepoUrl}/image.{this.ImageHash}.link";
-                var resp = await client.GetAsync(linkUrl);
+                return $"hash:sha3:{this.ImageHash}:{this.ImageUrl}";
+            }
+            else
+            {
+                using (var client = new HttpClient())
+                {
+                    var linkUrl = $"{this.RepoUrl}/image.{this.ImageHash}.link";
+                    var resp = await client.GetAsync(linkUrl);
 
-                if(resp.IsSuccessStatusCode)
-                {
-                    var imageUrl = await resp.Content.ReadAsStringAsync();
-                    return $"hash:sha3:{this.ImageHash}:{imageUrl?.TrimEnd()}";
-                }
-                else
-                {
-                    throw new Exception($"Unable to get package link from url: [{linkUrl}]");
+                    if (resp.IsSuccessStatusCode)
+                    {
+                        var imageUrl = await resp.Content.ReadAsStringAsync();
+                        return $"hash:sha3:{this.ImageHash}:{imageUrl?.TrimEnd()}";
+                    }
+                    else
+                    {
+                        throw new Exception($"Unable to get package link from url: [{linkUrl}]");
+                    }
                 }
             }
         }

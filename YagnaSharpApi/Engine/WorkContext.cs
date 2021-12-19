@@ -10,9 +10,9 @@ namespace YagnaSharpApi.Engine
     public class WorkContext
     {
         public string CtxId { get; private set; }
-        protected StorageProvider storage;
+        public StorageProvider Storage { get; protected set; }
         protected bool started = false;
-        protected List<WorkItem> pendingSteps = new List<WorkItem>();
+        protected List<Command> pendingSteps = new List<Command>();
         public NodeInfo NodeInfo { get; set; }
 
         public string ProviderName { get => this.NodeInfo?.Name; } 
@@ -20,8 +20,13 @@ namespace YagnaSharpApi.Engine
         public WorkContext(string ctxId, StorageProvider storage, NodeInfo nodeInfo)
         {
             this.CtxId = ctxId;
-            this.storage = storage;
+            this.Storage = storage;
             this.NodeInfo = nodeInfo;
+        }
+
+        public Script NewScript()
+        {
+            return new Script(this);
         }
 
         /// <summary>
@@ -29,6 +34,7 @@ namespace YagnaSharpApi.Engine
         /// Otherwise it returns null.
         /// </summary>
         /// <returns></returns>
+        [Obsolete]
         public InitStep Prepare()
         {
             if(! this.started)
@@ -44,7 +50,8 @@ namespace YagnaSharpApi.Engine
         /// <summary>
         /// Adds DeployStep to the batch (if not started yet).
         /// </summary>
-        public IndexedWorkItem Deploy()
+        [Obsolete]
+        public IndexedCommand Deploy()
         {
             if (!this.started)
             {
@@ -55,7 +62,8 @@ namespace YagnaSharpApi.Engine
             return null;
         }
 
-        public IndexedWorkItem Start()
+        [Obsolete]
+        public IndexedCommand Start()
         {
             if (!this.started)
             {
@@ -67,23 +75,26 @@ namespace YagnaSharpApi.Engine
             return null;
         }
 
-        public IndexedWorkItem SendJson(string destPath, object data)
+        [Obsolete]
+        public IndexedCommand SendJson(string destPath, object data)
         {
             this.Prepare();
-            var sendJson = new SendJson(this.storage, data, destPath);
+            var sendJson = new SendJson(this.Storage, data, destPath);
             this.pendingSteps.Add(sendJson);
             return sendJson;
         }
 
-        public IndexedWorkItem SendFile(string srcPath, string destPath)
+        [Obsolete]
+        public IndexedCommand SendFile(string srcPath, string destPath)
         {
             this.Prepare();
-            var sendFile = new SendFile(this.storage, srcPath, destPath);
+            var sendFile = new SendFile(this.Storage, srcPath, destPath);
             this.pendingSteps.Add(sendFile);
             return sendFile;
         }
 
-        public IndexedWorkItem Run(string cmd, params string[] args)
+        [Obsolete]
+        public IndexedCommand Run(string cmd, params string[] args)
         {
             this.Prepare();
             var run = new Run(cmd, args);
@@ -91,18 +102,20 @@ namespace YagnaSharpApi.Engine
             return run;
         }
 
-        public IndexedWorkItem DownloadFile(string srcPath, string destPath)
+        [Obsolete]
+        public IndexedCommand DownloadFile(string srcPath, string destPath)
         {
             this.Prepare();
-            var recvFile = new RecvFile(this.storage, srcPath, destPath);
+            var recvFile = new RecvFile(this.Storage, srcPath, destPath);
             this.pendingSteps.Add(recvFile);
             return recvFile;
         }
 
-        public BatchWorkItem Commit()
+        [Obsolete]
+        public BatchCommand Commit()
         {
-            var result = new BatchWorkItem(this.pendingSteps);
-            this.pendingSteps = new List<WorkItem>();
+            var result = new BatchCommand(this.pendingSteps);
+            this.pendingSteps = new List<Command>();
             return result;
         }
     }

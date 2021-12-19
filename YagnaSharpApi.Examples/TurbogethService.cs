@@ -33,7 +33,7 @@ namespace YagnaSharpApi.Examples
         /// </summary>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        public async override IAsyncEnumerable<WorkItem> OnStartupAsync(WorkContext ctx)
+        public async override IAsyncEnumerable<Command> OnStartupAsync(WorkContext ctx)
         {
             var deployStep = ctx.Deploy();
             ctx.Start();
@@ -52,7 +52,7 @@ namespace YagnaSharpApi.Examples
         /// <param name="cancellationToken">CancellationToken injected by the framework - 
         /// to indicate the Run has been interrupted.</param>
         /// <returns></returns>
-        public async override IAsyncEnumerable<WorkItem> OnRunAsync(WorkContext ctx, CancellationToken cancellationToken)
+        public async override IAsyncEnumerable<Command> OnRunAsync(WorkContext ctx, CancellationToken cancellationToken)
         {
             var gethClient = new GethClient(this.rpcEndpointUrl);
 
@@ -71,7 +71,7 @@ namespace YagnaSharpApi.Examples
         /// <param name="ctx"></param>
         /// <param name="error"></param>
         /// <returns></returns>
-        public async override IAsyncEnumerable<WorkItem> OnShutdownAsync(WorkContext ctx, Exception error = null)
+        public async override IAsyncEnumerable<Command> OnShutdownAsync(WorkContext ctx, Exception error = null)
         {
             // do nothing
             yield break;
