@@ -1,6 +1,7 @@
 ﻿using Golem.ActivityApi.Client.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YagnaSharpApi.Engine.Commands;
@@ -12,14 +13,30 @@ namespace YagnaSharpApi.Engine
         protected WorkContext ctx;
         protected List<Command> commands = new List<Command>();
 
+        /// <summary>
+        /// Indicates if this script contains initializing steps added explicitly.
+        /// </summary>
+        public bool IsInitialized { get; protected set; }
+
         public Script(WorkContext ctx)
         {
             this.ctx = ctx;
         }
 
-        public void Add(Command command)
+        public void Prepend(Command command)
+        {
+            this.commands.Insert(0, command);
+
+            if (command is DeployStep || command is StartStep || command is InitStep)
+                this.IsInitialized = true;
+        }
+
+        public void Append(Command command)
         {
             this.commands.Add(command);
+
+            if (command is DeployStep || command is StartStep || command is InitStep)
+                this.IsInitialized = true;
         }
 
         public async Task BeforeAsync()
@@ -49,7 +66,7 @@ namespace YagnaSharpApi.Engine
         public IndexedCommand Run(string cmd, params string[] args)
         {
             var command = new Run(cmd, args);
-            this.Add(command);
+            this.Append(command);
 
             return command;
         }
@@ -57,7 +74,7 @@ namespace YagnaSharpApi.Engine
         public InitStep Init()
         {
             var command = new InitStep();
-            this.Add(command);
+            this.Append(command);
 
             return command;
         }
@@ -65,7 +82,7 @@ namespace YagnaSharpApi.Engine
         public IndexedCommand Deploy()
         {
             var command = new DeployStep();
-            this.Add(command);
+            this.Append(command);
 
             return command;
         }
@@ -73,7 +90,7 @@ namespace YagnaSharpApi.Engine
         public IndexedCommand Start()
         {
             var command = new StartStep();
-            this.Add(command);
+            this.Append(command);
 
             return command;
         }
@@ -81,7 +98,7 @@ namespace YagnaSharpApi.Engine
         public IndexedCommand SendFile(string srcPath, string destPath)
         {
             var command = new SendFile(this.ctx.Storage, srcPath, destPath);
-            this.Add(command);
+            this.Append(command);
 
             return command;
 
@@ -90,7 +107,7 @@ namespace YagnaSharpApi.Engine
         public IndexedCommand SendJson(object data, string destPath)
         {
             var command = new SendJson(this.ctx.Storage, data, destPath);
-            this.Add(command);
+            this.Append(command);
 
             return command;
 
@@ -99,12 +116,20 @@ namespace YagnaSharpApi.Engine
         public IndexedCommand DownloadFile(string srcPath, string destPath)
         {
             var command = new RecvFile(this.ctx.Storage, srcPath, destPath);
-            this.Add(command);
+            this.Append(command);
 
             return command;
 
         }
 
+        /// <summary>
+        /// Retrieve results from all commands in script.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ExeScriptCommandResult> GetResults()
+        {
+            return this.commands.SelectMany(command => command.GetResults());
+        }
 
     }
 }

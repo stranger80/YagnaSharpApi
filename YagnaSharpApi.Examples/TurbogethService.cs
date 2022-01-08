@@ -33,12 +33,13 @@ namespace YagnaSharpApi.Examples
         /// </summary>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        public async override IAsyncEnumerable<Command> OnStartupAsync(WorkContext ctx)
+        public async override IAsyncEnumerable<Script> OnStartupAsync(WorkContext ctx)
         {
-            var deployStep = ctx.Deploy();
-            ctx.Start();
+            var script = ctx.NewScript();
+            var deployStep = script.Deploy();
+            script.Start();
 
-            yield return ctx.Commit(); 
+            yield return script; 
 
             var deployResult = await deployStep;
 
@@ -52,7 +53,7 @@ namespace YagnaSharpApi.Examples
         /// <param name="cancellationToken">CancellationToken injected by the framework - 
         /// to indicate the Run has been interrupted.</param>
         /// <returns></returns>
-        public async override IAsyncEnumerable<Command> OnRunAsync(WorkContext ctx, CancellationToken cancellationToken)
+        public async override IAsyncEnumerable<Script> OnRunAsync(WorkContext ctx, CancellationToken cancellationToken)
         {
             var gethClient = new GethClient(this.rpcEndpointUrl);
 
@@ -71,7 +72,7 @@ namespace YagnaSharpApi.Examples
         /// <param name="ctx"></param>
         /// <param name="error"></param>
         /// <returns></returns>
-        public async override IAsyncEnumerable<Command> OnShutdownAsync(WorkContext ctx, Exception error = null)
+        public async override IAsyncEnumerable<Script> OnShutdownAsync(WorkContext ctx, Exception error = null)
         {
             // do nothing
             yield break;

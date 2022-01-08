@@ -62,14 +62,15 @@ namespace YagnaSharpApi.Studio
         {
             List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
 
-            async IAsyncEnumerable<Command> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            async IAsyncEnumerable<Script> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
             {
                 var scenePath = "Assets/cubes.blend";
-                ctx.SendFile(scenePath, "/golem/resource/scene.blend");
                 await foreach (var task in tasks)
                 {
                     var frame = task.Data;
-                    ctx.SendJson("/golem/work/params.json",
+                    var script = ctx.NewScript();
+                    script.SendFile(scenePath, "/golem/resource/scene.blend");
+                    script.SendJson(
                         new
                         {
                             scene_file = "/golem/resource/scene.blend",
@@ -82,12 +83,13 @@ namespace YagnaSharpApi.Studio
                             RESOURCES_DIR = "/golem/resources",
                             WORK_DIR = "/golem/work",
                             OUTPUT_DIR = "/golem/output"
-                        });
+                        },
+                        "/golem/work/params.json");
 
-                    ctx.Run("/golem/entrypoints/run-blender.sh");
+                    script.Run("/golem/entrypoints/run-blender.sh");
                     var outputFile = $"output_{frame}.png";
-                    ctx.DownloadFile($"/golem/output/out{frame:d4}.png", outputFile);
-                    yield return ctx.Commit();
+                    script.DownloadFile($"/golem/output/out{frame:d4}.png", outputFile);
+                    yield return script;
                     // TODO check if results are valid
                     task.AcceptTask(outputFile);
                     acceptedTasks.Add(task);
@@ -104,7 +106,7 @@ namespace YagnaSharpApi.Studio
         }
 
         protected async Task DoExecutorRunAsync<Input, Output>(
-            Func<WorkContext, IAsyncEnumerable<GolemTask<Input, Output>>, IAsyncEnumerable<Command>> workerFunc,
+            Func<WorkContext, IAsyncEnumerable<GolemTask<Input, Output>>, IAsyncEnumerable<Script>> workerFunc,
             IEnumerable<GolemTask<Input, Output>> data,
             int timeoutSeconds = 360)
         {

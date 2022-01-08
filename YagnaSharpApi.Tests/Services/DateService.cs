@@ -20,37 +20,40 @@ namespace YagnaSharpApi.Tests.Services
             return VmRequestBuilder.Repo("d646d7b93083d817846c2ae5c62c72ca0507782385a2e29291a3d376"); 
         }
 
-        public async override IAsyncEnumerable<Command> OnStartupAsync(WorkContext ctx)
+        public async override IAsyncEnumerable<Script> OnStartupAsync(WorkContext ctx)
         {
-            ctx.Run("/bin/sh",
+            var script = ctx.NewScript();
+
+            script.Run("/bin/sh",
             "-c",
             $"while true; do date > {DATE_OUTPUT_PATH}; sleep {REFRESH_INTERVAL_SEC}; done &");
 
-            yield return ctx.Commit();
+            yield return script;
         }
 
-        public async override IAsyncEnumerable<Command> OnRunAsync(WorkContext ctx, [EnumeratorCancellation] CancellationToken cancellationToken)
+        public async override IAsyncEnumerable<Script> OnRunAsync(WorkContext ctx, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             while (true)
             {
                 Thread.Sleep(REFRESH_INTERVAL_SEC * 1000);
 
-                var runWork = ctx.Run(
+                var script = ctx.NewScript();
+
+                var runWork = script.Run(
                     "/bin/sh",
                     "-c",
                     $"cat {DATE_OUTPUT_PATH}"
                     );
 
-                var batch = ctx.Commit();
-                yield return batch;
+                yield return script;
 
-                var results = await batch;
+                var results = await runWork;
 
-                Debug.WriteLine($"Command returned: {results[^1].Stdout}");
+                Debug.WriteLine($"Command returned: {results.Stdout}");
             }
         }
 
-        public async override IAsyncEnumerable<Command> OnShutdownAsync(WorkContext ctx, Exception error = null)
+        public async override IAsyncEnumerable<Script> OnShutdownAsync(WorkContext ctx, Exception error = null)
         {
             yield break;
         }

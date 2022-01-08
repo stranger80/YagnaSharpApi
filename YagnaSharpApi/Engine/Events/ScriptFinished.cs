@@ -10,13 +10,13 @@ namespace YagnaSharpApi.Engine.Events
     {
         public string AgreementId { get; set; }
 
-        public Command CommandBatch { get; set; }
+        public Script ScriptBatch { get; set; }
 
-        public ScriptFinished(string agreementId, string taskId, Command commandBatch = default(Command))
+        public ScriptFinished(string agreementId, string taskId, Script commandBatch = default(Script))
         {
             this.AgreementId = agreementId;
             this.TaskId = taskId;
-            this.CommandBatch = commandBatch;
+            this.ScriptBatch = commandBatch;
         }
     }
 }

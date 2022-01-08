@@ -201,7 +201,7 @@ namespace YagnaSharpApi.Engine
             return await this.ActivityRepository.CreateActivityAsync(agreement);
         }
 
-        public async Task ProcessBatchesAsync(AgreementEntity agreement, ActivityEntity activity, IAsyncEnumerable<Command> commandGenerator, string taskId)
+        public async Task ProcessBatchesAsync(AgreementEntity agreement, ActivityEntity activity, IAsyncEnumerable<Script> commandGenerator, WorkContext ctx, string taskId)
         {
 
             await using (var iter = commandGenerator.GetAsyncEnumerator())
@@ -213,6 +213,12 @@ namespace YagnaSharpApi.Engine
                     var batch = iter.Current;
 
                     await batch.BeforeAsync();
+
+                    if(!activity.IsActivityInitialized && !batch.IsInitialized)
+                    {
+                        // do explicit initialization
+                        await this.PerformImplicitInitAsync(agreement, activity, ctx, taskId);
+                    }
 
                     var commandsBuilder = new ExeScriptBuilder();
                     batch.Evaluate(commandsBuilder);
@@ -244,77 +250,19 @@ namespace YagnaSharpApi.Engine
 
 
             }
-            /*
-                item = await command_generator.__anext__()
+        }
 
-                while True:
+        protected async Task PerformImplicitInitAsync(AgreementEntity agreement, ActivityEntity activity, WorkContext ctx, string taskId)
+        {
+            async IAsyncEnumerable<Script> ImplicitInitAsync()
+            {
+                var script = ctx.NewScript();
+                script.Append(new DeployStep());
+                script.Append(new StartStep());
+                yield return script;
+            }
+            await this.ProcessBatchesAsync(agreement, activity, ImplicitInitAsync(), ctx, taskId);
 
-                    batch, exec_options = _unpack_work_item(item)
-
-                    # TODO: `task_id` should really be `batch_id`, but then we should also rename
-                    # `task_id` field of several events (e.g. `ScriptSent`)
-                    script_id = str(next(exescript_ids))
-
-                    if batch.timeout:
-                        if exec_options.batch_timeout:
-                            logger.warning(
-                                "Overriding batch timeout set with commit(batch_timeout)"
-                                "by the value set in exec options"
-                            )
-                        else:
-                            exec_options.batch_timeout = batch.timeout
-
-                    batch_deadline = (
-                        datetime.now(timezone.utc) + exec_options.batch_timeout
-                        if exec_options.batch_timeout
-                        else None
-                    )
-
-                    await batch.prepare()
-                    cc = CommandContainer()
-                    batch.register(cc)
-                    remote = await activity.send(cc.commands(), deadline=batch_deadline)
-                    cmds = cc.commands()
-                    self.emit(events.ScriptSent(agr_id=agreement_id, script_id=script_id, cmds=cmds))
-
-                    async def get_batch_results() -> List[events.CommandEvent]:
-                        results = []
-                        async for evt_ctx in remote:
-                            evt = evt_ctx.event(agr_id=agreement_id, script_id=script_id, cmds=cmds)
-                            self.emit(evt)
-                            results.append(evt)
-                            if isinstance(evt, events.CommandExecuted) and not evt.success:
-                                raise CommandExecutionError(evt.command, evt.message, evt.stderr)
-
-                        self.emit(events.GettingResults(agr_id=agreement_id, script_id=script_id))
-                        await batch.post()
-                        self.emit(events.ScriptFinished(agr_id=agreement_id, script_id=script_id))
-                        await self.accept_payments_for_agreement(agreement_id, partial=True)
-                        return results
-
-                    loop = asyncio.get_event_loop()
-
-                    if exec_options.wait_for_results:
-                        # Block until the results are available
-                        try:
-                            future_results = loop.create_future()
-                            results = await get_batch_results()
-                            future_results.set_result(results)
-                        except Exception:
-                            # Raise the exception in `command_generator` (the `worker` coroutine).
-                            # If the client code is able to handle it then we'll proceed with
-                            # subsequent batches. Otherwise the worker finishes with error.
-                            item = await command_generator.athrow(*sys.exc_info())
-                        else:
-                            item = await command_generator.asend(future_results)
-
-                    else:
-                        # Schedule the coroutine in a separate asyncio task
-                        future_results = loop.create_task(get_batch_results())
-                        item = await command_generator.asend(future_results)
-
-              
-             */
         }
 
         public async Task ProcessInvoicesAsync(CancellationToken cancellationToken /* pass objects to collect stats */)

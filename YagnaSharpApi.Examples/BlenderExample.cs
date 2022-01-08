@@ -13,14 +13,17 @@ namespace YagnaSharpApi.Examples
     public class BlenderExample : IGolemExample
     {
 
-        static async IAsyncEnumerable<Command> Worker(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+        static async IAsyncEnumerable<Script> Worker(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
         {
             var scenePath = /* scriptDir + */ "/cubes.blend";
-            ctx.SendFile(scenePath, "/golem/resource/scene.blend");
             await foreach (var task in tasks)
             {
                 var frame = task.Data;
-                ctx.SendJson("/golem/work/params.json",
+                var script = ctx.NewScript();
+
+                script.SendFile(scenePath, "/golem/resource/scene.blend");
+
+                script.SendJson(
                     new
                     {
                         scene_file = "/golem/resource/scene.blend",
@@ -33,12 +36,13 @@ namespace YagnaSharpApi.Examples
                         RESOURCES_DIR = "/golem/resources",
                         WORK_DIR = "/golem/work",
                         OUTPUT_DIR = "/golem/output"
-                    });
+                    },
+                    "/golem/work/params.json");
 
-                ctx.Run("/golem/entrypoints/run-blender.sh");
+                script.Run("/golem/entrypoints/run-blender.sh");
                 var outputFile = $"output_{frame}.png";
-                ctx.DownloadFile($"/golem/output/out{frame:04d}.png", outputFile);
-                yield return ctx.Commit();
+                script.DownloadFile($"/golem/output/out{frame:04d}.png", outputFile);
+                yield return script;
                 // TODO check if results are valid
                 task.AcceptTask(outputFile);
             }
