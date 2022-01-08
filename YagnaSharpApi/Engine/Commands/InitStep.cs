@@ -5,7 +5,7 @@ using System.Text;
 
 namespace YagnaSharpApi.Engine.Commands
 {
-    public class InitStep : WorkItem
+    public class InitStep : Command
     {
         private int deployIndex;
         private int startIndex;
@@ -13,7 +13,7 @@ namespace YagnaSharpApi.Engine.Commands
         public ExeScriptCommandResult DeployResult { get; set; }
         public ExeScriptCommandResult StartResult { get; set; }
 
-        public override void Register(ExeScriptBuilder commands)
+        public override void Evaluate(ExeScriptBuilder commands)
         {
             this.deployIndex = commands.Deploy();
             this.startIndex = commands.Start();

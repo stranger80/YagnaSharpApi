@@ -62,21 +62,21 @@ namespace YagnaSharpApi.Engine
         /// </summary>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        public abstract IAsyncEnumerable<WorkItem> OnStartupAsync(WorkContext ctx);
+        public abstract IAsyncEnumerable<Script> OnStartupAsync(WorkContext ctx);
         
         /// <summary>
         /// Specifies actions which are to be executed on Provider while the service is running.
         /// </summary>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        public abstract IAsyncEnumerable<WorkItem> OnRunAsync(WorkContext ctx, CancellationToken cancellationToken);
+        public abstract IAsyncEnumerable<Script> OnRunAsync(WorkContext ctx, CancellationToken cancellationToken);
         
         /// <summary>
         /// Specifies actions to be executed on Provider while the service is being shut down.
         /// </summary>
         /// <param name="ctx"></param>
         /// <returns></returns>
-        public abstract IAsyncEnumerable<WorkItem> OnShutdownAsync(WorkContext ctx, Exception error = null);
+        public abstract IAsyncEnumerable<Script> OnShutdownAsync(WorkContext ctx, Exception error = null);
 
 
         /// <summary>
@@ -140,9 +140,9 @@ namespace YagnaSharpApi.Engine
             }
         }
 
-        protected async Task ExecuteLifecycleStepAsync(Engine engine, AgreementEntity agreement, ActivityEntity activity, WorkContext ctx, string taskId, Func<IAsyncEnumerable<WorkItem>> commandGenerator)
+        protected async Task ExecuteLifecycleStepAsync(Engine engine, AgreementEntity agreement, ActivityEntity activity, WorkContext ctx, string taskId, Func<IAsyncEnumerable<Script>> commandGenerator)
         {
-            await engine.ProcessBatchesAsync(agreement, activity, commandGenerator(), taskId);
+            await engine.ProcessBatchesAsync(agreement, activity, commandGenerator(), ctx, taskId);
             // TODO this should be a handled Cancelled exception - from cancellation token???
         }
 

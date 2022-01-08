@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace YagnaSharpApi.Engine.Commands
 {
-    public abstract class IndexedWorkItem : WorkItem
+    /// <summary>
+    /// Awaitable workitem.
+    /// 
+    /// </summary>
+    public abstract class IndexedCommand : Command
     {
         public int CommandIndex { get; protected set; }
 
@@ -15,7 +19,7 @@ namespace YagnaSharpApi.Engine.Commands
 
         private ExeScriptCommandResult Result;
 
-        public IndexedWorkItem()
+        public IndexedCommand()
         {
             this.resultTaskCompletionSource = new TaskCompletionSource<ExeScriptCommandResult>(TaskCreationOptions.RunContinuationsAsynchronously);
         }

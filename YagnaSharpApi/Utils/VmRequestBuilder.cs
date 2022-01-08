@@ -11,10 +11,10 @@ namespace YagnaSharpApi.Utils
         protected const string DEFAULT_REPO_URL = "_girepo._tcp.dev.golem.network";
         protected const string FALLBACK_REPO_URL = "http://yacn2.dev.golem.network:8000";
 
-        public static IPackage Repo(string imageHash, decimal minMemGiB = 0.5m, decimal minStorageGiB = 2.0m)
+        public static IPackage Repo(string imageHash, decimal minMemGiB = 0.5m, decimal minStorageGiB = 2.0m, string imageUrl = null)
         {
 
-            return new VmPackage(ResolveRepoUrl(DEFAULT_REPO_URL), imageHash, new VmConstraints(minMemGiB, minStorageGiB));
+            return new VmPackage(ResolveRepoUrl(DEFAULT_REPO_URL), imageHash, new VmConstraints(minMemGiB, minStorageGiB), imageUrl);
         }
 
         public static string ResolveRepoUrl(string address)

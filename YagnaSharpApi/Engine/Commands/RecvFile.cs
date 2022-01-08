@@ -6,7 +6,7 @@ using YagnaSharpApi.Storage;
 
 namespace YagnaSharpApi.Engine.Commands
 {
-    public class RecvFile : IndexedWorkItem
+    public class RecvFile : IndexedCommand
     {
         protected IOutputStorageProvider storage;
         protected string srcPath;
@@ -20,17 +20,17 @@ namespace YagnaSharpApi.Engine.Commands
             this.srcPath = srcPath;
         }
 
-        public async override Task Prepare()
+        public async override Task BeforeAsync()
         {
             this.destSlot = await this.storage.NewDestination(destPath);
         }
 
-        public override void Register(ExeScriptBuilder commands)
+        public override void Evaluate(ExeScriptBuilder commands)
         {
             this.CommandIndex = commands.Transfer($"container:{this.srcPath}", this.destSlot.UploadUrl());
         }
 
-        public async override Task Post()
+        public async override Task AfterAsync()
         {
             if (this.destSlot == null)
                 throw new Exception("RecvFile Post() called without Prepare()");

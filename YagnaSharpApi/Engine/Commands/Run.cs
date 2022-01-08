@@ -4,7 +4,7 @@ using System.Text;
 
 namespace YagnaSharpApi.Engine.Commands
 {
-    public class Run : IndexedWorkItem
+    public class Run : IndexedCommand
     {
         private string cmd;
         private string[] args;
@@ -15,7 +15,7 @@ namespace YagnaSharpApi.Engine.Commands
             this.args = args;
         }
 
-        public override void Register(ExeScriptBuilder commands)
+        public override void Evaluate(ExeScriptBuilder commands)
         {
             this.CommandIndex = commands.Run(cmd, args);
         }

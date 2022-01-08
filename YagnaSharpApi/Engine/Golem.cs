@@ -31,14 +31,14 @@ namespace YagnaSharpApi.Engine
         /// <param name="budget"></param>
         /// <returns></returns>        
         public async IAsyncEnumerable<GolemTask<TData, TResult>> ExecuteTasksAsync<TData, TResult>(
-            Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<WorkItem>> worker, 
+            Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<Script>> worker,
             IEnumerable<GolemTask<TData, TResult>> data,
             IPackage payload,
             int? maxWorkers = null,
             int? timeout = null,
             decimal? budget = null)
         {
-            using(var executor = new Executor(payload, maxWorkers ?? 1, budget ?? this.Budget, timeout ?? 360, this.SubnetTag, this.Configuration, this.MarketStrategy, this))
+            using (var executor = new Executor(payload, maxWorkers ?? 1, budget ?? this.Budget, timeout ?? 360, this.SubnetTag, this.Configuration, this.MarketStrategy, this))
             {
                 executor.OnExecutorEvent += Executor_OnExecutorEvent;
                 try
@@ -50,7 +50,7 @@ namespace YagnaSharpApi.Engine
                 {
                     executor.OnExecutorEvent -= Executor_OnExecutorEvent;
                 }
-                
+
             }
         }
 

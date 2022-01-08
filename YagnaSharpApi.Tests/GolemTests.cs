@@ -32,7 +32,7 @@ namespace YagnaSharpApi.Tests
         }
 
         protected async Task DoGolemRunTaskAsync<Input, Output>(
-            Func<WorkContext, IAsyncEnumerable<GolemTask<Input, Output>>, IAsyncEnumerable<WorkItem>> workerFunc,
+            Func<WorkContext, IAsyncEnumerable<GolemTask<Input, Output>>, IAsyncEnumerable<Script>> workerFunc,
             IEnumerable<GolemTask<Input, Output>> data,
             Action assertions,
             int timeoutSeconds = 360)
@@ -66,22 +66,23 @@ namespace YagnaSharpApi.Tests
         {
             var acceptedTasks = new List<GolemTask<object, string>>();
 
-            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<object, string>> tasks)
+            async IAsyncEnumerable<Script> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<object, string>> tasks)
             {
                 await foreach (var task in tasks)
                 {
                     System.Diagnostics.Debug.WriteLine("Starting Task Body...");
+                    var script = ctx.NewScript();
 
-                    ctx.Run("/bin/sh", "-c", "date");
-                    var workItem = ctx.Commit();
-                    yield return workItem;
+                    var workItem = script.Run("/bin/sh", "-c", "date");
+
+                    yield return script;
 
                     var results = await workItem;
 
                     // always accept
                     System.Diagnostics.Debug.WriteLine("Accepting Task results...");
                     
-                    task.AcceptTask(results[^1]?.Stdout);
+                    task.AcceptTask(results?.Stdout);
                     acceptedTasks.Add(task);
                     System.Diagnostics.Debug.WriteLine("Accepted Task results...");
                 }
@@ -102,17 +103,14 @@ namespace YagnaSharpApi.Tests
         {
             List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
 
-            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            async IAsyncEnumerable<Script> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
             {
                 await foreach (var task in tasks)
                 {
                     System.Diagnostics.Debug.WriteLine("Starting Task Body...");
-                    var initStep = ctx.Prepare();  // force the init steps to be added to exescript (DEPLOY/START)
-                    yield return ctx.Commit();
+                    var script = ctx.NewScript();
 
-                    // assert that the command results have been recorded
-                    Assert.IsNotNull(initStep.DeployResult);
-                    Assert.IsNotNull(initStep.StartResult);
+                    yield return script;
 
                     // always accept
                     System.Diagnostics.Debug.WriteLine("Accepting Task results...");
@@ -137,14 +135,18 @@ namespace YagnaSharpApi.Tests
         {
             List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
 
-            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            async IAsyncEnumerable<Script> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
             {
                 await foreach (var task in tasks)
                 {
                     System.Diagnostics.Debug.WriteLine("Starting Task Body...");
-                    ctx.SendFile("Assets/cubes.blend", "/golem/resource/scene.blend");
-                    ctx.DownloadFile($"/golem/resource/scene.blend", "output.file");
-                    yield return ctx.Commit();
+
+                    var script = ctx.NewScript();
+
+                    script.SendFile("Assets/cubes.blend", "/golem/resource/scene.blend");
+                    script.DownloadFile($"/golem/resource/scene.blend", "output.file");
+                    
+                    yield return script;
                     // always accept
                     System.Diagnostics.Debug.WriteLine("Accepting Task results...");
                     task.AcceptTask("dummy");
@@ -171,14 +173,16 @@ namespace YagnaSharpApi.Tests
         {
             List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
 
-            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            async IAsyncEnumerable<Script> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
             {
                 var scenePath = "Assets/cubes.blend";
-                ctx.SendFile(scenePath, "/golem/resource/scene.blend");
+                var script = ctx.NewScript();
+
+                script.SendFile(scenePath, "/golem/resource/scene.blend");
                 await foreach (var task in tasks)
                 {
                     var frame = task.Data;
-                    ctx.SendJson("/golem/work/params.json",
+                    script.SendJson(
                         new
                         {
                             scene_file = "/golem/resource/scene.blend",
@@ -191,12 +195,14 @@ namespace YagnaSharpApi.Tests
                             RESOURCES_DIR = "/golem/resources",
                             WORK_DIR = "/golem/work",
                             OUTPUT_DIR = "/golem/output"
-                        });
+                        },
+                        "/golem/work/params.json");
 
-                    ctx.Run("/golem/entrypoints/run-blender.sh");
+                    script.Run("/golem/entrypoints/run-blender.sh");
                     var outputFile = $"output_{frame}.png";
-                    ctx.DownloadFile($"/golem/output/out{frame:d4}.png", outputFile);
-                    yield return ctx.Commit();
+                    script.DownloadFile($"/golem/output/out{frame:d4}.png", outputFile);
+                    
+                    yield return script;
                     // TODO check if results are valid
                     task.AcceptTask(outputFile);
                     acceptedTasks.Add(task);
@@ -221,14 +227,16 @@ namespace YagnaSharpApi.Tests
         {
             List<GolemTask<int, string>> acceptedTasks = new List<GolemTask<int, string>>();
 
-            async IAsyncEnumerable<WorkItem> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
+            async IAsyncEnumerable<Script> ProcessGolemTasksAsync(WorkContext ctx, IAsyncEnumerable<GolemTask<int, string>> tasks)
             {
                 var scenePath = "nonexistent.path";
-                ctx.SendFile(scenePath, "/golem/resource/scene.blend");
+                var script = ctx.NewScript();
+
+                script.SendFile(scenePath, "/golem/resource/scene.blend");
                 await foreach (var task in tasks)
                 {
                     var frame = task.Data;
-                    ctx.SendJson("/golem/work/params.json",
+                    script.SendJson(
                         new
                         {
                             scene_file = "/golem/resource/scene.blend",
@@ -241,12 +249,13 @@ namespace YagnaSharpApi.Tests
                             RESOURCES_DIR = "/golem/resources",
                             WORK_DIR = "/golem/work",
                             OUTPUT_DIR = "/golem/output"
-                        });
+                        },
+                        "/golem/work/params.json");
 
-                    ctx.Run("/golem/entrypoints/run-blender.sh");
+                    script.Run("/golem/entrypoints/run-blender.sh");
                     var outputFile = $"output_{frame}.png";
-                    ctx.DownloadFile($"/golem/output/out{frame:d4}.png", outputFile);
-                    yield return ctx.Commit();
+                    script.DownloadFile($"/golem/output/out{frame:d4}.png", outputFile);
+                    yield return script;
                     // TODO check if results are valid
                     task.AcceptTask(outputFile);
                     acceptedTasks.Add(task);
@@ -298,7 +307,7 @@ namespace YagnaSharpApi.Tests
                 Assert.IsTrue(events.Any(ev => ev is ScriptFinished));
                 Assert.IsTrue(
                     (events.LastOrDefault(ev => ev is ScriptFinished) as ScriptFinished)?
-                    .CommandBatch
+                    .ScriptBatch
                     .GetResults()
                     .LastOrDefault()?
                     .Stdout != null);

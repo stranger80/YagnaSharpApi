@@ -130,7 +130,10 @@ namespace YagnaSharpApi.Engine
             this.OnExecutorEvent?.Invoke(this, e);
         }
 
-        public async IAsyncEnumerable<GolemTask<TData, TResult>> SubmitAsync<TData, TResult>(Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<WorkItem>> worker, IEnumerable<GolemTask<TData, TResult>> data)
+        public async IAsyncEnumerable<GolemTask<TData, TResult>> SubmitAsync<TData, TResult>(Func<WorkContext, 
+                                                                                                  IAsyncEnumerable<GolemTask<TData, TResult>>, 
+                                                                                                  IAsyncEnumerable<Script>> worker, 
+                                                                                             IEnumerable<GolemTask<TData, TResult>> data)
         {
             this.OnExecutorEvent?.Invoke(this, new SubmitStarted());
 
@@ -261,7 +264,7 @@ namespace YagnaSharpApi.Engine
                                 }
 
                                 System.Diagnostics.Debug.WriteLine($"Removing task: {completedTask.Id}");
-                                this.Workers.Remove(completedTask); 
+                                this.Workers.Remove(completedTask);
                                 runningTasks.Remove(completedTask);
                             }
 
@@ -366,12 +369,12 @@ namespace YagnaSharpApi.Engine
         /// 
         /// </summary>
         /// <returns></returns>
-        protected async Task WorkerStarter<TData, TResult>(Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<WorkItem>> worker, IEnumerable<GolemTask<TData, TResult>> data, SmartQueue<TData, TResult> smartQueue, CancellationToken cancellationToken)
+        protected async Task WorkerStarter<TData, TResult>(Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<Script>> worker, IEnumerable<GolemTask<TData, TResult>> data, SmartQueue<TData, TResult> smartQueue, CancellationToken cancellationToken)
         {
             System.Diagnostics.Debug.WriteLine("Starting WorkerStarter...");
             do
             {
-                while (this.Workers.Count < this.maxWorkers )
+                while (this.Workers.Count < this.maxWorkers)
                 {
                     System.Diagnostics.Debug.WriteLine("Queueing new Task for exec...");
                     Task newTask = null;
@@ -382,13 +385,13 @@ namespace YagnaSharpApi.Engine
                             this.DoWork(bufferedAgreement, worker, data, smartQueue)
                             );
 
-                        if(newTask != null)
+                        if (newTask != null)
                             this.Workers.Add(newTask);
                     }
                     catch (Exception exc)
                     {
                         // TODO should we do something to abort the new task?
-                            
+
                     }
 
                 }
@@ -398,7 +401,16 @@ namespace YagnaSharpApi.Engine
             System.Diagnostics.Debug.WriteLine("Finishing WorkerStarter...");
         }
 
-        protected async Task DoWork<TData, TResult>(BufferedAgreement bufferedAgreement, Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<WorkItem>> worker, IEnumerable<GolemTask<TData, TResult>> data, SmartQueue<TData, TResult> smartQueue)
+        /// <summary>
+        /// 'Container' class required to track the 'last task'
+        /// </summary>
+        /// <typeparam name="TObject"></typeparam>
+        protected class Box<TObject>
+        {
+            public TObject Item { get; set; } = default(TObject);
+        }
+
+        protected async Task DoWork<TData, TResult>(BufferedAgreement bufferedAgreement, Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<Script>> worker, IEnumerable<GolemTask<TData, TResult>> data, SmartQueue<TData, TResult> smartQueue)
         {
             this.OnExecutorEvent?.Invoke(this, new WorkerStarted(bufferedAgreement.Agreement.AgreementId));
 
@@ -407,7 +419,7 @@ namespace YagnaSharpApi.Engine
             {
                 activity = await this.Engine.CreateActivityAsync(bufferedAgreement.Agreement);
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 this.OnExecutorEvent?.Invoke(this, new ActivityCreateFailed(bufferedAgreement.Agreement.AgreementId, exc));
                 this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement.AgreementId));
@@ -421,87 +433,137 @@ namespace YagnaSharpApi.Engine
             // "wrap" the data task collection with logic that for each fetched task will put the task into the queue 
             // that monitors task execution, handles retries, etc. 
             // (Also, record the 'lastTask' so that one can correlate WorkItems with GolemTasks)
- 
-            GolemTask<TData, TResult> lastTask = null;
+
+            Box<GolemTask<TData, TResult>> lastTask = new Box<GolemTask<TData, TResult>>();
 
             async IAsyncEnumerable<GolemTask<TData, TResult>> QueueTasks(IEnumerable<GolemTask<TData, TResult>> data, SmartQueue<TData, TResult> queue)
             {
                 // now get tasks from smartqueue - it will return next task, 
                 // selecting one from either newly queued, or queued for reschedule
-                await foreach(var task in queue.GetTaskForExecutionAsync())
+                await foreach (var task in queue.GetTaskForExecutionAsync())
                 {
-                    lastTask = task;
+                    lastTask.Item = task;
                     yield return task;
                 }
             }
 
             var commandGenerator = worker(workContext, QueueTasks(data, smartQueue));
 
-            await foreach(var batch in commandGenerator)
-            {
-                // TODO batch deadline logic
+            if (!await this.ProcessBatchesAsync<TData, TResult>(commandGenerator, bufferedAgreement, activity, workContext, lastTask))
+                return;
 
-                // TODO in yapapi there is here a weird logic that attempts to correlate 
-                // the batch of commands created by the worker() delegate with its input GolemTask
-
-                var currentTask = lastTask;
-
-                try
-                {
-                    currentTask.Start();
-
-                    this.OnExecutorEvent?.Invoke(this, new TaskStarted<TData>(bufferedAgreement.Agreement.AgreementId, currentTask.Id, currentTask.Data));
-
-                    await batch.Prepare();
-
-                    var commandsBuilder = new ExeScriptBuilder();
-                    batch.Register(commandsBuilder);
-
-                    var commands = commandsBuilder.GetCommands();
-
-                    // ...at this point we should have the exescript built by commandBuilder
-                    var commandResults = activity.ExecAsync(commands);
-
-                    this.OnExecutorEvent?.Invoke(this, new ScriptSent(bufferedAgreement.Agreement.AgreementId, currentTask.Id, commands));
-
-                    await foreach (var result in commandResults)
-                    {
-                        batch.StoreResult(result);
-
-                        // TODO raise command executed event
-                        if (result.Result == ExeScriptCommandResult.ResultEnum.Error)
-                            throw new CommandExecutionException(commands[result.Index], result); 
-                    }
-
-                    this.OnExecutorEvent?.Invoke(this, new GettingResults(bufferedAgreement.Agreement.AgreementId, currentTask.Id));
-                    await batch.Post();
-                    this.OnExecutorEvent?.Invoke(this, new ScriptFinished(bufferedAgreement.Agreement.AgreementId, currentTask.Id));
-
-                    await this.Engine.AcceptPaymentForAgreement(bufferedAgreement.Agreement.AgreementId, true);
-
-                }
-                catch (CommandExecutionException exc) // in case of command error - throw the exception up...
-                {
-                    currentTask.Stop(true); // reschedule failed task
-                    this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement.AgreementId, exc));
-                    throw;
-                }
-                catch(Exception exc)
-                {
-                    currentTask.Stop(true); // reschedule failed task
-                    this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement.AgreementId, exc));
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine($"Finished executing batch in Worker Task {Task.CurrentId}..");
-
-            }
             System.Diagnostics.Debug.WriteLine($"finishing Worker Task {Task.CurrentId}..");
             await this.Engine.AcceptPaymentForAgreement(bufferedAgreement.Agreement.AgreementId);
             System.Diagnostics.Debug.WriteLine($"Accepted payment in Worker Task {Task.CurrentId}..");
 
             this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement.AgreementId));
             System.Diagnostics.Debug.WriteLine($"finished Worker Task {Task.CurrentId}..");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TData"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="commandGenerator"></param>
+        /// <param name="bufferedAgreement"></param>
+        /// <param name="activity"></param>
+        /// <param name="lastTaskBox"></param>
+        /// <returns>true if finished successfully</returns>
+        protected async Task<bool> ProcessBatchesAsync<TData, TResult>(IAsyncEnumerable<Script> commandGenerator, 
+            BufferedAgreement bufferedAgreement, ActivityEntity activity, WorkContext workContext, Box<GolemTask<TData, TResult>> lastTaskBox = null)
+        {
+            bool initializationDone = false;
+
+            await foreach (var batch in commandGenerator)
+            {
+                // TODO batch deadline logic
+
+                // TODO in yapapi there is here a weird logic that attempts to correlate 
+                // the batch of commands created by the worker() delegate with its input GolemTask
+
+                var currentTask = lastTaskBox?.Item;
+
+                try
+                {
+                    currentTask?.Start();
+
+                    this.OnExecutorEvent?.Invoke(this, new TaskStarted<TData>(bufferedAgreement.Agreement.AgreementId, currentTask?.Id, currentTask != null ? currentTask.Data : default(TData)));
+
+                    // The first batch must either incldue initialization block, or we must initialize
+                    if (!initializationDone)
+                    {
+                        if (!batch.IsInitialized)
+                        {
+                            await this.PerformImplicitInitAsync(workContext, bufferedAgreement, activity);
+                        }
+                        initializationDone = true;
+                    }
+
+                    await batch.BeforeAsync();
+
+                    var commandsBuilder = new ExeScriptBuilder();
+                    batch.Evaluate(commandsBuilder);
+
+                    var commands = commandsBuilder.GetCommands();
+
+                    // If there are any commands to execute...
+                    if (commands.Any())
+                    {
+                        // ...at this point we should have the exescript built by commandBuilder
+                        var commandResults = activity.ExecAsync(commands);
+
+                        this.OnExecutorEvent?.Invoke(this, new ScriptSent(bufferedAgreement.Agreement.AgreementId, currentTask?.Id, commands));
+
+                        await foreach (var result in commandResults)
+                        {
+                            batch.StoreResult(result);
+
+                            // TODO raise command executed event
+                            if (result.Result == ExeScriptCommandResult.ResultEnum.Error)
+                                throw new CommandExecutionException(commands[result.Index], result);
+                        }
+
+                        this.OnExecutorEvent?.Invoke(this, new GettingResults(bufferedAgreement.Agreement.AgreementId, currentTask?.Id));
+                    }
+
+                    await batch.AfterAsync();
+                    this.OnExecutorEvent?.Invoke(this, new ScriptFinished(bufferedAgreement.Agreement.AgreementId, currentTask?.Id));
+
+                    await this.Engine.AcceptPaymentForAgreement(bufferedAgreement.Agreement.AgreementId, true);
+
+                }
+                catch (CommandExecutionException exc) // in case of command error - throw the exception up...
+                {
+                    currentTask?.Stop(true); // reschedule failed task
+                    this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement.AgreementId, exc));
+                    throw;
+                }
+                catch (Exception exc)
+                {
+                    currentTask?.Stop(true); // reschedule failed task
+                    this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement.AgreementId, exc));
+                    return false;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"Finished executing batch in Worker Task {Task.CurrentId}..");
+
+            }
+            return true;
+
+        }
+
+        protected async Task PerformImplicitInitAsync(WorkContext ctx, BufferedAgreement bufferedAgreement, ActivityEntity activity)
+        {
+            async IAsyncEnumerable<Script> ImplicitInitAsync()
+            {
+                var script = ctx.NewScript();
+                script.Append(new DeployStep());
+                script.Append(new StartStep());
+                yield return script;
+            }
+            await this.ProcessBatchesAsync<object, string>(ImplicitInitAsync(), bufferedAgreement, activity, ctx);
+
         }
 
         protected AllocationEntity GetAllocationForInvoice(InvoiceEntity invoice)
