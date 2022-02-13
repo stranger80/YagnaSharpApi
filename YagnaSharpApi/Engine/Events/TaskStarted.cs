@@ -4,15 +4,12 @@ using System.Text;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class TaskStarted<TData> : TaskEvent
+    public class TaskStarted<TData, TResult> : TaskEvent<TData, TResult>
     {
-        public string AgreementId { get; set; }
         public TData Data { get; set; }
 
-        public TaskStarted(string agreementId, string taskId, TData data)
+        public TaskStarted(GolemTask<TData, TResult> task, TData data) : base(task)
         {
-            this.AgreementId = agreementId;
-            this.TaskId = taskId;
             this.Data = data;
         }
 

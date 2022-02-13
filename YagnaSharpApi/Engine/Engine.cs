@@ -88,7 +88,7 @@ namespace YagnaSharpApi.Engine
             this.AgreementPool.OnAgreementEvent += AgreementPool_OnAgreementEvent; 
         }
 
-        private void AgreementPool_OnAgreementEvent(object sender, AgreementEvent e)
+        private void AgreementPool_OnAgreementEvent(object sender, ExecutorEvent e)
         {
             this.OnExecutorEvent?.Invoke(this, e);
         }
@@ -198,7 +198,7 @@ namespace YagnaSharpApi.Engine
 
         public async Task<ActivityEntity> CreateActivityAsync(AgreementEntity agreement)
         {
-            return await this.ActivityRepository.CreateActivityAsync(agreement);
+            return await this.ActivityRepository.CreateActivityAsync(agreement, null);  // explicitly set timeout to null
         }
 
         public async Task ProcessBatchesAsync(AgreementEntity agreement, ActivityEntity activity, IAsyncEnumerable<Script> commandGenerator, WorkContext ctx, string taskId)
@@ -228,20 +228,27 @@ namespace YagnaSharpApi.Engine
                     // ...at this point we should have the exescript built by commandBuilder
                     var commandResults = activity.ExecAsync(commands);
 
-                    this.OnExecutorEvent?.Invoke(this, new ScriptSent(agreement.AgreementId, taskId, commands));
+                    this.OnExecutorEvent?.Invoke(this, new ScriptSent(agreement, activity, batch));
 
                     await foreach (var result in commandResults)
                     {
                         batch.StoreResult(result);
 
-                        // TODO raise command executed event
+                        this.OnExecutorEvent?.Invoke(this, new CommandExecuted(agreement, activity, batch)
+                        {
+                            Success = result.Result == ExeScriptCommandResult.ResultEnum.Ok,
+                            Message = result.Message,
+                            StdOut = result.Stdout,
+                            StdErr = result.Stderr
+                        });
+
                         if (result.Result == ExeScriptCommandResult.ResultEnum.Error)
                             throw new CommandExecutionException(commands[result.Index], result);
                     }
 
-                    this.OnExecutorEvent?.Invoke(this, new GettingResults(agreement.AgreementId, taskId));
+                    this.OnExecutorEvent?.Invoke(this, new GettingResults(agreement, activity, batch));
                     await batch.AfterAsync();
-                    this.OnExecutorEvent?.Invoke(this, new ScriptFinished(agreement.AgreementId, taskId, batch));
+                    this.OnExecutorEvent?.Invoke(this, new ScriptFinished(agreement, activity, batch));
 
                     await this.AcceptPaymentForAgreement(agreement.AgreementId, true);
 
@@ -275,10 +282,9 @@ namespace YagnaSharpApi.Engine
                     {
                         if (this.AgreementsToPay.Contains(invoiceEvent.Invoice?.AgreementId))
                         {
-                            this.OnExecutorEvent?.Invoke(this, new InvoiceReceived(
-                                invoiceEvent.Invoice.AgreementId,
-                                invoiceEvent.Invoice.InvoiceId,
-                                invoiceEvent.Invoice.Amount));
+                            var agreement = await this.MarketRepository.GetAgreement(invoiceEvent.Invoice?.AgreementId);
+
+                            this.OnExecutorEvent?.Invoke(this, new InvoiceReceived(agreement, invoiceEvent.Invoice));
                             var allocation = this.GetAllocationForInvoice(invoiceEvent.Invoice);
 
                             try
@@ -286,16 +292,11 @@ namespace YagnaSharpApi.Engine
                                 await invoiceEvent.Invoice?.AcceptAsync(invoiceEvent.Invoice.Amount, allocation);
 
                                 this.AgreementsToPay.Remove(invoiceEvent.Invoice?.AgreementId);
-                                this.OnExecutorEvent?.Invoke(this, new InvoiceAccepted(
-                                    invoiceEvent.Invoice.AgreementId,
-                                    invoiceEvent.Invoice.InvoiceId,
-                                    invoiceEvent.Invoice.Amount));
+                                this.OnExecutorEvent?.Invoke(this, new InvoiceAccepted(agreement, invoiceEvent.Invoice));
                             }
                             catch (Exception exc)
                             {
-                                this.OnExecutorEvent?.Invoke(this, new PaymentFailed(
-                                    invoiceEvent.Invoice.AgreementId,
-                                    exc));
+                                this.OnExecutorEvent?.Invoke(this, new PaymentFailed(agreement, exc));
 
                             }
                         }
@@ -324,12 +325,14 @@ namespace YagnaSharpApi.Engine
 
         public async Task AcceptPaymentForAgreement(string agreementId, bool partial = false)
         {
-            this.OnExecutorEvent?.Invoke(this, new PaymentPrepared(agreementId));
+            var agreement = await this.MarketRepository.GetAgreement(agreementId);
+            
+            this.OnExecutorEvent?.Invoke(this, new PaymentPrepared(agreement));
 
             if (!this.InvoicesByAgreementId.ContainsKey(agreementId))
             {
                 this.AgreementsToPay.Add(agreementId);
-                this.OnExecutorEvent?.Invoke(this, new PaymentQueued(agreementId));
+                this.OnExecutorEvent?.Invoke(this, new PaymentQueued(agreement));
                 return;
             }
             InvoiceEntity invoice = this.InvoicesByAgreementId[agreementId];
@@ -337,7 +340,7 @@ namespace YagnaSharpApi.Engine
 
             var allocation = this.GetAllocationForInvoice(invoice);
             await invoice.AcceptAsync(invoice.Amount, allocation);
-            this.OnExecutorEvent?.Invoke(this, new PaymentAccepted(agreementId, invoice.InvoiceId, invoice.Amount));
+            this.OnExecutorEvent?.Invoke(this, new PaymentAccepted(agreement, invoice));
         }
 
 

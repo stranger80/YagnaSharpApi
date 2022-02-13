@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class ActivityCreateFailed : ExecutorEvent
+    public class ActivityCreateFailed : AgreementEvent, IActivityEvent
     {
-        public ActivityCreateFailed(string agreementId, Exception exc = null)
+        public ActivityCreateFailed(AgreementEntity agreement, Exception exc = null) : base(agreement, exc)
         {
-            this.AgreementId = agreementId;
-            this.Exception = exc;
         }
 
-        public string AgreementId { get; set; }
-        public Exception Exception { get; set; }
     }
 }

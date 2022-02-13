@@ -66,20 +66,20 @@ namespace YagnaSharpApi.Engine
 
                 agreementId = agreement.AgreementId;
 
-                this.OnClusterEvent?.Invoke(this, new WorkerStarted(agreement.AgreementId));
+                this.OnClusterEvent?.Invoke(this, new WorkerStarted(agreement));
                 try
                 {
                     activity = await this.Engine.CreateActivityAsync(agreement);
                 }
                 catch(Exception exc)
                 {
-                    this.OnClusterEvent?.Invoke(this, new ActivityCreateFailed(agreement.AgreementId, exc));
+                    this.OnClusterEvent?.Invoke(this, new ActivityCreateFailed(agreement, exc));
                     throw;
                 }
 
                 spawned = true;
 
-                this.OnClusterEvent?.Invoke(this, new ActivityCreated(agreement.AgreementId, activity.ActivityId));
+                this.OnClusterEvent?.Invoke(this, new ActivityCreated(agreement, activity));
 
                 this.Engine.AcceptDebitNotesForAgreement(agreementId);
 
@@ -87,18 +87,21 @@ namespace YagnaSharpApi.Engine
 
                 var taskId = $"{this.Id}:{Cluster<TService>.taskIds++}";
 
-                this.OnClusterEvent?.Invoke(this, new TaskStarted<object>(agreement.AgreementId, taskId, null));
 
                 try
                 {
                     var instance = new TService();
+
+                    this.OnClusterEvent?.Invoke(this, new ServiceStarted(agreement, activity, instance));
+
                     instance.ProviderName = workContext.ProviderName;
                     this.Instances.Add(instance);
 
                     await instance.ExecuteLifecycleAsync(this.Engine, agreement, activity, workContext, taskId);
 
-                    // TODO TaskFinished event
-                    this.OnClusterEvent?.Invoke(this, new WorkerFinished(agreement.AgreementId));
+                    this.OnClusterEvent?.Invoke(this, new ServiceFinished(agreement, activity, instance));
+
+                    this.OnClusterEvent?.Invoke(this, new WorkerFinished(agreement, activity));
                 }
                 finally
                 {
@@ -129,7 +132,7 @@ namespace YagnaSharpApi.Engine
                 {
                     if (agreementId != null)
                     {
-                        this.OnClusterEvent?.Invoke(this, new WorkerFinished(agreementId, exc));
+                        this.OnClusterEvent?.Invoke(this, new WorkerFinished(await this.Engine.MarketRepository.GetAgreement(agreementId), null, exc));
                     }
                     else
                     {

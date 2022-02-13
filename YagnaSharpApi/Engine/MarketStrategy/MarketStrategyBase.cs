@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
             this.Conditions = conditions;
         }
 
-        public async IAsyncEnumerable<(float, ProposalEntity)> FindOffersAsync(DemandBuilder demand, CancellationToken cancellationToken = default)
+        public async IAsyncEnumerable<(float, ProposalEntity)> FindOffersAsync(DemandBuilder demand, [EnumeratorCancellation]CancellationToken cancellationToken = default)
         {
             DemandSubscriptionEntity subscription;
 
@@ -43,7 +44,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
             }
             catch (Exception exc)
             {
-                this.OnMarketEvent?.Invoke(this, new SubscriptionFailed() { Reason = exc.ToString() });
+                this.OnMarketEvent?.Invoke(this, new SubscriptionFailed(exc));
                 throw;
             }
 
@@ -58,7 +59,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                 }
                 catch (Exception exc)
                 {
-                    this.OnMarketEvent?.Invoke(this, new CollectFailed() { Reason = exc.ToString() });
+                    this.OnMarketEvent?.Invoke(this, new CollectFailed(subscription, exc));
                     throw;
                 }
 
@@ -74,7 +75,7 @@ namespace YagnaSharpApi.Engine.MarketStrategy
                         }
                         catch (Exception exc)
                         {
-                            this.OnMarketEvent?.Invoke(this, new CollectFailed() { Reason = exc.ToString() });
+                            this.OnMarketEvent?.Invoke(this, new CollectFailed(subscription, exc));
                             subscription.Dispose();
 
                             throw;

@@ -1,0 +1,67 @@
+﻿Event
+	ExecutorEvent
+		SubscriptionFailed (IMarketEvent)
+		SubscriptionEvent (IMarketEvent)
+			SubscriptionCreated
+			CollectFailed
+		ProposalEvent (IMarketEvent)
+			ProposalReceived
+			ProposalRejected
+			ProposalResponded
+			ProposalConfirmed
+			ProposalFailed
+		NoProposalsConfirmed
+		ComputationStarted
+		ComputationFinished
+		AgreementEvent
+			AgreementCreated (IMarketEvent)
+			AgreementConfirmed (IMarketEvent)
+			AgreementRejected (IMarketEvent)
+			AgreementTerminated (IMarketEvent)
+			ActivityCreateFailed (IActivityEvent)
+			WorkerStarted
+			ActivityEvent (IActivityEvent)
+				ActivityCreated
+				TaskEvent
+					TaskStarted
+					TaskFinished
+					TaskAccepted
+					TaskRejected
+				ServiceEvent
+					ServiceStarted
+					ServiceFinished
+				ScriptEvent
+					ScriptSent
+					CommandEvent
+						CommandStarted
+						CommandStdOut
+						CommandStdErr
+						CommandExecuted
+						DownloadStarted
+						DownloadFinished
+					GettingResults
+					ScriptFinished
+				WorkerFinished
+
+			DebitNoteEvent (IPaymentEvent)
+				DebitNoteAccepted
+				DebitNoteReceived
+
+			InvoiceEvent (IPaymentEvent)
+				InvoiceAccepted
+				InvoiceReceived
+
+			PaymentPrepared (IPaymentEvent)
+			PaymentQueued (IPaymentEvent)
+			PaymentAccepted (IPaymentEvent)
+			PaymentFailed (IPaymentEvent)
+
+
+
+		AgreementFailed (IMarketEvent)
+		AllocationCreated (IPaymentEvent)
+		AllocationFailed (IPaymentEvent)
+		AllocationReleased (IPaymentEvent)
+		SubmitStarted
+		SubmitFinished
+

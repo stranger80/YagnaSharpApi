@@ -3,20 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using YagnaSharpApi.Engine.Commands;
+using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class ScriptFinished : TaskEvent
+    public class ScriptFinished : ScriptEvent
     {
-        public string AgreementId { get; set; }
-
-        public Script ScriptBatch { get; set; }
-
-        public ScriptFinished(string agreementId, string taskId, Script commandBatch = default(Script))
+        public ScriptFinished(AgreementEntity agreement, ActivityEntity activity, Script script = default(Script)) : base(agreement, activity, script)
         {
-            this.AgreementId = agreementId;
-            this.TaskId = taskId;
-            this.ScriptBatch = commandBatch;
         }
     }
 }

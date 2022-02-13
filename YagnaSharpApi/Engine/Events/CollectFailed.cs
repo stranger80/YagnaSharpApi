@@ -1,12 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class CollectFailed : MarketEvent
+    public class CollectFailed : SubscriptionEvent
     {
-        public string SubscriptionId { get; set; }
+        public CollectFailed(SubscriptionEntity subscription, string reason) : base(subscription)
+        {
+            this.Reason = reason;
+        }
+
+        public CollectFailed(SubscriptionEntity subscription, Exception exc) : base(subscription, exc)
+        {
+            this.Reason = exc?.Message;
+        }
+
         public string Reason { get; set; }
     }
 }

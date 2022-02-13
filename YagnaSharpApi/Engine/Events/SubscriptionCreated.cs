@@ -5,13 +5,10 @@ using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class SubscriptionCreated : MarketEvent
+    public class SubscriptionCreated : SubscriptionEvent
     {
-        public SubscriptionCreated(SubscriptionEntity subscription)
+        public SubscriptionCreated(SubscriptionEntity subscription) : base(subscription)
         {
-            this.Subscription = subscription;
         }
-
-        public SubscriptionEntity Subscription { get; set; }
     }
 }

@@ -108,7 +108,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ActivityState</returns>
-        System.Threading.Tasks.Task<ActivityState> GetActivityStateAsync (string activityId);
+        System.Threading.Tasks.Task<ActivityState> GetActivityStateAsync (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Get state of specified Activity.
@@ -119,7 +119,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ApiResponse (ActivityState)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ActivityState>> GetActivityStateAsyncWithHttpInfo (string activityId);
+        System.Threading.Tasks.Task<ApiResponse<ActivityState>> GetActivityStateAsyncWithHttpInfo (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Get usage of specified Activity.
         /// </summary>
@@ -129,7 +129,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ActivityUsage</returns>
-        System.Threading.Tasks.Task<ActivityUsage> GetActivityUsageAsync (string activityId);
+        System.Threading.Tasks.Task<ActivityUsage> GetActivityUsageAsync (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Get usage of specified Activity.
@@ -140,7 +140,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ApiResponse (ActivityUsage)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ActivityUsage>> GetActivityUsageAsyncWithHttpInfo (string activityId);
+        System.Threading.Tasks.Task<ApiResponse<ActivityUsage>> GetActivityUsageAsyncWithHttpInfo (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Get running commands for a specified Activity.
         /// </summary>
@@ -150,7 +150,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of List&lt;ExeScriptCommandState&gt;</returns>
-        System.Threading.Tasks.Task<List<ExeScriptCommandState>> GetRunningCommandAsync (string activityId);
+        System.Threading.Tasks.Task<List<ExeScriptCommandState>> GetRunningCommandAsync (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Get running commands for a specified Activity.
@@ -161,7 +161,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ApiResponse (List&lt;ExeScriptCommandState&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<ExeScriptCommandState>>> GetRunningCommandAsyncWithHttpInfo (string activityId);
+        System.Threading.Tasks.Task<ApiResponse<List<ExeScriptCommandState>>> GetRunningCommandAsyncWithHttpInfo (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -350,9 +350,9 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ActivityState</returns>
-        public async System.Threading.Tasks.Task<ActivityState> GetActivityStateAsync (string activityId)
+        public async System.Threading.Tasks.Task<ActivityState> GetActivityStateAsync (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<ActivityState> localVarResponse = await GetActivityStateAsyncWithHttpInfo(activityId);
+             Golem.Common.Client.Client.ApiResponse<ActivityState> localVarResponse = await GetActivityStateAsyncWithHttpInfo(activityId, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -363,7 +363,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ApiResponse (ActivityState)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<ActivityState>> GetActivityStateAsyncWithHttpInfo (string activityId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<ActivityState>> GetActivityStateAsyncWithHttpInfo (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
@@ -398,7 +398,7 @@ namespace Golem.ActivityApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<ActivityState>("/activity/{activityId}/state", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<ActivityState>("/activity/{activityId}/state", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -477,9 +477,9 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ActivityUsage</returns>
-        public async System.Threading.Tasks.Task<ActivityUsage> GetActivityUsageAsync (string activityId)
+        public async System.Threading.Tasks.Task<ActivityUsage> GetActivityUsageAsync (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<ActivityUsage> localVarResponse = await GetActivityUsageAsyncWithHttpInfo(activityId);
+             Golem.Common.Client.Client.ApiResponse<ActivityUsage> localVarResponse = await GetActivityUsageAsyncWithHttpInfo(activityId, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -490,7 +490,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ApiResponse (ActivityUsage)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<ActivityUsage>> GetActivityUsageAsyncWithHttpInfo (string activityId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<ActivityUsage>> GetActivityUsageAsyncWithHttpInfo (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
@@ -525,7 +525,7 @@ namespace Golem.ActivityApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<ActivityUsage>("/activity/{activityId}/usage", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<ActivityUsage>("/activity/{activityId}/usage", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -604,9 +604,9 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of List&lt;ExeScriptCommandState&gt;</returns>
-        public async System.Threading.Tasks.Task<List<ExeScriptCommandState>> GetRunningCommandAsync (string activityId)
+        public async System.Threading.Tasks.Task<List<ExeScriptCommandState>> GetRunningCommandAsync (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<List<ExeScriptCommandState>> localVarResponse = await GetRunningCommandAsyncWithHttpInfo(activityId);
+             Golem.Common.Client.Client.ApiResponse<List<ExeScriptCommandState>> localVarResponse = await GetRunningCommandAsyncWithHttpInfo(activityId, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -617,7 +617,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ApiResponse (List&lt;ExeScriptCommandState&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<ExeScriptCommandState>>> GetRunningCommandAsyncWithHttpInfo (string activityId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<ExeScriptCommandState>>> GetRunningCommandAsyncWithHttpInfo (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
@@ -652,7 +652,7 @@ namespace Golem.ActivityApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<List<ExeScriptCommandState>>("/activity/{activityId}/command", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<List<ExeScriptCommandState>>("/activity/{activityId}/command", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {

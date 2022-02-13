@@ -24,5 +24,7 @@ namespace YagnaSharpApi.Repository
         IAsyncEnumerable<InvoiceEventEntity> GetInvoiceEventsAsync(CancellationToken cancellationToken = default);
         Task AcceptInvoiceAsync(InvoiceEntity invoice, string amount, AllocationEntity allocation);
 
+        Task AcceptDebitNoteAsync(DebitNoteEntity debitNote, string amount, AllocationEntity allocation);
+
     }
 }

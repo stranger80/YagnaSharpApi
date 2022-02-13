@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using YagnaSharpApi.Engine.Events;
+using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine
 {
-    public enum GolemTastState
+    public enum GolemTaskState
     {
         Waiting,
         Running,
@@ -25,10 +27,14 @@ namespace YagnaSharpApi.Engine
         public string Id { get; set; }
         public DateTime? Started { get; set; }
         public DateTime? Finished { get; set; }
-        public GolemTastState State { get; set; }
+        public GolemTaskState State { get; set; }
         public TData Data { get; protected set; }
         public TResult Result { get; protected set; }
+        
+        [JsonIgnore]
         public SmartQueue<TData, TResult> Queue { get; set; }
+        public AgreementEntity Agreement { get; set; }
+        public ActivityEntity Activity { get; set; }
 
         private object lockObject = new object();
 
@@ -36,18 +42,20 @@ namespace YagnaSharpApi.Engine
         public GolemTask(TData data, DateTime? expires = null, int timeout = 0)
         {
             this.Id = $"{nextTaskId++}";
-            this.State = GolemTastState.Waiting;
+            this.State = GolemTaskState.Waiting;
             this.Data = data;
         }
 
-        public event EventHandler<TaskEvent> OnTaskComplete;
+        public event EventHandler<TaskEvent<TData, TResult>> OnTaskComplete;
 
-        public void Start()
+        public void Start(AgreementEntity agreement, ActivityEntity activity)
         {
             lock(lockObject)
             {
+                this.Agreement = agreement;
+                this.Activity = activity;
                 this.Started = DateTime.UtcNow;
-                this.State = GolemTastState.Running;
+                this.State = GolemTaskState.Running;
             }
         }
 
@@ -74,22 +82,14 @@ namespace YagnaSharpApi.Engine
 
         }
 
-        // DO NOT USE this is just for convenience when porting from python
-        public static GolemTask<TData, TResult> QueueTask(GolemTask<TData, TResult> task /* , queue*/)
-        {
-            // record the task "handle" and queue reference...???
-            task.Start();
-            return task;
-        }
-
         public void AcceptTask(TResult result)
         {
             lock (lockObject)
             {
-                if (this.State != GolemTastState.Running)
+                if (this.State != GolemTaskState.Running)
                     throw new Exception("Accepted task not in Running state!");
-                this.State = GolemTastState.Accepted;
-                this.OnTaskComplete?.Invoke(this, new TaskAccepted<TResult>(this.Id, result));
+                this.State = GolemTaskState.Accepted;
+                this.OnTaskComplete?.Invoke(this, new TaskAccepted<TData, TResult>(this, result));
                 this.Result = result;
                 this.DoStop();
             }
@@ -99,10 +99,10 @@ namespace YagnaSharpApi.Engine
         {
             lock (lockObject)
             {
-                if (this.State != GolemTastState.Running)
+                if (this.State != GolemTaskState.Running)
                     throw new Exception("Accepted task not in Running state!");
-                this.State = GolemTastState.Rejected;
-                this.OnTaskComplete?.Invoke(this, new TaskRejected(this.Id, reason));
+                this.State = GolemTaskState.Rejected;
+                this.OnTaskComplete?.Invoke(this, new TaskRejected<TData, TResult>(this, reason));
                 this.DoStop(retry);
             }
         }

@@ -5,7 +5,7 @@ using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class PaymentEvent : ExecutorEvent
+    public interface ITaskEvent
     {
     }
 }

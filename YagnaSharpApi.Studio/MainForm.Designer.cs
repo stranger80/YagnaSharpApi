@@ -40,6 +40,10 @@ namespace YagnaSharpApi.Studio
             this.timestampDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.eventModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.eventDetailsTreeView = new System.Windows.Forms.TreeView();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
             this.eventDetailTextBox = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -86,6 +90,9 @@ namespace YagnaSharpApi.Studio
             ((System.ComponentModel.ISupportInitialize)(this.eventsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventModelBindingSource)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -122,9 +129,10 @@ namespace YagnaSharpApi.Studio
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(12, 12);
+            this.startButton.Location = new System.Drawing.Point(15, 15);
+            this.startButton.Margin = new System.Windows.Forms.Padding(4);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(94, 29);
+            this.startButton.Size = new System.Drawing.Size(118, 36);
             this.startButton.TabIndex = 0;
             this.startButton.Text = "Start";
             this.startButton.UseVisualStyleBackColor = true;
@@ -133,7 +141,8 @@ namespace YagnaSharpApi.Studio
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer2.Location = new System.Drawing.Point(4, 4);
+            this.splitContainer2.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer2.Name = "splitContainer2";
             // 
             // splitContainer2.Panel1
@@ -143,8 +152,9 @@ namespace YagnaSharpApi.Studio
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.groupBox2);
-            this.splitContainer2.Size = new System.Drawing.Size(1477, 737);
-            this.splitContainer2.SplitterDistance = 646;
+            this.splitContainer2.Size = new System.Drawing.Size(1848, 924);
+            this.splitContainer2.SplitterDistance = 808;
+            this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 0;
             // 
             // groupBox1
@@ -152,8 +162,10 @@ namespace YagnaSharpApi.Studio
             this.groupBox1.Controls.Add(this.eventsDataGridView);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(646, 737);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(808, 924);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Events :";
@@ -167,12 +179,13 @@ namespace YagnaSharpApi.Studio
             this.timestampDataGridViewTextBoxColumn});
             this.eventsDataGridView.DataSource = this.eventModelBindingSource;
             this.eventsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.eventsDataGridView.Location = new System.Drawing.Point(3, 23);
+            this.eventsDataGridView.Location = new System.Drawing.Point(4, 28);
+            this.eventsDataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.eventsDataGridView.Name = "eventsDataGridView";
             this.eventsDataGridView.RowHeadersWidth = 51;
             this.eventsDataGridView.RowTemplate.Height = 29;
             this.eventsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.eventsDataGridView.Size = new System.Drawing.Size(640, 711);
+            this.eventsDataGridView.Size = new System.Drawing.Size(800, 892);
             this.eventsDataGridView.TabIndex = 0;
             this.eventsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.eventsDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.eventsDataGridView_CellFormatting);
@@ -187,7 +200,7 @@ namespace YagnaSharpApi.Studio
             this.textDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.textDataGridViewTextBoxColumn.Name = "textDataGridViewTextBoxColumn";
             this.textDataGridViewTextBoxColumn.ReadOnly = true;
-            this.textDataGridViewTextBoxColumn.Width = 65;
+            this.textDataGridViewTextBoxColumn.Width = 78;
             // 
             // timestampDataGridViewTextBoxColumn
             // 
@@ -197,7 +210,7 @@ namespace YagnaSharpApi.Studio
             this.timestampDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.timestampDataGridViewTextBoxColumn.Name = "timestampDataGridViewTextBoxColumn";
             this.timestampDataGridViewTextBoxColumn.ReadOnly = true;
-            this.timestampDataGridViewTextBoxColumn.Width = 112;
+            this.timestampDataGridViewTextBoxColumn.Width = 136;
             // 
             // eventModelBindingSource
             // 
@@ -206,24 +219,68 @@ namespace YagnaSharpApi.Studio
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.eventDetailTextBox);
+            this.groupBox2.Controls.Add(this.tabControl2);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(827, 737);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Size = new System.Drawing.Size(1035, 924);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Event details :";
             // 
+            // tabControl2
+            // 
+            this.tabControl2.Controls.Add(this.tabPage5);
+            this.tabControl2.Controls.Add(this.tabPage6);
+            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl2.Location = new System.Drawing.Point(4, 28);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(1027, 892);
+            this.tabControl2.TabIndex = 2;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.eventDetailsTreeView);
+            this.tabPage5.Location = new System.Drawing.Point(4, 34);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(1019, 854);
+            this.tabPage5.TabIndex = 0;
+            this.tabPage5.Text = "JSON";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // eventDetailsTreeView
+            // 
+            this.eventDetailsTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.eventDetailsTreeView.Location = new System.Drawing.Point(3, 3);
+            this.eventDetailsTreeView.Name = "eventDetailsTreeView";
+            this.eventDetailsTreeView.Size = new System.Drawing.Size(1013, 848);
+            this.eventDetailsTreeView.TabIndex = 1;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.eventDetailTextBox);
+            this.tabPage6.Location = new System.Drawing.Point(4, 34);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(1019, 854);
+            this.tabPage6.TabIndex = 1;
+            this.tabPage6.Text = "Text";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
             // eventDetailTextBox
             // 
             this.eventDetailTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.eventDetailTextBox.Location = new System.Drawing.Point(3, 23);
+            this.eventDetailTextBox.Location = new System.Drawing.Point(3, 3);
+            this.eventDetailTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.eventDetailTextBox.Multiline = true;
             this.eventDetailTextBox.Name = "eventDetailTextBox";
             this.eventDetailTextBox.ReadOnly = true;
             this.eventDetailTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.eventDetailTextBox.Size = new System.Drawing.Size(821, 711);
+            this.eventDetailTextBox.Size = new System.Drawing.Size(1013, 848);
             this.eventDetailTextBox.TabIndex = 0;
             // 
             // tabControl1
@@ -235,19 +292,21 @@ namespace YagnaSharpApi.Studio
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Location = new System.Drawing.Point(12, 47);
+            this.tabControl1.Location = new System.Drawing.Point(15, 59);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1491, 776);
+            this.tabControl1.Size = new System.Drawing.Size(1864, 970);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.splitContainer2);
-            this.tabPage1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage1.Location = new System.Drawing.Point(4, 34);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1483, 743);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Size = new System.Drawing.Size(1856, 932);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Events";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -255,10 +314,11 @@ namespace YagnaSharpApi.Studio
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.splitContainer1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage2.Location = new System.Drawing.Point(4, 34);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1483, 743);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage2.Size = new System.Drawing.Size(1856, 932);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Offers";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -266,7 +326,8 @@ namespace YagnaSharpApi.Studio
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer1.Location = new System.Drawing.Point(4, 4);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -276,14 +337,16 @@ namespace YagnaSharpApi.Studio
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer1.Size = new System.Drawing.Size(1477, 737);
-            this.splitContainer1.SplitterDistance = 765;
+            this.splitContainer1.Size = new System.Drawing.Size(1848, 924);
+            this.splitContainer1.SplitterDistance = 957;
+            this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 0;
             // 
             // splitContainer3
             // 
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer3.Name = "splitContainer3";
             this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -294,8 +357,9 @@ namespace YagnaSharpApi.Studio
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.groupBox4);
-            this.splitContainer3.Size = new System.Drawing.Size(765, 737);
-            this.splitContainer3.SplitterDistance = 401;
+            this.splitContainer3.Size = new System.Drawing.Size(957, 924);
+            this.splitContainer3.SplitterDistance = 502;
+            this.splitContainer3.SplitterWidth = 5;
             this.splitContainer3.TabIndex = 0;
             // 
             // groupBox3
@@ -303,8 +367,10 @@ namespace YagnaSharpApi.Studio
             this.groupBox3.Controls.Add(this.offersDataGridView);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(765, 401);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox3.Size = new System.Drawing.Size(957, 502);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Offers :";
@@ -321,12 +387,13 @@ namespace YagnaSharpApi.Studio
             this.offerProposalDataGridViewTextBoxColumn});
             this.offersDataGridView.DataSource = this.offerModelbindingSource;
             this.offersDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.offersDataGridView.Location = new System.Drawing.Point(3, 23);
+            this.offersDataGridView.Location = new System.Drawing.Point(4, 28);
+            this.offersDataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.offersDataGridView.Name = "offersDataGridView";
             this.offersDataGridView.RowHeadersWidth = 51;
             this.offersDataGridView.RowTemplate.Height = 29;
             this.offersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.offersDataGridView.Size = new System.Drawing.Size(759, 375);
+            this.offersDataGridView.Size = new System.Drawing.Size(949, 470);
             this.offersDataGridView.TabIndex = 0;
             this.offersDataGridView.SelectionChanged += new System.EventHandler(this.offersDataGridView_SelectionChanged);
             // 
@@ -384,8 +451,10 @@ namespace YagnaSharpApi.Studio
             this.groupBox4.Controls.Add(this.offerEventsDataGridView);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(765, 332);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox4.Size = new System.Drawing.Size(957, 417);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Offer events :";
@@ -400,12 +469,13 @@ namespace YagnaSharpApi.Studio
             this.eventDataGridViewTextBoxColumn1});
             this.offerEventsDataGridView.DataSource = this.offerEventBindingSource;
             this.offerEventsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.offerEventsDataGridView.Location = new System.Drawing.Point(3, 23);
+            this.offerEventsDataGridView.Location = new System.Drawing.Point(4, 28);
+            this.offerEventsDataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.offerEventsDataGridView.Name = "offerEventsDataGridView";
             this.offerEventsDataGridView.RowHeadersWidth = 51;
             this.offerEventsDataGridView.RowTemplate.Height = 29;
             this.offerEventsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.offerEventsDataGridView.Size = new System.Drawing.Size(759, 306);
+            this.offerEventsDataGridView.Size = new System.Drawing.Size(949, 385);
             this.offerEventsDataGridView.TabIndex = 0;
             this.offerEventsDataGridView.SelectionChanged += new System.EventHandler(this.offerEventsDataGridView_SelectionChanged);
             // 
@@ -444,6 +514,7 @@ namespace YagnaSharpApi.Studio
             // 
             this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer4.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer4.Name = "splitContainer4";
             this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -454,8 +525,9 @@ namespace YagnaSharpApi.Studio
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.groupBox6);
-            this.splitContainer4.Size = new System.Drawing.Size(708, 737);
-            this.splitContainer4.SplitterDistance = 401;
+            this.splitContainer4.Size = new System.Drawing.Size(886, 924);
+            this.splitContainer4.SplitterDistance = 502;
+            this.splitContainer4.SplitterWidth = 5;
             this.splitContainer4.TabIndex = 0;
             // 
             // groupBox5
@@ -463,8 +535,10 @@ namespace YagnaSharpApi.Studio
             this.groupBox5.Controls.Add(this.offerDetailsTextBox);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(0, 0);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(708, 401);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox5.Size = new System.Drawing.Size(886, 502);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Offer details :";
@@ -472,11 +546,12 @@ namespace YagnaSharpApi.Studio
             // offerDetailsTextBox
             // 
             this.offerDetailsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.offerDetailsTextBox.Location = new System.Drawing.Point(3, 23);
+            this.offerDetailsTextBox.Location = new System.Drawing.Point(4, 28);
+            this.offerDetailsTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.offerDetailsTextBox.Multiline = true;
             this.offerDetailsTextBox.Name = "offerDetailsTextBox";
             this.offerDetailsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.offerDetailsTextBox.Size = new System.Drawing.Size(702, 375);
+            this.offerDetailsTextBox.Size = new System.Drawing.Size(878, 470);
             this.offerDetailsTextBox.TabIndex = 0;
             // 
             // groupBox6
@@ -484,8 +559,10 @@ namespace YagnaSharpApi.Studio
             this.groupBox6.Controls.Add(this.offerEventDetailsTextBox);
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox6.Location = new System.Drawing.Point(0, 0);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(708, 332);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox6.Size = new System.Drawing.Size(886, 417);
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Offer event details :";
@@ -493,20 +570,22 @@ namespace YagnaSharpApi.Studio
             // offerEventDetailsTextBox
             // 
             this.offerEventDetailsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.offerEventDetailsTextBox.Location = new System.Drawing.Point(3, 23);
+            this.offerEventDetailsTextBox.Location = new System.Drawing.Point(4, 28);
+            this.offerEventDetailsTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.offerEventDetailsTextBox.Multiline = true;
             this.offerEventDetailsTextBox.Name = "offerEventDetailsTextBox";
             this.offerEventDetailsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.offerEventDetailsTextBox.Size = new System.Drawing.Size(702, 306);
+            this.offerEventDetailsTextBox.Size = new System.Drawing.Size(878, 385);
             this.offerEventDetailsTextBox.TabIndex = 0;
             // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.splitContainer5);
-            this.tabPage3.Location = new System.Drawing.Point(4, 29);
+            this.tabPage3.Location = new System.Drawing.Point(4, 34);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1483, 743);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage3.Size = new System.Drawing.Size(1856, 932);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Agreements";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -514,7 +593,8 @@ namespace YagnaSharpApi.Studio
             // splitContainer5
             // 
             this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer5.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer5.Location = new System.Drawing.Point(4, 4);
+            this.splitContainer5.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer5.Name = "splitContainer5";
             // 
             // splitContainer5.Panel1
@@ -524,8 +604,9 @@ namespace YagnaSharpApi.Studio
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.groupBox8);
-            this.splitContainer5.Size = new System.Drawing.Size(1477, 737);
-            this.splitContainer5.SplitterDistance = 491;
+            this.splitContainer5.Size = new System.Drawing.Size(1848, 924);
+            this.splitContainer5.SplitterDistance = 614;
+            this.splitContainer5.SplitterWidth = 5;
             this.splitContainer5.TabIndex = 0;
             // 
             // groupBox7
@@ -533,8 +614,10 @@ namespace YagnaSharpApi.Studio
             this.groupBox7.Controls.Add(this.agreementsDataGridView);
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox7.Location = new System.Drawing.Point(0, 0);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(491, 737);
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox7.Size = new System.Drawing.Size(614, 924);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Agreements :";
@@ -551,12 +634,13 @@ namespace YagnaSharpApi.Studio
             this.agreementDataGridViewTextBoxColumn});
             this.agreementsDataGridView.DataSource = this.agreementModelBindingSource;
             this.agreementsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.agreementsDataGridView.Location = new System.Drawing.Point(3, 23);
+            this.agreementsDataGridView.Location = new System.Drawing.Point(4, 28);
+            this.agreementsDataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.agreementsDataGridView.Name = "agreementsDataGridView";
             this.agreementsDataGridView.RowHeadersWidth = 51;
             this.agreementsDataGridView.RowTemplate.Height = 29;
             this.agreementsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.agreementsDataGridView.Size = new System.Drawing.Size(485, 711);
+            this.agreementsDataGridView.Size = new System.Drawing.Size(606, 892);
             this.agreementsDataGridView.TabIndex = 0;
             this.agreementsDataGridView.SelectionChanged += new System.EventHandler(this.agreementsDataGridView_SelectionChanged);
             // 
@@ -614,8 +698,10 @@ namespace YagnaSharpApi.Studio
             this.groupBox8.Controls.Add(this.agreementDetailsTextBox);
             this.groupBox8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox8.Location = new System.Drawing.Point(0, 0);
+            this.groupBox8.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(982, 737);
+            this.groupBox8.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox8.Size = new System.Drawing.Size(1229, 924);
             this.groupBox8.TabIndex = 0;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Agreement details :";
@@ -623,30 +709,33 @@ namespace YagnaSharpApi.Studio
             // agreementDetailsTextBox
             // 
             this.agreementDetailsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.agreementDetailsTextBox.Location = new System.Drawing.Point(3, 23);
+            this.agreementDetailsTextBox.Location = new System.Drawing.Point(4, 28);
+            this.agreementDetailsTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.agreementDetailsTextBox.Multiline = true;
             this.agreementDetailsTextBox.Name = "agreementDetailsTextBox";
             this.agreementDetailsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.agreementDetailsTextBox.Size = new System.Drawing.Size(976, 711);
+            this.agreementDetailsTextBox.Size = new System.Drawing.Size(1221, 892);
             this.agreementDetailsTextBox.TabIndex = 0;
             // 
             // tabPage4
             // 
-            this.tabPage4.Location = new System.Drawing.Point(4, 29);
+            this.tabPage4.Location = new System.Drawing.Point(4, 34);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1483, 743);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage4.Size = new System.Drawing.Size(1856, 932);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Payments";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1515, 835);
+            this.ClientSize = new System.Drawing.Size(1894, 1044);
             this.Controls.Add(this.startButton);
             this.Controls.Add(this.tabControl1);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "Yagna API Studio";
             this.splitContainer2.Panel1.ResumeLayout(false);
@@ -657,7 +746,10 @@ namespace YagnaSharpApi.Studio
             ((System.ComponentModel.ISupportInitialize)(this.eventsDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventModelBindingSource)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
@@ -749,6 +841,10 @@ namespace YagnaSharpApi.Studio
         private System.Windows.Forms.DataGridViewTextBoxColumn timestampDataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn eventDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn eventCountDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.TreeView eventDetailsTreeView;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TabPage tabPage6;
     }
 }
 

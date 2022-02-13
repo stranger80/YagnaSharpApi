@@ -350,7 +350,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task ApproveAgreementAsync (string agreementId, string appSessionId = default(string), float? timeout = default(float?));
+        System.Threading.Tasks.Task ApproveAgreementAsync (string agreementId, string appSessionId = default(string), float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// ApproveAgreement - Approves Agreement proposed by the Reqestor.
@@ -363,7 +363,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> ApproveAgreementAsyncWithHttpInfo (string agreementId, string appSessionId = default(string), float? timeout = default(float?));
+        System.Threading.Tasks.Task<ApiResponse<Object>> ApproveAgreementAsyncWithHttpInfo (string agreementId, string appSessionId = default(string), float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// CollectAgreementEvents - Collects events related to an Agreement.
         /// </summary>
@@ -376,7 +376,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of List&lt;AgreementEvent&gt;</returns>
-        System.Threading.Tasks.Task<List<AgreementEvent>> CollectAgreementEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string));
+        System.Threading.Tasks.Task<List<AgreementEvent>> CollectAgreementEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// CollectAgreementEvents - Collects events related to an Agreement.
@@ -390,7 +390,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;AgreementEvent&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<AgreementEvent>>> CollectAgreementEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string));
+        System.Threading.Tasks.Task<ApiResponse<List<AgreementEvent>>> CollectAgreementEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// CollectDemands - Reads Market responses to published Offer.
         /// </summary>
@@ -402,7 +402,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of List&lt;Event&gt;</returns>
-        System.Threading.Tasks.Task<List<Event>> CollectDemandsAsync (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?));
+        System.Threading.Tasks.Task<List<Event>> CollectDemandsAsync (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// CollectDemands - Reads Market responses to published Offer.
@@ -415,7 +415,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of ApiResponse (List&lt;Event&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<Event>>> CollectDemandsAsyncWithHttpInfo (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?));
+        System.Threading.Tasks.Task<ApiResponse<List<Event>>> CollectDemandsAsyncWithHttpInfo (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// CounterProposalOffer - Responds with a bespoke Offer to received Demand.
         /// </summary>
@@ -427,7 +427,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="demandOfferBase"></param>
         /// <returns>Task of string</returns>
-        System.Threading.Tasks.Task<string> CounterProposalOfferAsync (string subscriptionId, string proposalId, DemandOfferBase demandOfferBase);
+        System.Threading.Tasks.Task<string> CounterProposalOfferAsync (string subscriptionId, string proposalId, DemandOfferBase demandOfferBase, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// CounterProposalOffer - Responds with a bespoke Offer to received Demand.
@@ -440,7 +440,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="demandOfferBase"></param>
         /// <returns>Task of ApiResponse (string)</returns>
-        System.Threading.Tasks.Task<ApiResponse<string>> CounterProposalOfferAsyncWithHttpInfo (string subscriptionId, string proposalId, DemandOfferBase demandOfferBase);
+        System.Threading.Tasks.Task<ApiResponse<string>> CounterProposalOfferAsyncWithHttpInfo (string subscriptionId, string proposalId, DemandOfferBase demandOfferBase, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// GetAgreement - Fetches agreement with given agreement id.
         /// </summary>
@@ -450,7 +450,7 @@ namespace Golem.MarketApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>Task of Agreement</returns>
-        System.Threading.Tasks.Task<Agreement> GetAgreementAsync (string agreementId);
+        System.Threading.Tasks.Task<Agreement> GetAgreementAsync (string agreementId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// GetAgreement - Fetches agreement with given agreement id.
@@ -461,7 +461,7 @@ namespace Golem.MarketApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>Task of ApiResponse (Agreement)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Agreement>> GetAgreementAsyncWithHttpInfo (string agreementId);
+        System.Threading.Tasks.Task<ApiResponse<Agreement>> GetAgreementAsyncWithHttpInfo (string agreementId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// GetOffers - Fetches all active Offers which have been published by the Provider.
         /// </summary>
@@ -470,7 +470,7 @@ namespace Golem.MarketApi.Client.Api
         /// </remarks>
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;Offer&gt;</returns>
-        System.Threading.Tasks.Task<List<Offer>> GetOffersAsync ();
+        System.Threading.Tasks.Task<List<Offer>> GetOffersAsync (System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// GetOffers - Fetches all active Offers which have been published by the Provider.
@@ -480,7 +480,7 @@ namespace Golem.MarketApi.Client.Api
         /// </remarks>
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Offer&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<Offer>>> GetOffersAsyncWithHttpInfo ();
+        System.Threading.Tasks.Task<ApiResponse<List<Offer>>> GetOffersAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// GetProposalDemand - Fetches Proposal (Demand) with given id.
         /// </summary>
@@ -491,7 +491,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <returns>Task of Proposal</returns>
-        System.Threading.Tasks.Task<Proposal> GetProposalDemandAsync (string subscriptionId, string proposalId);
+        System.Threading.Tasks.Task<Proposal> GetProposalDemandAsync (string subscriptionId, string proposalId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// GetProposalDemand - Fetches Proposal (Demand) with given id.
@@ -503,7 +503,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <returns>Task of ApiResponse (Proposal)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Proposal>> GetProposalDemandAsyncWithHttpInfo (string subscriptionId, string proposalId);
+        System.Threading.Tasks.Task<ApiResponse<Proposal>> GetProposalDemandAsyncWithHttpInfo (string subscriptionId, string proposalId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// QueryReplyOffers - Handles dynamic property query.
         /// </summary>
@@ -515,7 +515,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="queryId"></param>
         /// <param name="body"></param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task QueryReplyOffersAsync (string subscriptionId, string queryId, Object body);
+        System.Threading.Tasks.Task QueryReplyOffersAsync (string subscriptionId, string queryId, Object body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// QueryReplyOffers - Handles dynamic property query.
@@ -528,7 +528,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="queryId"></param>
         /// <param name="body"></param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> QueryReplyOffersAsyncWithHttpInfo (string subscriptionId, string queryId, Object body);
+        System.Threading.Tasks.Task<ApiResponse<Object>> QueryReplyOffersAsyncWithHttpInfo (string subscriptionId, string queryId, Object body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// RejectAgreement - Rejects Agreement proposed by the Requestor.
         /// </summary>
@@ -539,7 +539,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task RejectAgreementAsync (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>));
+        System.Threading.Tasks.Task RejectAgreementAsync (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// RejectAgreement - Rejects Agreement proposed by the Requestor.
@@ -551,7 +551,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> RejectAgreementAsyncWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>));
+        System.Threading.Tasks.Task<ApiResponse<Object>> RejectAgreementAsyncWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// RejectProposalDemand - Rejects Proposal (Demand).
         /// </summary>
@@ -563,7 +563,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task RejectProposalDemandAsync (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>));
+        System.Threading.Tasks.Task RejectProposalDemandAsync (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// RejectProposalDemand - Rejects Proposal (Demand).
@@ -576,7 +576,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> RejectProposalDemandAsyncWithHttpInfo (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>));
+        System.Threading.Tasks.Task<ApiResponse<Object>> RejectProposalDemandAsyncWithHttpInfo (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// SubscribeOffer - Publishes Provider capabilities via Offer.
         /// </summary>
@@ -586,7 +586,7 @@ namespace Golem.MarketApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="demandOfferBase"></param>
         /// <returns>Task of string</returns>
-        System.Threading.Tasks.Task<string> SubscribeOfferAsync (DemandOfferBase demandOfferBase);
+        System.Threading.Tasks.Task<string> SubscribeOfferAsync (DemandOfferBase demandOfferBase, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// SubscribeOffer - Publishes Provider capabilities via Offer.
@@ -597,7 +597,7 @@ namespace Golem.MarketApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="demandOfferBase"></param>
         /// <returns>Task of ApiResponse (string)</returns>
-        System.Threading.Tasks.Task<ApiResponse<string>> SubscribeOfferAsyncWithHttpInfo (DemandOfferBase demandOfferBase);
+        System.Threading.Tasks.Task<ApiResponse<string>> SubscribeOfferAsyncWithHttpInfo (DemandOfferBase demandOfferBase, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// TerminateAgreement - Terminates approved Agreement.
         /// </summary>
@@ -608,7 +608,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task TerminateAgreementAsync (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>));
+        System.Threading.Tasks.Task TerminateAgreementAsync (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// TerminateAgreement - Terminates approved Agreement.
@@ -620,7 +620,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> TerminateAgreementAsyncWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>));
+        System.Threading.Tasks.Task<ApiResponse<Object>> TerminateAgreementAsyncWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// UnsubscribeOffer - Stop subscription for previously published Offer.
         /// </summary>
@@ -630,7 +630,7 @@ namespace Golem.MarketApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task UnsubscribeOfferAsync (string subscriptionId);
+        System.Threading.Tasks.Task UnsubscribeOfferAsync (string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// UnsubscribeOffer - Stop subscription for previously published Offer.
@@ -641,7 +641,7 @@ namespace Golem.MarketApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> UnsubscribeOfferAsyncWithHttpInfo (string subscriptionId);
+        System.Threading.Tasks.Task<ApiResponse<Object>> UnsubscribeOfferAsyncWithHttpInfo (string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -843,9 +843,9 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task ApproveAgreementAsync (string agreementId, string appSessionId = default(string), float? timeout = default(float?))
+        public async System.Threading.Tasks.Task ApproveAgreementAsync (string agreementId, string appSessionId = default(string), float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             await ApproveAgreementAsyncWithHttpInfo(agreementId, appSessionId, timeout);
+             await ApproveAgreementAsyncWithHttpInfo(agreementId, appSessionId, timeout, cancellationToken);
 
         }
 
@@ -857,7 +857,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> ApproveAgreementAsyncWithHttpInfo (string agreementId, string appSessionId = default(string), float? timeout = default(float?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> ApproveAgreementAsyncWithHttpInfo (string agreementId, string appSessionId = default(string), float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
@@ -900,7 +900,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/agreements/{agreementId}/approve", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/agreements/{agreementId}/approve", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -998,9 +998,9 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of List&lt;AgreementEvent&gt;</returns>
-        public async System.Threading.Tasks.Task<List<AgreementEvent>> CollectAgreementEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public async System.Threading.Tasks.Task<List<AgreementEvent>> CollectAgreementEventsAsync (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<List<AgreementEvent>> localVarResponse = await CollectAgreementEventsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId);
+             Golem.Common.Client.Client.ApiResponse<List<AgreementEvent>> localVarResponse = await CollectAgreementEventsAsyncWithHttpInfo(timeout, afterTimestamp, maxEvents, appSessionId,cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1014,7 +1014,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <param name="appSessionId">A correlation/session identifier used for querying events related to an action where this appSessionId has been specified (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;AgreementEvent&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<AgreementEvent>>> CollectAgreementEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<AgreementEvent>>> CollectAgreementEventsAsyncWithHttpInfo (float? timeout = default(float?), DateTime? afterTimestamp = default(DateTime?), int? maxEvents = default(int?), string appSessionId = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
 
             Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
@@ -1059,7 +1059,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<List<AgreementEvent>>("/agreementEvents", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<List<AgreementEvent>>("/agreementEvents", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -1152,9 +1152,9 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of List&lt;Event&gt;</returns>
-        public async System.Threading.Tasks.Task<List<Event>> CollectDemandsAsync (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?))
+        public async System.Threading.Tasks.Task<List<Event>> CollectDemandsAsync (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<List<Event>> localVarResponse = await CollectDemandsAsyncWithHttpInfo(subscriptionId, timeout, maxEvents);
+             Golem.Common.Client.Client.ApiResponse<List<Event>> localVarResponse = await CollectDemandsAsyncWithHttpInfo(subscriptionId, timeout, maxEvents, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1167,7 +1167,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of ApiResponse (List&lt;Event&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<Event>>> CollectDemandsAsyncWithHttpInfo (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<Event>>> CollectDemandsAsyncWithHttpInfo (string subscriptionId, float? timeout = default(float?), int? maxEvents = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
@@ -1210,7 +1210,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<List<Event>>("/offers/{subscriptionId}/events", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<List<Event>>("/offers/{subscriptionId}/events", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -1307,9 +1307,9 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="demandOfferBase"></param>
         /// <returns>Task of string</returns>
-        public async System.Threading.Tasks.Task<string> CounterProposalOfferAsync (string subscriptionId, string proposalId, DemandOfferBase demandOfferBase)
+        public async System.Threading.Tasks.Task<string> CounterProposalOfferAsync (string subscriptionId, string proposalId, DemandOfferBase demandOfferBase, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<string> localVarResponse = await CounterProposalOfferAsyncWithHttpInfo(subscriptionId, proposalId, demandOfferBase);
+             Golem.Common.Client.Client.ApiResponse<string> localVarResponse = await CounterProposalOfferAsyncWithHttpInfo(subscriptionId, proposalId, demandOfferBase, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1322,7 +1322,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="demandOfferBase"></param>
         /// <returns>Task of ApiResponse (string)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<string>> CounterProposalOfferAsyncWithHttpInfo (string subscriptionId, string proposalId, DemandOfferBase demandOfferBase)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<string>> CounterProposalOfferAsyncWithHttpInfo (string subscriptionId, string proposalId, DemandOfferBase demandOfferBase, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
@@ -1369,7 +1369,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<string>("/offers/{subscriptionId}/proposals/{proposalId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<string>("/offers/{subscriptionId}/proposals/{proposalId}", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -1448,9 +1448,9 @@ namespace Golem.MarketApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>Task of Agreement</returns>
-        public async System.Threading.Tasks.Task<Agreement> GetAgreementAsync (string agreementId)
+        public async System.Threading.Tasks.Task<Agreement> GetAgreementAsync (string agreementId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<Agreement> localVarResponse = await GetAgreementAsyncWithHttpInfo(agreementId);
+             Golem.Common.Client.Client.ApiResponse<Agreement> localVarResponse = await GetAgreementAsyncWithHttpInfo(agreementId, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1461,7 +1461,7 @@ namespace Golem.MarketApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
         /// <returns>Task of ApiResponse (Agreement)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Agreement>> GetAgreementAsyncWithHttpInfo (string agreementId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Agreement>> GetAgreementAsyncWithHttpInfo (string agreementId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
@@ -1496,7 +1496,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Agreement>("/agreements/{agreementId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<Agreement>("/agreements/{agreementId}", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -1566,9 +1566,9 @@ namespace Golem.MarketApi.Client.Api
         /// </summary>
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;Offer&gt;</returns>
-        public async System.Threading.Tasks.Task<List<Offer>> GetOffersAsync ()
+        public async System.Threading.Tasks.Task<List<Offer>> GetOffersAsync (System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<List<Offer>> localVarResponse = await GetOffersAsyncWithHttpInfo();
+             Golem.Common.Client.Client.ApiResponse<List<Offer>> localVarResponse = await GetOffersAsyncWithHttpInfo(cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1578,7 +1578,7 @@ namespace Golem.MarketApi.Client.Api
         /// </summary>
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Offer&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<Offer>>> GetOffersAsyncWithHttpInfo ()
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<Offer>>> GetOffersAsyncWithHttpInfo (System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
 
             Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
@@ -1607,7 +1607,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<List<Offer>>("/offers", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<List<Offer>>("/offers", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -1695,9 +1695,9 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <returns>Task of Proposal</returns>
-        public async System.Threading.Tasks.Task<Proposal> GetProposalDemandAsync (string subscriptionId, string proposalId)
+        public async System.Threading.Tasks.Task<Proposal> GetProposalDemandAsync (string subscriptionId, string proposalId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<Proposal> localVarResponse = await GetProposalDemandAsyncWithHttpInfo(subscriptionId, proposalId);
+             Golem.Common.Client.Client.ApiResponse<Proposal> localVarResponse = await GetProposalDemandAsyncWithHttpInfo(subscriptionId, proposalId, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1709,7 +1709,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="subscriptionId"></param>
         /// <param name="proposalId"></param>
         /// <returns>Task of ApiResponse (Proposal)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Proposal>> GetProposalDemandAsyncWithHttpInfo (string subscriptionId, string proposalId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Proposal>> GetProposalDemandAsyncWithHttpInfo (string subscriptionId, string proposalId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
@@ -1750,7 +1750,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Proposal>("/offers/{subscriptionId}/proposals/{proposalId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<Proposal>("/offers/{subscriptionId}/proposals/{proposalId}", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -1846,9 +1846,9 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="queryId"></param>
         /// <param name="body"></param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task QueryReplyOffersAsync (string subscriptionId, string queryId, Object body)
+        public async System.Threading.Tasks.Task QueryReplyOffersAsync (string subscriptionId, string queryId, Object body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             await QueryReplyOffersAsyncWithHttpInfo(subscriptionId, queryId, body);
+             await QueryReplyOffersAsyncWithHttpInfo(subscriptionId, queryId, body, cancellationToken);
 
         }
 
@@ -1860,7 +1860,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="queryId"></param>
         /// <param name="body"></param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> QueryReplyOffersAsyncWithHttpInfo (string subscriptionId, string queryId, Object body)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> QueryReplyOffersAsyncWithHttpInfo (string subscriptionId, string queryId, Object body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
@@ -1907,7 +1907,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/offers/{subscriptionId}/propertyQuery/{queryId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/offers/{subscriptionId}/propertyQuery/{queryId}", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -1990,9 +1990,9 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task RejectAgreementAsync (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public async System.Threading.Tasks.Task RejectAgreementAsync (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             await RejectAgreementAsyncWithHttpInfo(agreementId, requestBody);
+             await RejectAgreementAsyncWithHttpInfo(agreementId, requestBody, cancellationToken);
 
         }
 
@@ -2003,7 +2003,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> RejectAgreementAsyncWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> RejectAgreementAsyncWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
@@ -2040,7 +2040,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/agreements/{agreementId}/reject", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/agreements/{agreementId}/reject", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -2132,9 +2132,9 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task RejectProposalDemandAsync (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public async System.Threading.Tasks.Task RejectProposalDemandAsync (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             await RejectProposalDemandAsyncWithHttpInfo(subscriptionId, proposalId, requestBody);
+             await RejectProposalDemandAsyncWithHttpInfo(subscriptionId, proposalId, requestBody, cancellationToken);
 
         }
 
@@ -2146,7 +2146,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="proposalId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> RejectProposalDemandAsyncWithHttpInfo (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> RejectProposalDemandAsyncWithHttpInfo (string subscriptionId, string proposalId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
@@ -2189,7 +2189,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/offers/{subscriptionId}/proposals/{proposalId}/reject", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/offers/{subscriptionId}/proposals/{proposalId}/reject", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -2268,9 +2268,9 @@ namespace Golem.MarketApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="demandOfferBase"></param>
         /// <returns>Task of string</returns>
-        public async System.Threading.Tasks.Task<string> SubscribeOfferAsync (DemandOfferBase demandOfferBase)
+        public async System.Threading.Tasks.Task<string> SubscribeOfferAsync (DemandOfferBase demandOfferBase, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<string> localVarResponse = await SubscribeOfferAsyncWithHttpInfo(demandOfferBase);
+             Golem.Common.Client.Client.ApiResponse<string> localVarResponse = await SubscribeOfferAsyncWithHttpInfo(demandOfferBase, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -2281,7 +2281,7 @@ namespace Golem.MarketApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="demandOfferBase"></param>
         /// <returns>Task of ApiResponse (string)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<string>> SubscribeOfferAsyncWithHttpInfo (DemandOfferBase demandOfferBase)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<string>> SubscribeOfferAsyncWithHttpInfo (DemandOfferBase demandOfferBase, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'demandOfferBase' is set
             if (demandOfferBase == null)
@@ -2316,7 +2316,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<string>("/offers", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<string>("/offers", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -2399,9 +2399,9 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task TerminateAgreementAsync (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public async System.Threading.Tasks.Task TerminateAgreementAsync (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             await TerminateAgreementAsyncWithHttpInfo(agreementId, requestBody);
+             await TerminateAgreementAsyncWithHttpInfo(agreementId, requestBody, cancellationToken);
 
         }
 
@@ -2412,7 +2412,7 @@ namespace Golem.MarketApi.Client.Api
         /// <param name="agreementId"></param>
         /// <param name="requestBody"> (optional)</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> TerminateAgreementAsyncWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> TerminateAgreementAsyncWithHttpInfo (string agreementId, Dictionary<string, Object> requestBody = default(Dictionary<string, Object>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'agreementId' is set
             if (agreementId == null)
@@ -2449,7 +2449,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/agreements/{agreementId}/terminate", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/agreements/{agreementId}/terminate", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -2527,9 +2527,9 @@ namespace Golem.MarketApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task UnsubscribeOfferAsync (string subscriptionId)
+        public async System.Threading.Tasks.Task UnsubscribeOfferAsync (string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             await UnsubscribeOfferAsyncWithHttpInfo(subscriptionId);
+             await UnsubscribeOfferAsyncWithHttpInfo(subscriptionId, cancellationToken);
 
         }
 
@@ -2539,7 +2539,7 @@ namespace Golem.MarketApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="subscriptionId"></param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> UnsubscribeOfferAsyncWithHttpInfo (string subscriptionId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> UnsubscribeOfferAsyncWithHttpInfo (string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'subscriptionId' is set
             if (subscriptionId == null)
@@ -2574,7 +2574,7 @@ namespace Golem.MarketApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/offers/{subscriptionId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/offers/{subscriptionId}", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using YagnaSharpApi.Engine;
 using YagnaSharpApi.Engine.Commands;
@@ -53,7 +54,7 @@ namespace YagnaSharpApi.Examples
         /// <param name="cancellationToken">CancellationToken injected by the framework - 
         /// to indicate the Run has been interrupted.</param>
         /// <returns></returns>
-        public async override IAsyncEnumerable<Script> OnRunAsync(WorkContext ctx, CancellationToken cancellationToken)
+        public async override IAsyncEnumerable<Script> OnRunAsync(WorkContext ctx, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             var gethClient = new GethClient(this.rpcEndpointUrl);
 

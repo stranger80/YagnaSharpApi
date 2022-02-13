@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class InvoiceAccepted : PaymentEvent
+    public class InvoiceAccepted : InvoiceEvent
     {
-        public InvoiceAccepted(string agreementId, string invoiceId, string amount)
+        public InvoiceAccepted(AgreementEntity agreement, InvoiceEntity invoice) : base(agreement, invoice)
         {
-            this.AgreementId = agreementId;
-            this.InvoiceId = invoiceId;
-            this.Amount = amount;
         }
-
-        public string AgreementId { get; set; }
-        public string InvoiceId { get; set; }
-        public string Amount { get; set; }
     }
 }

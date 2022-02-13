@@ -7,9 +7,8 @@ namespace YagnaSharpApi.Engine.Events
 {
     public class ProposalReceived : ProposalEvent
     {
-        public ProposalReceived(ProposalEntity prop)
+        public ProposalReceived(ProposalEntity prop) : base(prop)
         {
-            this.Proposal = prop;
         }
     }
 }
