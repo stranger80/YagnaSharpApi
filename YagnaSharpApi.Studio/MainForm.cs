@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -214,19 +215,103 @@ namespace YagnaSharpApi.Studio
         private void eventsDataGridView_SelectionChanged(object sender, EventArgs e)
         {
             this.eventDetailTextBox.Text = String.Empty;
+            this.eventDetailsTreeView.Nodes.Clear();
 
             foreach (var row in this.eventsDataGridView.SelectedRows)
             {
                 var selectedItem = (row as DataGridViewRow).DataBoundItem as EventModel;
 
+                // populate textbox
                 var text = JsonConvert.SerializeObject(selectedItem.Event, Formatting.Indented);
 
                 this.eventDetailTextBox.Text = text;
+
+                // populate treeview
+
+                var jsonObject = JObject.Parse(text);
+
+                var rootNode = this.Json2Tree(jsonObject, selectedItem.Event.GetType().Name);
+
+                this.eventDetailsTreeView.Nodes.Add(rootNode);
 
                 break;
             }
 
 
+
+        }
+
+        private TreeNode Json2Tree(JObject obj, string key)
+        {
+            //create the parent node
+            TreeNode parent = new TreeNode();
+            parent.Text = key;
+
+            //loop through the obj. all token should be pair<key, value>
+            foreach (var token in obj)
+            {
+                //create the child node
+                TreeNode child = new TreeNode();
+                //check if the value is of type obj recall the method
+                if (token.Value.Type.ToString() == "Object")
+                {
+                    // child.Text = token.Key.ToString();
+                    //create a new JObject using the the Token.value
+                    JObject o = (JObject)token.Value;
+                    //recall the method
+                    child = Json2Tree(o, token.Key);
+                    //add the child to the parentNode
+                    parent.Nodes.Add(child);
+                }
+                //if type is of array
+                else if (token.Value.Type.ToString() == "Array")
+                {
+                    int ix = -1;
+                    child.Text = $"{token.Key}";
+                    //loop though the array
+                    foreach (var itm in token.Value)
+                    {
+                        //check if value is an Array of objects
+                        if (itm.Type.ToString() == "Object")
+                        {
+                            TreeNode objTN = new TreeNode();
+                            //child.Text = token.Key.ToString();
+                            //call back the method
+                            ix++;
+
+                            JObject o = (JObject)itm;
+                            objTN = Json2Tree(o, token.Key + "[" + ix + "]");
+                            child.Nodes.Add(objTN);
+                            //parent.Nodes.Add(child);
+                        }
+                        //regular array string, int, etc
+                        else if (itm.Type.ToString() == "Array")
+                        {
+                            ix++;
+                            TreeNode dataArray = new TreeNode();
+                            foreach (var data in itm)
+                            {
+                                dataArray.Text = token.Key.ToString() + "[" + ix + "]";
+                                dataArray.Nodes.Add(data.ToString());
+                            }
+                            child.Nodes.Add(dataArray);
+                        }
+
+                        else
+                        {
+                            child.Nodes.Add(itm.ToString());
+                        }
+                    }
+                    parent.Nodes.Add(child);
+                }
+                else
+                {
+                    //if token.Value is not nested
+                    child.Text = $"{token.Key}: {token.Value.ToString()}";
+                    parent.Nodes.Add(child);
+                }
+            }
+            return parent;
 
         }
 
@@ -242,13 +327,13 @@ namespace YagnaSharpApi.Studio
 
             switch(selectedItem.Event)
             {
-                case MarketEvent m:
+                case IMarketEvent m:
                     e.CellStyle.ForeColor = Color.DarkGreen;
                     break;
-                case TaskEvent m:
+                case ITaskEvent m:
                     e.CellStyle.ForeColor = Color.Blue;
                     break;
-                case PaymentEvent m:
+                case IPaymentEvent m:
                     e.CellStyle.ForeColor = Color.Violet;
                     break;
                 case ExecutorEvent m:

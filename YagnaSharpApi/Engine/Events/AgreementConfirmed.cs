@@ -5,11 +5,10 @@ using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class AgreementConfirmed : AgreementEvent
+    public class AgreementConfirmed : AgreementEvent, IMarketEvent
     {
-        public  AgreementConfirmed(AgreementEntity agreement)
+        public  AgreementConfirmed(AgreementEntity agreement) : base(agreement)
         {
-            this.Agreement = agreement;
         }
     }
 }

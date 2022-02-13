@@ -5,11 +5,10 @@ using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class AgreementRejected : AgreementEvent
+    public class AgreementRejected : AgreementEvent, IMarketEvent
     {
-        public AgreementRejected(AgreementEntity agreement)
+        public AgreementRejected(AgreementEntity agreement) : base(agreement)
         {
-            this.Agreement = agreement;
         }
     }
 }

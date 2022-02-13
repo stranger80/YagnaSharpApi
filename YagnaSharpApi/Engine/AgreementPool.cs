@@ -36,7 +36,7 @@ namespace YagnaSharpApi.Engine
 
         private int proposalCount = 0;
 
-        public event EventHandler<Events.AgreementEvent> OnAgreementEvent;
+        public event EventHandler<Events.ExecutorEvent> OnAgreementEvent;
 
         public AgreementPool()
         {
@@ -157,7 +157,7 @@ namespace YagnaSharpApi.Engine
             }
             catch (ApiException exc)
             {
-                this.OnAgreementEvent?.Invoke(this, new AgreementFailed(offer.Proposal.ProposalId, exc));
+                this.OnAgreementEvent?.Invoke(this, new AgreementFailed(offer.Proposal, exc));
                 throw;
             }
 

@@ -4,6 +4,7 @@ using Golem.ActivityApi.Client.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,13 +27,13 @@ namespace YagnaSharpApi.Repository
             this.Mapper = mapper;
         }
 
-        public async Task<ActivityEntity> CreateActivityAsync(AgreementEntity agreement)
+        public async Task<ActivityEntity> CreateActivityAsync(AgreementEntity agreement, float? timeout = 0.0f)
         {
             try
             {
                 var request = new CreateActivityRequest(agreement.AgreementId);
 
-                var response = await this.RequestorControlApi.CreateActivityAsync(request);
+                var response = await this.RequestorControlApi.CreateActivityAsync(request, timeout);
 
                 var result = new ActivityEntity(this)
                 {
@@ -69,7 +70,7 @@ namespace YagnaSharpApi.Repository
             }
         }
 
-        public async IAsyncEnumerable<ExeScriptCommandResult> GetBatchEventsAsync(ExeScriptBatchEntity batch, CancellationToken cancellationToken = default)
+        public async IAsyncEnumerable<ExeScriptCommandResult> GetBatchEventsAsync(ExeScriptBatchEntity batch, [EnumeratorCancellation]CancellationToken cancellationToken = default)
         {
             bool stop = false;
             do

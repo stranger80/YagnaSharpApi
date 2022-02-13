@@ -178,6 +178,72 @@ namespace YagnaSharpApi.Repository
             }
         }
 
+        public async IAsyncEnumerable<DebitNoteEventEntity> GetDebitNoteEventsAsync([EnumeratorCancellation] CancellationToken cancellationToken)
+        {
+            // implement ongoing listening of the DebitNote Event flow, 
+            // decode incoming events
+            // for new Invoices - call GetInvoice(debitNoteId) to retrieve the DebitNote details from payment API
+
+            DateTime afterTimestamp = DateTime.UtcNow;
+
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var events = await this.RequestorApi.GetDebitNoteEventsAsync(5.0f, afterTimestamp, null, null, cancellationToken);
+
+                foreach (var ev in events)
+                {
+                    if (ev.EventDate > afterTimestamp) // move the afterTimestamp pointer
+                    {
+                        afterTimestamp = ev.EventDate;
+                    }
+
+                    var eventEntity = this.Mapper.Map<DebitNoteEventEntity>(ev);
+
+                    switch (ev)
+                    {
+                        case DebitNoteReceivedEvent dnrev:
+                            eventEntity.DebitNote = await this.GetDebitNoteAsync(dnrev.DebitNoteId);
+                            break;
+                    }
+
+                    yield return eventEntity;
+                }
+            }
+        }
+
+        public async Task<DebitNoteEntity> GetDebitNoteAsync(string debitNoteId)
+        {
+            try
+            {
+                var existingDebitNote = await this.RequestorApi.GetDebitNoteAsync(debitNoteId);
+
+                var result = this.Mapper.Map<DebitNoteEntity>(existingDebitNote);
+
+                result.SetRepository(this);
+
+                return result;
+            }
+            catch (Exception exc)
+            {
+                throw;
+            }
+
+        }
+
+        public async Task AcceptDebitNoteAsync(DebitNoteEntity debitNote, string amount, AllocationEntity allocation)
+        {
+            try
+            {
+                var acceptance = new Acceptance(amount, allocation.AllocationId);
+                await this.RequestorApi.AcceptDebitNoteAsync(debitNote.DebitNoteId, acceptance);
+            }
+            catch (Exception exc)
+            {
+                throw;
+            }
+        }
+
+
         public async Task<IEnumerable<AccountEntity>> GetAccountsAsync()
         {
             try

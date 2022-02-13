@@ -7,12 +7,8 @@ namespace YagnaSharpApi.Engine.Events
 {
     public class ProposalFailed : ProposalEvent
     {
-        public ProposalFailed(ProposalEntity prop, Exception exc = null)
+        public ProposalFailed(ProposalEntity prop, Exception exc = null) : base(prop, exc)
         {
-            this.Proposal = prop;
-            this.Exception = exc;
         }
-
-        public Exception Exception { get; set; }
     }
 }

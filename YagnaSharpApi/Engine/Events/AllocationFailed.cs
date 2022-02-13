@@ -4,13 +4,10 @@ using System.Text;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class AllocationFailed : PaymentEvent
+    public class AllocationFailed : ExecutorEvent, IPaymentEvent
     {
-        public AllocationFailed(Exception exc)
+        public AllocationFailed(Exception exc) : base(exc)
         {
-            this.Exception = exc;
         }
-
-        public Exception Exception { get; private set; }
     }
 }

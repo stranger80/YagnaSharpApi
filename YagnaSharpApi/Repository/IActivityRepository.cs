@@ -15,7 +15,7 @@ namespace YagnaSharpApi.Repository
 {
     public interface IActivityRepository : IDisposable
     {
-        Task<ActivityEntity> CreateActivityAsync(AgreementEntity agreement);
+        Task<ActivityEntity> CreateActivityAsync(AgreementEntity agreement, float? timeout = 0.0f);
 
         Task<ExeScriptBatchEntity> ExecAsync(ActivityEntity activity, IEnumerable<ExeScriptCommand> commands);
 

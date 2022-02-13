@@ -5,15 +5,13 @@ using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class AgreementCreated : AgreementEvent
+    public class AgreementCreated : AgreementEvent, IMarketEvent
     {
-        public ProposalEntity OfferProposal { get; set; }
-
-        public AgreementCreated(AgreementEntity agreement, ProposalEntity proposal)
+        public AgreementCreated(AgreementEntity agreement, ProposalEntity proposal) : base(agreement)
         {
-            this.Agreement = agreement;
             this.OfferProposal = proposal;
         }
 
+        public ProposalEntity OfferProposal { get; set; }
     }
 }

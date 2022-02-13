@@ -307,7 +307,7 @@ namespace YagnaSharpApi.Tests
                 Assert.IsTrue(events.Any(ev => ev is ScriptFinished));
                 Assert.IsTrue(
                     (events.LastOrDefault(ev => ev is ScriptFinished) as ScriptFinished)?
-                    .ScriptBatch
+                    .Script
                     .GetResults()
                     .LastOrDefault()?
                     .Stdout != null);

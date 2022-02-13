@@ -67,7 +67,7 @@ namespace YagnaSharpApi.Tests
                     // selecting one from either newly queued, or queued for reschedule
                     await foreach (var task in queue.GetTaskForExecutionAsync())
                     {
-                        task.Start();
+                        task.Start(null, null);
                         lastTask = task;
                         yield return task;
                     }
@@ -134,7 +134,7 @@ namespace YagnaSharpApi.Tests
                     // selecting one from either newly queued, or queued for reschedule
                     await foreach (var task in queue.GetTaskForExecutionAsync())
                     {
-                        task.Start();
+                        task.Start(null, null);
                         lastTask = task;
                         yield return task;
                     }

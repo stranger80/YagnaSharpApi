@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class PaymentQueued : PaymentEvent
+    public class PaymentQueued : AgreementEvent, IPaymentEvent
     {
-        public PaymentQueued(string agreementId)
+        public PaymentQueued(AgreementEntity agreement) : base(agreement)
         {
-            this.AgreementId = agreementId;
         }
-
-        public string AgreementId { get; set; }
     }
 }

@@ -22,6 +22,9 @@ namespace YagnaSharpApi.Engine
     [Obsolete]
     public class Executor : IDisposable
     {
+        public const int DEFAULT_GET_OFFERS_TIMEOUT = 20;
+        public const int DEFAULT_EXECUTOR_TIMEOUT = 15*60; // 15 minutes
+
         private bool disposedValue;
         private CancellationTokenSource cancellationTokenSource;
                 
@@ -48,6 +51,9 @@ namespace YagnaSharpApi.Engine
         public decimal Budget { get; set; }
         public DateTime Expires { get; set; }
         public string SubnetTag { get; set; }
+        public DateTime? GetOffersDeadline { get; set; }
+        public int NoOffers { get; set; }
+        public int ProposalsConfirmed { get; set; }
 
         public event EventHandler<Event> OnExecutorEvent;
 
@@ -120,13 +126,21 @@ namespace YagnaSharpApi.Engine
             this.AgreementPool.OnAgreementEvent += AgreementPool_OnAgreementEvent; 
         }
 
-        private void AgreementPool_OnAgreementEvent(object sender, AgreementEvent e)
+        private void AgreementPool_OnAgreementEvent(object sender, ExecutorEvent e)
         {
             this.OnExecutorEvent?.Invoke(this, e);
         }
 
         private void MarketStrategy_OnMarketEvent(object sender, Event e)
         {
+            if(e is ProposalReceived)
+            {
+                var offerEvent = e as ProposalReceived;
+                if(offerEvent.Proposal.State != ProposalState.Draft)
+                {
+                    this.NoOffers++;
+                }
+            }
             this.OnExecutorEvent?.Invoke(this, e);
         }
 
@@ -149,7 +163,7 @@ namespace YagnaSharpApi.Engine
                     inputTask.Queue = smartQueue;
 
                     inputTask.OnTaskComplete += (sender, ev) => {
-                        if (ev is TaskAccepted<TResult>)
+                        if (ev is TaskAccepted<TData, TResult>)
                         {
                             doneTasks.Add((GolemTask<TData, TResult>)sender);
                         }
@@ -215,6 +229,8 @@ namespace YagnaSharpApi.Engine
                     // TODO processDebitNotesTask
                 };
 
+                this.GetOffersDeadline = DateTime.Now.AddSeconds(Executor.DEFAULT_GET_OFFERS_TIMEOUT);
+
                 try
                 {
                     Task<GolemTask<TData, TResult>> getDoneTask = null;
@@ -227,10 +243,11 @@ namespace YagnaSharpApi.Engine
                         {
                             throw new Exception($"task timeout exceeded. timeout={this.Configuration.TaskTimeout}");
                         }
-                        //if(now > GetOffersDeadline && proposalsConfirmed == 0)
-                        //{
-                        //    // TODO raise NoProposalsConfirmed event
-                        //}
+                        if(now > this.GetOffersDeadline && this.ProposalsConfirmed == 0)
+                        {
+                            this.OnExecutorEvent?.Invoke(this, new NoProposalsConfirmed(this.NoOffers, this.GetOffersDeadline.Value));
+                            this.GetOffersDeadline = this.GetOffersDeadline?.AddSeconds(Executor.DEFAULT_GET_OFFERS_TIMEOUT);
+                        }
 
                         if (getDoneTask == null)
                         {
@@ -353,6 +370,7 @@ namespace YagnaSharpApi.Engine
                     await foreach (var prop in this.MarketStrategy.FindOffersAsync(demand, cancellationToken))
                     {
                         System.Diagnostics.Debug.WriteLine("Adding Proposal to AgreementPool...");
+                        this.ProposalsConfirmed++;
                         // Add to AgreementPool
                         this.AgreementPool.AddProposal(prop.Item1, prop.Item2);
                         System.Diagnostics.Debug.WriteLine("Added Proposal to AgreementPool...");
@@ -412,7 +430,7 @@ namespace YagnaSharpApi.Engine
 
         protected async Task DoWork<TData, TResult>(BufferedAgreement bufferedAgreement, Func<WorkContext, IAsyncEnumerable<GolemTask<TData, TResult>>, IAsyncEnumerable<Script>> worker, IEnumerable<GolemTask<TData, TResult>> data, SmartQueue<TData, TResult> smartQueue)
         {
-            this.OnExecutorEvent?.Invoke(this, new WorkerStarted(bufferedAgreement.Agreement.AgreementId));
+            this.OnExecutorEvent?.Invoke(this, new WorkerStarted(bufferedAgreement.Agreement));
 
             ActivityEntity activity = null;
             try
@@ -421,12 +439,12 @@ namespace YagnaSharpApi.Engine
             }
             catch (Exception exc)
             {
-                this.OnExecutorEvent?.Invoke(this, new ActivityCreateFailed(bufferedAgreement.Agreement.AgreementId, exc));
-                this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement.AgreementId));
+                this.OnExecutorEvent?.Invoke(this, new ActivityCreateFailed(bufferedAgreement.Agreement, exc));
+                this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement, null, exc));
                 throw;
             }
 
-            this.OnExecutorEvent?.Invoke(this, new ActivityCreated(bufferedAgreement.Agreement.AgreementId, activity.ActivityId));
+            this.OnExecutorEvent?.Invoke(this, new ActivityCreated(bufferedAgreement.Agreement, activity));
 
             var workContext = new WorkContext($"worker-{this.workerId++}", this.StorageProvider, new NodeInfo(bufferedAgreement.Agreement));
 
@@ -456,7 +474,7 @@ namespace YagnaSharpApi.Engine
             await this.Engine.AcceptPaymentForAgreement(bufferedAgreement.Agreement.AgreementId);
             System.Diagnostics.Debug.WriteLine($"Accepted payment in Worker Task {Task.CurrentId}..");
 
-            this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement.AgreementId));
+            this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement, activity));
             System.Diagnostics.Debug.WriteLine($"finished Worker Task {Task.CurrentId}..");
         }
 
@@ -486,10 +504,11 @@ namespace YagnaSharpApi.Engine
 
                 try
                 {
-                    currentTask?.Start();
+                    currentTask?.Start(bufferedAgreement.Agreement, activity);
 
-                    this.OnExecutorEvent?.Invoke(this, new TaskStarted<TData>(bufferedAgreement.Agreement.AgreementId, currentTask?.Id, currentTask != null ? currentTask.Data : default(TData)));
-
+                    if(currentTask != null)
+                        this.OnExecutorEvent?.Invoke(this, new TaskStarted<TData, TResult>(currentTask, currentTask != null ? currentTask.Data : default(TData)));
+    
                     // The first batch must either incldue initialization block, or we must initialize
                     if (!initializationDone)
                     {
@@ -513,22 +532,30 @@ namespace YagnaSharpApi.Engine
                         // ...at this point we should have the exescript built by commandBuilder
                         var commandResults = activity.ExecAsync(commands);
 
-                        this.OnExecutorEvent?.Invoke(this, new ScriptSent(bufferedAgreement.Agreement.AgreementId, currentTask?.Id, commands));
+                        this.OnExecutorEvent?.Invoke(this, new ScriptSent(bufferedAgreement.Agreement, activity, batch));
 
                         await foreach (var result in commandResults)
                         {
                             batch.StoreResult(result);
 
-                            // TODO raise command executed event
+                            this.OnExecutorEvent?.Invoke(this, new CommandExecuted(bufferedAgreement.Agreement, activity, batch)
+                            {
+                                Command = commands[result.Index],
+                                Success = result.Result == ExeScriptCommandResult.ResultEnum.Ok,
+                                Message = result.Message,
+                                StdOut = result.Stdout,
+                                StdErr = result.Stderr
+                            });
+
                             if (result.Result == ExeScriptCommandResult.ResultEnum.Error)
                                 throw new CommandExecutionException(commands[result.Index], result);
                         }
 
-                        this.OnExecutorEvent?.Invoke(this, new GettingResults(bufferedAgreement.Agreement.AgreementId, currentTask?.Id));
+                        this.OnExecutorEvent?.Invoke(this, new GettingResults(bufferedAgreement.Agreement, activity, batch));
                     }
 
                     await batch.AfterAsync();
-                    this.OnExecutorEvent?.Invoke(this, new ScriptFinished(bufferedAgreement.Agreement.AgreementId, currentTask?.Id));
+                    this.OnExecutorEvent?.Invoke(this, new ScriptFinished(bufferedAgreement.Agreement, activity, batch));
 
                     await this.Engine.AcceptPaymentForAgreement(bufferedAgreement.Agreement.AgreementId, true);
 
@@ -536,13 +563,13 @@ namespace YagnaSharpApi.Engine
                 catch (CommandExecutionException exc) // in case of command error - throw the exception up...
                 {
                     currentTask?.Stop(true); // reschedule failed task
-                    this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement.AgreementId, exc));
+                    this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement, activity, exc));
                     throw;
                 }
                 catch (Exception exc)
                 {
                     currentTask?.Stop(true); // reschedule failed task
-                    this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement.AgreementId, exc));
+                    this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement, activity, exc));
                     return false;
                 }
 

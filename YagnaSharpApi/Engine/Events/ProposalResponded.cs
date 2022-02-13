@@ -7,12 +7,11 @@ namespace YagnaSharpApi.Engine.Events
 {
     public class ProposalResponded : ProposalEvent
     {
-        public ProposalEntity CounterProposal { get; set; }
-
-        public ProposalResponded(ProposalEntity prop, ProposalEntity counterProp)
+        public ProposalResponded(ProposalEntity prop, ProposalEntity counterProp) : base(prop)
         {
-            this.Proposal = prop;
             this.CounterProposal = counterProp;
         }
+        public ProposalEntity CounterProposal { get; set; }
+
     }
 }

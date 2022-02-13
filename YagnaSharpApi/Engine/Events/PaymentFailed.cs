@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class PaymentFailed : PaymentEvent
+    public class PaymentFailed : AgreementEvent, IPaymentEvent
     {
-        public PaymentFailed(string agreementId, Exception exc)
+        public PaymentFailed(AgreementEntity agreement, Exception exc) : base(agreement, exc)
         {
-            this.AgreementId = agreementId;
-            this.Exception = exc;
         }
-
-        public string AgreementId { get; set; }
-        public Exception Exception { get; set; }
     }
 }

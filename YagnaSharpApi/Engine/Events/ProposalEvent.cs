@@ -5,8 +5,13 @@ using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class ProposalEvent : MarketEvent
+    public class ProposalEvent : ExecutorEvent, IMarketEvent
     {
+        public ProposalEvent(ProposalEntity proposal, Exception exc = null) : base(exc)
+        {
+            this.Proposal = proposal;
+        }
+
         public ProposalEntity Proposal { get; set; }
     }
 }

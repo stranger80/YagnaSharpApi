@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class WorkerFinished : ExecutorEvent
+    public class WorkerFinished : ActivityEvent
     {
-        public WorkerFinished(string agreementId, Exception exc = null)
+        public WorkerFinished(AgreementEntity agreement, ActivityEntity activity, Exception exc = null) : base(agreement, activity, exc)
         {
-            this.AgreementId = agreementId;
-            this.Exception = exc;
         }
 
-        public string AgreementId { get; set; }
 
-        public Exception Exception { get; set; }
     }
 }

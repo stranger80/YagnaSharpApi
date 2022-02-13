@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class WorkerStarted : ExecutorEvent
+    public class WorkerStarted : AgreementEvent
     {
-        public WorkerStarted(string agreementId)
+        public WorkerStarted(AgreementEntity agreement) : base(agreement)
         {
-            this.AgreementId = agreementId;
         }
-
-        public string AgreementId { get; set; }
     }
 }

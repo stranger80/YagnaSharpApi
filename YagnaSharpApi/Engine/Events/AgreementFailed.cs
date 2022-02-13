@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class AgreementFailed : AgreementEvent
+    public class AgreementFailed : ExecutorEvent, IMarketEvent
     {
-        public AgreementFailed(string proposalId, Exception exc = null)
+        public AgreementFailed(ProposalEntity proposal, Exception exc = null) : base(exc)
         {
-            this.ProposalId = proposalId;
-            this.Exception = exc;
+            this.Proposal = proposal;
         }
 
-        public string ProposalId { get; set; }
-        public Exception Exception { get; set; }
+        public ProposalEntity Proposal { get; set; }
     }
 }

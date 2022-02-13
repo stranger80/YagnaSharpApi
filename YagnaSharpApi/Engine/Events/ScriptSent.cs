@@ -2,19 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using YagnaSharpApi.Entities;
 
 namespace YagnaSharpApi.Engine.Events
 {
-    public class ScriptSent : TaskEvent
+    public class ScriptSent : ScriptEvent
     {
-        public string AgreementId { get; set; }
-        public IEnumerable<ExeScriptCommand> Commands { get; set; }
-
-        public ScriptSent(string agreementId, string taskId, IEnumerable<ExeScriptCommand> commands)
+        public ScriptSent(AgreementEntity agreement, ActivityEntity activity, Script script) : base(agreement, activity, script)
         {
-            this.AgreementId = agreementId;
-            this.TaskId = taskId;
-            this.Commands = commands;
         }
     }
 }

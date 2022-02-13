@@ -140,7 +140,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of List&lt;ProviderEvent&gt;</returns>
-        System.Threading.Tasks.Task<List<ProviderEvent>> CollectActivityEventsAsync (string appSessionId = default(string), DateTime? afterTimestamp = default(DateTime?), float? timeout = default(float?), int? maxEvents = default(int?));
+        System.Threading.Tasks.Task<List<ProviderEvent>> CollectActivityEventsAsync (string appSessionId = default(string), DateTime? afterTimestamp = default(DateTime?), float? timeout = default(float?), int? maxEvents = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Fetch Requestor command events.
@@ -154,7 +154,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of ApiResponse (List&lt;ProviderEvent&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<ProviderEvent>>> CollectActivityEventsAsyncWithHttpInfo (string appSessionId = default(string), DateTime? afterTimestamp = default(DateTime?), float? timeout = default(float?), int? maxEvents = default(int?));
+        System.Threading.Tasks.Task<ApiResponse<List<ProviderEvent>>> CollectActivityEventsAsyncWithHttpInfo (string appSessionId = default(string), DateTime? afterTimestamp = default(DateTime?), float? timeout = default(float?), int? maxEvents = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Get state of specified Activity.
         /// </summary>
@@ -164,7 +164,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ActivityState</returns>
-        System.Threading.Tasks.Task<ActivityState> GetActivityStateAsync (string activityId);
+        System.Threading.Tasks.Task<ActivityState> GetActivityStateAsync (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Get state of specified Activity.
@@ -175,7 +175,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ApiResponse (ActivityState)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ActivityState>> GetActivityStateAsyncWithHttpInfo (string activityId);
+        System.Threading.Tasks.Task<ApiResponse<ActivityState>> GetActivityStateAsyncWithHttpInfo (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Get usage of specified Activity.
         /// </summary>
@@ -185,7 +185,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ActivityUsage</returns>
-        System.Threading.Tasks.Task<ActivityUsage> GetActivityUsageAsync (string activityId);
+        System.Threading.Tasks.Task<ActivityUsage> GetActivityUsageAsync (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Get usage of specified Activity.
@@ -196,7 +196,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ApiResponse (ActivityUsage)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ActivityUsage>> GetActivityUsageAsyncWithHttpInfo (string activityId);
+        System.Threading.Tasks.Task<ApiResponse<ActivityUsage>> GetActivityUsageAsyncWithHttpInfo (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Set state of specified Activity.
         /// </summary>
@@ -207,7 +207,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="activityId"></param>
         /// <param name="activityState"></param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task SetActivityStateAsync (string activityId, ActivityState activityState);
+        System.Threading.Tasks.Task SetActivityStateAsync (string activityId, ActivityState activityState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Set state of specified Activity.
@@ -219,7 +219,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="activityId"></param>
         /// <param name="activityState"></param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> SetActivityStateAsyncWithHttpInfo (string activityId, ActivityState activityState);
+        System.Threading.Tasks.Task<ApiResponse<Object>> SetActivityStateAsyncWithHttpInfo (string activityId, ActivityState activityState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -427,9 +427,9 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of List&lt;ProviderEvent&gt;</returns>
-        public async System.Threading.Tasks.Task<List<ProviderEvent>> CollectActivityEventsAsync (string appSessionId = default(string), DateTime? afterTimestamp = default(DateTime?), float? timeout = default(float?), int? maxEvents = default(int?))
+        public async System.Threading.Tasks.Task<List<ProviderEvent>> CollectActivityEventsAsync (string appSessionId = default(string), DateTime? afterTimestamp = default(DateTime?), float? timeout = default(float?), int? maxEvents = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<List<ProviderEvent>> localVarResponse = await CollectActivityEventsAsyncWithHttpInfo(appSessionId, afterTimestamp, timeout, maxEvents);
+             Golem.Common.Client.Client.ApiResponse<List<ProviderEvent>> localVarResponse = await CollectActivityEventsAsyncWithHttpInfo(appSessionId, afterTimestamp, timeout, maxEvents, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -443,7 +443,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="timeout">Timeout used in long-polling calls (in seconds). How many seconds server should wait for response containing new events (&#x60;0.0&#x60; means it should return immediately if there are no events)  (optional, default to 5.0F)</param>
         /// <param name="maxEvents">Maximum number of events that server should return at once.  (optional, default to 10)</param>
         /// <returns>Task of ApiResponse (List&lt;ProviderEvent&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<ProviderEvent>>> CollectActivityEventsAsyncWithHttpInfo (string appSessionId = default(string), DateTime? afterTimestamp = default(DateTime?), float? timeout = default(float?), int? maxEvents = default(int?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<ProviderEvent>>> CollectActivityEventsAsyncWithHttpInfo (string appSessionId = default(string), DateTime? afterTimestamp = default(DateTime?), float? timeout = default(float?), int? maxEvents = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
 
             Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
@@ -488,7 +488,7 @@ namespace Golem.ActivityApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<List<ProviderEvent>>("/events", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<List<ProviderEvent>>("/events", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -567,9 +567,9 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ActivityState</returns>
-        public async System.Threading.Tasks.Task<ActivityState> GetActivityStateAsync (string activityId)
+        public async System.Threading.Tasks.Task<ActivityState> GetActivityStateAsync (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<ActivityState> localVarResponse = await GetActivityStateAsyncWithHttpInfo(activityId);
+             Golem.Common.Client.Client.ApiResponse<ActivityState> localVarResponse = await GetActivityStateAsyncWithHttpInfo(activityId, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -580,7 +580,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ApiResponse (ActivityState)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<ActivityState>> GetActivityStateAsyncWithHttpInfo (string activityId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<ActivityState>> GetActivityStateAsyncWithHttpInfo (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
@@ -615,7 +615,7 @@ namespace Golem.ActivityApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<ActivityState>("/activity/{activityId}/state", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<ActivityState>("/activity/{activityId}/state", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -694,9 +694,9 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ActivityUsage</returns>
-        public async System.Threading.Tasks.Task<ActivityUsage> GetActivityUsageAsync (string activityId)
+        public async System.Threading.Tasks.Task<ActivityUsage> GetActivityUsageAsync (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<ActivityUsage> localVarResponse = await GetActivityUsageAsyncWithHttpInfo(activityId);
+             Golem.Common.Client.Client.ApiResponse<ActivityUsage> localVarResponse = await GetActivityUsageAsyncWithHttpInfo(activityId, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -707,7 +707,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ApiResponse (ActivityUsage)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<ActivityUsage>> GetActivityUsageAsyncWithHttpInfo (string activityId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<ActivityUsage>> GetActivityUsageAsyncWithHttpInfo (string activityId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
@@ -742,7 +742,7 @@ namespace Golem.ActivityApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<ActivityUsage>("/activity/{activityId}/usage", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<ActivityUsage>("/activity/{activityId}/usage", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -829,9 +829,9 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="activityId"></param>
         /// <param name="activityState"></param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task SetActivityStateAsync (string activityId, ActivityState activityState)
+        public async System.Threading.Tasks.Task SetActivityStateAsync (string activityId, ActivityState activityState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             await SetActivityStateAsyncWithHttpInfo(activityId, activityState);
+             await SetActivityStateAsyncWithHttpInfo(activityId, activityState, cancellationToken);
 
         }
 
@@ -842,7 +842,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="activityId"></param>
         /// <param name="activityState"></param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> SetActivityStateAsyncWithHttpInfo (string activityId, ActivityState activityState)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> SetActivityStateAsyncWithHttpInfo (string activityId, ActivityState activityState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
@@ -883,7 +883,7 @@ namespace Golem.ActivityApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PutAsync<Object>("/activity/{activityId}/state", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PutAsync<Object>("/activity/{activityId}/state", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {

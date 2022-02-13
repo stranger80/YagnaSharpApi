@@ -4,6 +4,7 @@ using Golem.MarketApi.Client.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -63,7 +64,7 @@ namespace YagnaSharpApi.Repository
         }
 
 
-        public async IAsyncEnumerable<EventEntity> CollectOffersAsync(string subscriptionId, decimal timeout, CancellationToken token = default(CancellationToken))
+        public async IAsyncEnumerable<EventEntity> CollectOffersAsync(string subscriptionId, decimal timeout, [EnumeratorCancellation] CancellationToken token = default(CancellationToken))
         {
             List<Event> events;
             try

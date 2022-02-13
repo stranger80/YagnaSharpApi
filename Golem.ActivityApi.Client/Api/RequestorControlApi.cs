@@ -159,7 +159,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="activityId"></param>
         /// <param name="body"></param>
         /// <returns>Task of System.IO.Stream</returns>
-        System.Threading.Tasks.Task<System.IO.Stream> CallEncryptedAsync (string activityId, System.IO.Stream body);
+        System.Threading.Tasks.Task<System.IO.Stream> CallEncryptedAsync (string activityId, System.IO.Stream body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Sends encrypted command to secure exe-unit.
@@ -171,7 +171,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="activityId"></param>
         /// <param name="body"></param>
         /// <returns>Task of ApiResponse (System.IO.Stream)</returns>
-        System.Threading.Tasks.Task<ApiResponse<System.IO.Stream>> CallEncryptedAsyncWithHttpInfo (string activityId, System.IO.Stream body);
+        System.Threading.Tasks.Task<ApiResponse<System.IO.Stream>> CallEncryptedAsyncWithHttpInfo (string activityId, System.IO.Stream body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Creates new Activity based on given Agreement.
         /// </summary>
@@ -180,8 +180,10 @@ namespace Golem.ActivityApi.Client.Api
         /// </remarks>
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
+        /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of OneOfstringCreateActivityResult</returns>
-        System.Threading.Tasks.Task<CreateActivityResult> CreateActivityAsync (CreateActivityRequest agreementId);
+        System.Threading.Tasks.Task<CreateActivityResult> CreateActivityAsync (CreateActivityRequest agreementId, float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Creates new Activity based on given Agreement.
@@ -191,8 +193,10 @@ namespace Golem.ActivityApi.Client.Api
         /// </remarks>
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
+        /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (OneOfstringCreateActivityResult)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CreateActivityResult>> CreateActivityAsyncWithHttpInfo (CreateActivityRequest agreementId);
+        System.Threading.Tasks.Task<ApiResponse<CreateActivityResult>> CreateActivityAsyncWithHttpInfo (CreateActivityRequest agreementId, float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Destroys given Activity.
         /// </summary>
@@ -202,7 +206,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task DestroyActivityAsync (string activityId);
+        System.Threading.Tasks.Task DestroyActivityAsync (string activityId, float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Destroys given Activity.
@@ -213,7 +217,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> DestroyActivityAsyncWithHttpInfo (string activityId);
+        System.Threading.Tasks.Task<ApiResponse<Object>> DestroyActivityAsyncWithHttpInfo (string activityId, float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Executes an ExeScript batch within a given Activity.
         /// </summary>
@@ -224,7 +228,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="activityId"></param>
         /// <param name="script"></param>
         /// <returns>Task of string</returns>
-        System.Threading.Tasks.Task<string> ExecAsync (string activityId, ExeScriptRequest script);
+        System.Threading.Tasks.Task<string> ExecAsync (string activityId, ExeScriptRequest script, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Executes an ExeScript batch within a given Activity.
@@ -236,7 +240,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="activityId"></param>
         /// <param name="script"></param>
         /// <returns>Task of ApiResponse (string)</returns>
-        System.Threading.Tasks.Task<ApiResponse<string>> ExecAsyncWithHttpInfo (string activityId, ExeScriptRequest script);
+        System.Threading.Tasks.Task<ApiResponse<string>> ExecAsyncWithHttpInfo (string activityId, ExeScriptRequest script, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Queries for ExeScript batch results.
         /// </summary>
@@ -248,7 +252,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="batchId"></param>
         /// <param name="commandIndex">Wait until command with the specified index finishes. Must be accompanied by a valid \&quot;pollTimeout\&quot; query parameter.  (optional)</param>
         /// <returns>Task of List&lt;ExeScriptCommandResult&gt;</returns>
-        System.Threading.Tasks.Task<List<ExeScriptCommandResult>> GetExecBatchResultsAsync (string activityId, string batchId, decimal? commandIndex = default(decimal?));
+        System.Threading.Tasks.Task<List<ExeScriptCommandResult>> GetExecBatchResultsAsync (string activityId, string batchId, decimal? commandIndex = default(decimal?), float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Queries for ExeScript batch results.
@@ -261,7 +265,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="batchId"></param>
         /// <param name="commandIndex">Wait until command with the specified index finishes. Must be accompanied by a valid \&quot;pollTimeout\&quot; query parameter.  (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;ExeScriptCommandResult&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<ExeScriptCommandResult>>> GetExecBatchResultsAsyncWithHttpInfo (string activityId, string batchId, decimal? commandIndex = default(decimal?));
+        System.Threading.Tasks.Task<ApiResponse<List<ExeScriptCommandResult>>> GetExecBatchResultsAsyncWithHttpInfo (string activityId, string batchId, decimal? commandIndex = default(decimal?), float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -460,9 +464,9 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="activityId"></param>
         /// <param name="body"></param>
         /// <returns>Task of System.IO.Stream</returns>
-        public async System.Threading.Tasks.Task<System.IO.Stream> CallEncryptedAsync (string activityId, System.IO.Stream body)
+        public async System.Threading.Tasks.Task<System.IO.Stream> CallEncryptedAsync (string activityId, System.IO.Stream body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<System.IO.Stream> localVarResponse = await CallEncryptedAsyncWithHttpInfo(activityId, body);
+             Golem.Common.Client.Client.ApiResponse<System.IO.Stream> localVarResponse = await CallEncryptedAsyncWithHttpInfo(activityId, body, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -474,7 +478,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="activityId"></param>
         /// <param name="body"></param>
         /// <returns>Task of ApiResponse (System.IO.Stream)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<System.IO.Stream>> CallEncryptedAsyncWithHttpInfo (string activityId, System.IO.Stream body)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<System.IO.Stream>> CallEncryptedAsyncWithHttpInfo (string activityId, System.IO.Stream body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
@@ -516,7 +520,7 @@ namespace Golem.ActivityApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<System.IO.Stream>("/activity/{activityId}/encrypted", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<System.IO.Stream>("/activity/{activityId}/encrypted", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -594,10 +598,12 @@ namespace Golem.ActivityApi.Client.Api
         /// </summary>
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
+        /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of OneOfstringCreateActivityResult</returns>
-        public async System.Threading.Tasks.Task<CreateActivityResult> CreateActivityAsync (CreateActivityRequest request)
+        public async System.Threading.Tasks.Task<CreateActivityResult> CreateActivityAsync (CreateActivityRequest request, float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<CreateActivityResult> localVarResponse = await CreateActivityAsyncWithHttpInfo(request);
+             Golem.Common.Client.Client.ApiResponse<CreateActivityResult> localVarResponse = await CreateActivityAsyncWithHttpInfo(request, timeout, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -607,12 +613,14 @@ namespace Golem.ActivityApi.Client.Api
         /// </summary>
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="agreementId"></param>
+        /// <param name="timeout">Timeout used in blocking calls waiting for eg. acknowledgement. How many seconds server should wait for response/acknowledgement of an action (0.0 means it should wait for other party&#39;s response indefinitely)  (optional, default to 5.0F)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (OneOfstringCreateActivityResult)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<CreateActivityResult>> CreateActivityAsyncWithHttpInfo (CreateActivityRequest request)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<CreateActivityResult>> CreateActivityAsyncWithHttpInfo (CreateActivityRequest agreementId, float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'agreementId' is set
-            if (request == null)
-                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'request' when calling RequestorControlApi->CreateActivity");
+            if (agreementId == null)
+                throw new Golem.Common.Client.Client.ApiException(400, "Missing required parameter 'agreementId' when calling RequestorControlApi->CreateActivity");
 
 
             Golem.Common.Client.Client.RequestOptions localVarRequestOptions = new Golem.Common.Client.Client.RequestOptions();
@@ -631,8 +639,13 @@ namespace Golem.ActivityApi.Client.Api
             
             foreach (var _accept in _accepts)
                 localVarRequestOptions.HeaderParameters.Add("Accept", _accept);
-            
-            localVarRequestOptions.Data = request;
+
+            if (timeout != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+            }
+
+            localVarRequestOptions.Data = agreementId;
 
             // authentication (app_key) required
             // http basic authentication required
@@ -643,7 +656,7 @@ namespace Golem.ActivityApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<CreateActivityResult>("/activity", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<CreateActivityResult>("/activity", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -721,9 +734,9 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task DestroyActivityAsync (string activityId)
+        public async System.Threading.Tasks.Task DestroyActivityAsync (string activityId, float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             await DestroyActivityAsyncWithHttpInfo(activityId);
+             await DestroyActivityAsyncWithHttpInfo(activityId, timeout, cancellationToken);
 
         }
 
@@ -733,7 +746,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <exception cref="Golem.Common.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="activityId"></param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> DestroyActivityAsyncWithHttpInfo (string activityId)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<Object>> DestroyActivityAsyncWithHttpInfo (string activityId, float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
@@ -758,6 +771,11 @@ namespace Golem.ActivityApi.Client.Api
             
             if (activityId != null)
                 localVarRequestOptions.PathParameters.Add("activityId", Golem.Common.Client.Client.ClientUtils.ParameterToString(activityId)); // path parameter
+            
+            if (timeout != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+            }
 
             // authentication (app_key) required
             // http basic authentication required
@@ -768,7 +786,7 @@ namespace Golem.ActivityApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/activity/{activityId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/activity/{activityId}", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -856,9 +874,9 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="activityId"></param>
         /// <param name="script"></param>
         /// <returns>Task of string</returns>
-        public async System.Threading.Tasks.Task<string> ExecAsync (string activityId, ExeScriptRequest script)
+        public async System.Threading.Tasks.Task<string> ExecAsync (string activityId, ExeScriptRequest script, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<string> localVarResponse = await ExecAsyncWithHttpInfo(activityId, script);
+             Golem.Common.Client.Client.ApiResponse<string> localVarResponse = await ExecAsyncWithHttpInfo(activityId, script, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -870,7 +888,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="activityId"></param>
         /// <param name="script"></param>
         /// <returns>Task of ApiResponse (string)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<string>> ExecAsyncWithHttpInfo (string activityId, ExeScriptRequest script)
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<string>> ExecAsyncWithHttpInfo (string activityId, ExeScriptRequest script, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
@@ -911,7 +929,7 @@ namespace Golem.ActivityApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<string>("/activity/{activityId}/exec", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<string>("/activity/{activityId}/exec", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
@@ -1006,9 +1024,9 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="batchId"></param>
         /// <param name="commandIndex">Wait until command with the specified index finishes. Must be accompanied by a valid \&quot;pollTimeout\&quot; query parameter.  (optional)</param>
         /// <returns>Task of List&lt;ExeScriptCommandResult&gt;</returns>
-        public async System.Threading.Tasks.Task<List<ExeScriptCommandResult>> GetExecBatchResultsAsync (string activityId, string batchId, decimal? commandIndex = default(decimal?))
+        public async System.Threading.Tasks.Task<List<ExeScriptCommandResult>> GetExecBatchResultsAsync (string activityId, string batchId, decimal? commandIndex = default(decimal?), float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-             Golem.Common.Client.Client.ApiResponse<List<ExeScriptCommandResult>> localVarResponse = await GetExecBatchResultsAsyncWithHttpInfo(activityId, batchId, commandIndex);
+             Golem.Common.Client.Client.ApiResponse<List<ExeScriptCommandResult>> localVarResponse = await GetExecBatchResultsAsyncWithHttpInfo(activityId, batchId, commandIndex, timeout, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1021,7 +1039,7 @@ namespace Golem.ActivityApi.Client.Api
         /// <param name="batchId"></param>
         /// <param name="commandIndex">Wait until command with the specified index finishes. Must be accompanied by a valid \&quot;pollTimeout\&quot; query parameter.  (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;ExeScriptCommandResult&gt;)</returns>
-        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<ExeScriptCommandResult>>> GetExecBatchResultsAsyncWithHttpInfo (string activityId, string batchId, decimal? commandIndex = default(decimal?))
+        public async System.Threading.Tasks.Task<Golem.Common.Client.Client.ApiResponse<List<ExeScriptCommandResult>>> GetExecBatchResultsAsyncWithHttpInfo (string activityId, string batchId, decimal? commandIndex = default(decimal?), float? timeout = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'activityId' is set
             if (activityId == null)
@@ -1056,6 +1074,10 @@ namespace Golem.ActivityApi.Client.Api
             {
                 localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "commandIndex", commandIndex));
             }
+            if (commandIndex != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(Golem.Common.Client.Client.ClientUtils.ParameterToMultiMap("", "timeout", timeout));
+            }
 
             // authentication (app_key) required
             // http basic authentication required
@@ -1066,7 +1088,7 @@ namespace Golem.ActivityApi.Client.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<List<ExeScriptCommandResult>>("/activity/{activityId}/exec/{batchId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<List<ExeScriptCommandResult>>("/activity/{activityId}/exec/{batchId}", localVarRequestOptions, this.Configuration, cancellationToken);
 
             if (this.ExceptionFactory != null)
             {
