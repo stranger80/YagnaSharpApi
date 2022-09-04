@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YagnaSharpApi", "YagnaSharpApi\YagnaSharpApi.csproj", "{B3085C8A-9983-436A-8B62-CAC6E3DE3582}"
 EndProject
@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YagnaSharpApi.Tests", "Yagn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Golem.Common.Client", "Golem.Common.Client\Golem.Common.Client.csproj", "{6E57BF78-E5C4-4620-9A7F-8A150E0BFD15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YagnaSharpApi.Studio", "YagnaSharpApi.Studio\YagnaSharpApi.Studio.csproj", "{6B2F0184-7AEB-4A24-83B2-0DCE9DAB430B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YagnaSharpApi.Studio", "YagnaSharpApi.Studio\YagnaSharpApi.Studio.csproj", "{6B2F0184-7AEB-4A24-83B2-0DCE9DAB430B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Golem.Compose", "Golem.Compose\Golem.Compose.csproj", "{1170835A-AC18-4CC0-93DA-25603271BFEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{6B2F0184-7AEB-4A24-83B2-0DCE9DAB430B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B2F0184-7AEB-4A24-83B2-0DCE9DAB430B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B2F0184-7AEB-4A24-83B2-0DCE9DAB430B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1170835A-AC18-4CC0-93DA-25603271BFEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1170835A-AC18-4CC0-93DA-25603271BFEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1170835A-AC18-4CC0-93DA-25603271BFEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1170835A-AC18-4CC0-93DA-25603271BFEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

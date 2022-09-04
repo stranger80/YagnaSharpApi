@@ -21,7 +21,7 @@ namespace YagnaSharpApi.Repository
         Task RejectProposalOfferAsync(string subscriptionId, string proposalId, ReasonEntity reason);
         Task UnsubscribeDemandAsync(string subscriptionId);
         Task<AgreementEntity> CreateAgreementAsync(ProposalEntity proposal, decimal timeout);
-        Task<AgreementEntity> GetAgreement(string agreementId);
+        Task<AgreementEntity> GetAgreementAsync(string agreementId);
         Task ConfirmAgreementAsync(AgreementEntity agreement);
         Task<AgreementEntity.StateEnum> WaitForApprovalAsync(AgreementEntity agreement, decimal timeout);
         Task TerminateAgreementAsync(AgreementEntity agreement, ReasonEntity reason);

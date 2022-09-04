@@ -18,12 +18,15 @@ namespace YagnaSharpApi.Repository
     {
         private bool disposedValue;
 
+        protected Dictionary<string, ActivityEntity> ActivitiesById = new Dictionary<string, ActivityEntity>();
         public IRequestorControlApi RequestorControlApi { get; set; }
+        public IRequestorStateApi RequestorStateApi { get; set; }
         public IMapper Mapper { get; set; }
 
-        public ActivityRepository(IRequestorControlApi requestorControlApi, IMapper mapper)
+        public ActivityRepository(IRequestorControlApi requestorControlApi, IRequestorStateApi requestorStateApi, IMapper mapper)
         {
             this.RequestorControlApi = requestorControlApi;
+            this.RequestorStateApi = requestorStateApi;
             this.Mapper = mapper;
         }
 
@@ -46,6 +49,33 @@ namespace YagnaSharpApi.Repository
             catch (Exception exc)
             {
                 System.Diagnostics.Debug.WriteLine($"CreateActivity failed for provider: {agreement.Offer.ProviderId}");
+                throw;
+            }
+        }
+
+        public async Task<ActivityEntity> GetActivityAsync(string activityId)
+        {
+            if (this.ActivitiesById.ContainsKey(activityId))
+            {
+                return this.ActivitiesById[activityId];
+            }
+
+            try
+            {
+                var activityState = await this.RequestorStateApi.GetActivityStateAsync(activityId);
+
+                var result = new ActivityEntity(this)
+                {
+                    ActivityId = activityId,
+                    State = (YagnaSharpApi.Entities.ActivityEntity.StateEnum)activityState.State[0],
+                };
+
+                this.ActivitiesById.Add(activityId, result);
+
+                return result;
+            }
+            catch (Exception exc)
+            {
                 throw;
             }
         }
@@ -133,5 +163,6 @@ namespace YagnaSharpApi.Repository
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
     }
 }

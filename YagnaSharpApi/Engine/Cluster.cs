@@ -132,7 +132,7 @@ namespace YagnaSharpApi.Engine
                 {
                     if (agreementId != null)
                     {
-                        this.OnClusterEvent?.Invoke(this, new WorkerFinished(await this.Engine.MarketRepository.GetAgreement(agreementId), null, exc));
+                        this.OnClusterEvent?.Invoke(this, new WorkerFinished(await this.Engine.MarketRepository.GetAgreementAsync(agreementId), null, exc));
                     }
                     else
                     {

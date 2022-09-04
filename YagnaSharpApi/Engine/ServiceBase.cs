@@ -115,6 +115,11 @@ namespace YagnaSharpApi.Engine
                             await this.ExecuteLifecycleStepAsync(engine, agreement, activity, ctx, taskId, () => OnRunAsync(ctx, this.CancellationToken));
                             this.MoveToState(ServiceStateEnum.ShuttingDown);
                         }
+                        catch (OperationCanceledException exc)
+                        {
+                            // on cancellation - moveto ShuttingDown
+                            this.MoveToState(ServiceStateEnum.ShuttingDown);
+                        }
                         catch (Exception exc)
                         {
                             // on error move to Error state
@@ -129,6 +134,11 @@ namespace YagnaSharpApi.Engine
                             await this.ExecuteLifecycleStepAsync(engine, agreement, activity, ctx, taskId, () => OnShutdownAsync(ctx));
                             this.MoveToState(ServiceStateEnum.Finished);
                         }
+                        catch (OperationCanceledException exc)
+                        {
+                            // on cancellation - move to Finished
+                            this.MoveToState(ServiceStateEnum.Finished);
+                        }
                         catch (Exception exc)
                         {
                             // on error move to Error state
@@ -138,11 +148,21 @@ namespace YagnaSharpApi.Engine
                         break;
                 }
             }
+
+            try
+            {
+                await agreement.TerminateAsync(new ReasonEntity() { Message = "Successfully finished all work" });
+            }
+            catch (Exception exc)
+            {
+                System.Diagnostics.Debug.WriteLine(exc);
+            }
+
         }
 
         protected async Task ExecuteLifecycleStepAsync(Engine engine, AgreementEntity agreement, ActivityEntity activity, WorkContext ctx, string taskId, Func<IAsyncEnumerable<Script>> commandGenerator)
         {
-            await engine.ProcessBatchesAsync(agreement, activity, commandGenerator(), ctx, taskId);
+            await engine.ProcessBatchesAsync(agreement, activity, commandGenerator(), ctx, taskId, this.CancellationToken);
             // TODO this should be a handled Cancelled exception - from cancellation token???
         }
 
@@ -209,7 +229,9 @@ namespace YagnaSharpApi.Engine
                 switch(signal)
                 {
                     case ServiceControlSignal.Stop:
-                        // TODO implement service shutdown
+                        // Use cancellation token
+                        this.CancellationTokenSource.Cancel();
+
                         // then exit = stop listening to control queue
                         return;
                 }

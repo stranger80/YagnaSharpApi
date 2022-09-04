@@ -177,7 +177,7 @@ namespace YagnaSharpApi.Repository
 
         }
 
-        public async Task<AgreementEntity> GetAgreement(string agreementId)
+        public async Task<AgreementEntity> GetAgreementAsync(string agreementId)
         {
             if(this.AgreementsById.ContainsKey(agreementId))
             {

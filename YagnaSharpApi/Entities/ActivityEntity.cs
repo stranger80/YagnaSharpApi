@@ -12,6 +12,16 @@ namespace YagnaSharpApi.Entities
 {
     public class ActivityEntity : IDisposable
     {
+        public enum StateEnum
+        {
+            New = 1,
+            Initialized = 2,
+            Deployed = 3,
+            Ready = 4,
+            Unresponsive = 5,
+            Terminated = 6
+        }
+
         private bool disposedValue;
 
         protected IActivityRepository Repository { get; set; }
@@ -21,8 +31,9 @@ namespace YagnaSharpApi.Entities
         /// </summary>
         public bool IsActivityInitialized { get; protected set; }
 
-
         public string ActivityId { get; set; }
+
+        public StateEnum State { get; set; } = StateEnum.New;
 
         public ActivityEntity(IActivityRepository repo)
         {
@@ -58,7 +69,8 @@ namespace YagnaSharpApi.Entities
                 {
                     try
                     {
-                        await this.Repository.DestroyActivityAsync(this.ActivityId);
+                        // do not destroy activity when disposing the entity object - as the activity may remain running when agend application exits
+                        // await this.Repository.DestroyActivityAsync(this.ActivityId);
                     }
                     catch(Exception exc)
                     {

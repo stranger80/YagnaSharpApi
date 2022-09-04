@@ -45,8 +45,9 @@ namespace YagnaSharpApi.Tests
             var factory = new ApiFactory(config);
 
             var controlApi = factory.GetActivityRequestorControlApi();
+            var stateApi = factory.GetActivityRequestorStateApi();
 
-            return new ActivityRepository(controlApi, MapConfig.Config.CreateMapper());
+            return new ActivityRepository(controlApi, stateApi, MapConfig.Config.CreateMapper());
 
         }
 

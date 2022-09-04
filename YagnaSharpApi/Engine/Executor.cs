@@ -95,7 +95,7 @@ namespace YagnaSharpApi.Engine
             this.Package = package;
 
             this.MarketRepository = new MarketRepository(apiFactory.GetMarketRequestorApi(), mapper);
-            this.ActivityRepository = new ActivityRepository(apiFactory.GetActivityRequestorControlApi(), mapper);
+            this.ActivityRepository = new ActivityRepository(apiFactory.GetActivityRequestorControlApi(), apiFactory.GetActivityRequestorStateApi(), mapper);
             this.PaymentRepository = new PaymentRepository(apiFactory.GetPaymentRequestorApi(), mapper);
 
             this.MarketStrategy = marketStrategy ?? new DummyMarketStrategy(this.MarketRepository, new MarketStrategyConditions() );

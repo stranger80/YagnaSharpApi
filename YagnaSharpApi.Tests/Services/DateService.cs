@@ -50,6 +50,9 @@ namespace YagnaSharpApi.Tests.Services
                 var results = await runWork;
 
                 Debug.WriteLine($"Command returned: {results.Stdout}");
+
+                if (cancellationToken.IsCancellationRequested)
+                    yield break;
             }
         }
 

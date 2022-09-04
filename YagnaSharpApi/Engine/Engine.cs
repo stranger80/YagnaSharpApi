@@ -69,7 +69,7 @@ namespace YagnaSharpApi.Engine
             var mapper = Mapper.MapConfig.Config.CreateMapper();
 
             this.MarketRepository = new MarketRepository(apiFactory.GetMarketRequestorApi(), mapper);
-            this.ActivityRepository = new ActivityRepository(apiFactory.GetActivityRequestorControlApi(), mapper);
+            this.ActivityRepository = new ActivityRepository(apiFactory.GetActivityRequestorControlApi(),apiFactory.GetActivityRequestorStateApi(), mapper);
             this.PaymentRepository = new PaymentRepository(apiFactory.GetPaymentRequestorApi(), mapper);
 
             this.MarketStrategy = marketStrategy ?? new DummyMarketStrategy(this.MarketRepository, new MarketStrategyConditions() );
@@ -201,12 +201,11 @@ namespace YagnaSharpApi.Engine
             return await this.ActivityRepository.CreateActivityAsync(agreement, null);  // explicitly set timeout to null
         }
 
-        public async Task ProcessBatchesAsync(AgreementEntity agreement, ActivityEntity activity, IAsyncEnumerable<Script> commandGenerator, WorkContext ctx, string taskId)
+        public async Task ProcessBatchesAsync(AgreementEntity agreement, ActivityEntity activity, IAsyncEnumerable<Script> commandGenerator, WorkContext ctx, string taskId, CancellationToken cancellationToken)
         {
-
-            await using (var iter = commandGenerator.GetAsyncEnumerator())
+            await using (var iter = commandGenerator.GetAsyncEnumerator(cancellationToken))
             {
-                var isItem = await iter.MoveNextAsync();
+                var isItem = await iter.MoveNextAsync(cancellationToken);
 
                 while (isItem)
                 {
@@ -217,7 +216,7 @@ namespace YagnaSharpApi.Engine
                     if(!activity.IsActivityInitialized && !batch.IsInitialized)
                     {
                         // do explicit initialization
-                        await this.PerformImplicitInitAsync(agreement, activity, ctx, taskId);
+                        await this.PerformImplicitInitAsync(agreement, activity, ctx, taskId, cancellationToken);
                     }
 
                     var commandsBuilder = new ExeScriptBuilder();
@@ -252,14 +251,12 @@ namespace YagnaSharpApi.Engine
 
                     await this.AcceptPaymentForAgreement(agreement.AgreementId, true);
 
-                    isItem = await iter.MoveNextAsync();
+                    isItem = await iter.MoveNextAsync(cancellationToken);
                 }
-
-
             }
         }
 
-        protected async Task PerformImplicitInitAsync(AgreementEntity agreement, ActivityEntity activity, WorkContext ctx, string taskId)
+        protected async Task PerformImplicitInitAsync(AgreementEntity agreement, ActivityEntity activity, WorkContext ctx, string taskId, CancellationToken cancellationToken)
         {
             async IAsyncEnumerable<Script> ImplicitInitAsync()
             {
@@ -268,7 +265,7 @@ namespace YagnaSharpApi.Engine
                 script.Append(new StartStep());
                 yield return script;
             }
-            await this.ProcessBatchesAsync(agreement, activity, ImplicitInitAsync(), ctx, taskId);
+            await this.ProcessBatchesAsync(agreement, activity, ImplicitInitAsync(), ctx, taskId, cancellationToken);
 
         }
 
@@ -282,7 +279,7 @@ namespace YagnaSharpApi.Engine
                     {
                         if (this.AgreementsToPay.Contains(invoiceEvent.Invoice?.AgreementId))
                         {
-                            var agreement = await this.MarketRepository.GetAgreement(invoiceEvent.Invoice?.AgreementId);
+                            var agreement = await this.MarketRepository.GetAgreementAsync(invoiceEvent.Invoice?.AgreementId);
 
                             this.OnExecutorEvent?.Invoke(this, new InvoiceReceived(agreement, invoiceEvent.Invoice));
                             var allocation = this.GetAllocationForInvoice(invoiceEvent.Invoice);
@@ -325,7 +322,7 @@ namespace YagnaSharpApi.Engine
 
         public async Task AcceptPaymentForAgreement(string agreementId, bool partial = false)
         {
-            var agreement = await this.MarketRepository.GetAgreement(agreementId);
+            var agreement = await this.MarketRepository.GetAgreementAsync(agreementId);
             
             this.OnExecutorEvent?.Invoke(this, new PaymentPrepared(agreement));
 

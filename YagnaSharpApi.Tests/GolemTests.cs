@@ -1,3 +1,4 @@
+using Golem.ActivityApi.Client.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
@@ -31,10 +32,16 @@ namespace YagnaSharpApi.Tests
             MapConfig.Init();
         }
 
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            this.EventList.Clear();
+        }
+
         protected async Task DoGolemRunTaskAsync<Input, Output>(
             Func<WorkContext, IAsyncEnumerable<GolemTask<Input, Output>>, IAsyncEnumerable<Script>> workerFunc,
             IEnumerable<GolemTask<Input, Output>> data,
-            Action assertions,
+            Action assertions, bool waitForInvoiceAcceptance = true,
             int timeoutSeconds = 360)
         {
             var payload = VmRequestBuilder.Repo(
@@ -57,6 +64,16 @@ namespace YagnaSharpApi.Tests
                 }
 
                 assertions();
+
+                if (waitForInvoiceAcceptance)
+                {
+                    // Wait until invoice paid
+                    while (!this.EventList.Any(ev => ev is InvoiceAccepted))
+                    {
+                        Thread.Sleep(500);
+                    }
+                }
+
             }
 
         }
@@ -96,6 +113,7 @@ namespace YagnaSharpApi.Tests
             {
                 Assert.AreEqual(data.Count(), acceptedTasks.Count);
             });
+
         }
 
         [TestMethod]
@@ -127,7 +145,8 @@ namespace YagnaSharpApi.Tests
             await this.DoGolemRunTaskAsync(ProcessGolemTasksAsync, data, () =>
             {
                 Assert.AreEqual(data.Count(), acceptedTasks.Count);
-            });
+            }, 
+            false);
         }
 
         [TestMethod]
@@ -218,6 +237,7 @@ namespace YagnaSharpApi.Tests
                 Assert.AreEqual(data.Count(), acceptedTasks.Count);
                 Assert.IsTrue(File.Exists("output_0.png"));
             },
+            true,
             600);
         }
 
@@ -277,6 +297,7 @@ namespace YagnaSharpApi.Tests
                 Assert.IsNotNull(workerFinishedEvent.Exception);
                 Assert.IsTrue(workerFinishedEvent.Exception is FileNotFoundException);
             },
+            false,
             600);
         }
 
@@ -312,9 +333,119 @@ namespace YagnaSharpApi.Tests
                     .LastOrDefault()?
                     .Stdout != null);
 
+                // Shutdown service instance...
+                cluster.Instances[0].Shutdown();
+
+
+                // Wait until invoice paid
+                while(!events.Any(ev => ev is InvoiceAccepted))
+                {
+                    Thread.Sleep(500);
+                }
+
             }
 
         }
+
+
+        [TestMethod]
+        public async Task Golem_RunsSimplePayload()
+        {
+            const string DATE_OUTPUT_PATH = "/golem/work/date.txt";
+            const int REFRESH_INTERVAL_SEC = 5;
+            
+            var payload = VmRequestBuilder.Repo(
+                TestConstants.VM_TASK_DEFAULT_PAYLOAD_HASH,
+                0.5m,
+                2.0m
+                );
+
+
+            using (var golem = new Engine.Golem(
+                1.0m,
+                TestConstants.SUBNET_TAG))
+            {
+                golem.OnExecutorEvent += Golem_OnExecutorEvent;
+
+                var (agreement, activity) = await golem.RunPayloadAsync(payload, DateTime.Now.AddMinutes(5.0));
+
+                Assert.IsNotNull(agreement);
+                Assert.IsNotNull(activity);
+
+                await foreach(var result in activity.ExecAsync(new List<ExeScriptCommand>()
+                    {
+                        new DeployCommand(new object()),
+                        new StartCommand(new StartCommandBody(new List<string>())),
+                        new RunCommand(new RunCommandBody("/bin/sh",
+                            new List<string>() {"-c", $"while true; do date > {DATE_OUTPUT_PATH}; sleep {REFRESH_INTERVAL_SEC}; done &" },
+                            new Capture()  // default settings of stdout/stderr
+                            {
+                                Stdout = new CaptureMode()
+                                {
+                                    Stream = new CaptureStreamBody()
+                                },
+                                Stderr = new CaptureMode()
+                                {
+                                    Stream = new CaptureStreamBody()
+                                }
+                            }
+                        )),
+                        new RunCommand(new RunCommandBody("/bin/sh",
+                            new List<string>() { "-c", $"cat {DATE_OUTPUT_PATH}" },
+                            new Capture()  // default settings of stdout/stderr
+                            {
+                                Stdout = new CaptureMode()
+                                {
+                                    Stream = new CaptureStreamBody()
+                                },
+                                Stderr = new CaptureMode()
+                                {
+                                    Stream = new CaptureStreamBody()
+                                }
+                            }))
+                        }))
+                {
+                    Assert.AreEqual(ExeScriptCommandResult.ResultEnum.Ok, result.Result);
+                }
+
+
+                for(int i=0; i< 10; i++)
+                {
+                    Thread.Sleep(5000);
+                    await foreach (var result in activity.ExecAsync(new List<ExeScriptCommand>()
+                    {
+                        new RunCommand(new RunCommandBody("/bin/sh",
+                            new List<string>() { "-c", $"cat {DATE_OUTPUT_PATH}" },
+                            new Capture()  // default settings of stdout/stderr
+                            {
+                                Stdout = new CaptureMode()
+                                {
+                                    Stream = new CaptureStreamBody()
+                                },
+                                Stderr = new CaptureMode()
+                                {
+                                    Stream = new CaptureStreamBody()
+                                }
+                            }))
+                        }))
+                    {
+                        Assert.AreEqual(ExeScriptCommandResult.ResultEnum.Ok, result.Result);
+                        Assert.IsNotNull(result.Stdout);
+                    }
+
+                }
+
+
+
+                await agreement.TerminateAsync(new Entities.ReasonEntity() { Message = "Terminated" });
+
+
+                Thread.Sleep(10000); // allow for invoices to be paid, etc.
+
+
+            }
+        }
+
 
 
         private void Golem_OnExecutorEvent(object sender, Event e)
