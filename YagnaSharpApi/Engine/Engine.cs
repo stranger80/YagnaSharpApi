@@ -35,7 +35,7 @@ namespace YagnaSharpApi.Engine
         protected IDictionary<string, InvoiceEntity> InvoicesByAgreementId = new ConcurrentDictionary<string, InvoiceEntity>();
         protected HashSet<string> AgreementsToPay = new HashSet<string>();
         protected HashSet<string> AgreementsAcceptingDebitNotes = new HashSet<string>();
-        protected ConcurrentBag<AllocationEntity> Allocations = new ConcurrentBag<AllocationEntity>();
+        protected SynchronizedCollection<AllocationEntity> Allocations = new SynchronizedCollection<AllocationEntity>();
         protected List<Task> Workers = new List<Task>();
 
         public ApiConfiguration Configuration { get; set; }
@@ -172,7 +172,7 @@ namespace YagnaSharpApi.Engine
                         // this.Expires.AddSeconds(this.Configuration.InvoiceTimeout));
                         );
 
-                    result.Add(allocation);
+                    this.Allocations.Add(allocation);
                     this.OnExecutorEvent?.Invoke(this, new AllocationCreated(allocation.AllocationId));
                 }
                 catch (Exception exc)
@@ -181,7 +181,33 @@ namespace YagnaSharpApi.Engine
                 }
             }
 
-            return result;
+            return this.Allocations;
+        }
+
+
+
+        /// <summary>
+        /// Release and remove allocations from received collection
+        /// </summary>
+        /// <param name="allocations"></param>
+        /// <returns></returns>
+        public async Task ReleaseAllocationsAsync()
+        {
+            var allocsReleased = new List<AllocationEntity>();
+
+            try
+            {
+                foreach (var alloc in this.Allocations)
+                {
+                    await this.PaymentRepository.ReleaseAllocationAsync(alloc.AllocationId);
+                    this.OnExecutorEvent?.Invoke(this, new AllocationReleased(alloc.AllocationId));
+                    allocsReleased.Add(alloc);
+                }
+            }
+            finally
+            {
+                allocsReleased.ForEach(item => this.Allocations.Remove(item));
+            }
         }
 
         protected AllocationEntity GetAllocationForInvoice(InvoiceEntity invoice)
@@ -340,7 +366,13 @@ namespace YagnaSharpApi.Engine
             this.OnExecutorEvent?.Invoke(this, new PaymentAccepted(agreement, invoice));
         }
 
-
+        public bool HasAgreementsToPay
+        {
+            get
+            {
+                return this.AgreementsToPay.Any();
+            }
+        }
 
         #region Dispose
 
@@ -350,6 +382,8 @@ namespace YagnaSharpApi.Engine
             {
                 if (disposing)
                 {
+                    this.ReleaseAllocationsAsync().Wait();
+
                     this.cancellationTokenSource.Cancel();
 
                     this.MarketRepository.Dispose();

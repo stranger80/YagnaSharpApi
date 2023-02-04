@@ -42,8 +42,7 @@ namespace YagnaSharpApi.Engine
         /// </summary>
         protected bool shouldDisposeEngine = false; 
         protected IDictionary<string, InvoiceEntity> InvoicesByAgreementId = new ConcurrentDictionary<string, InvoiceEntity>();
-        protected HashSet<string> AgreementsToPay = new HashSet<string>();
-        protected ConcurrentBag<AllocationEntity> Allocations = new ConcurrentBag<AllocationEntity>();
+        protected SynchronizedCollection<AllocationEntity> Allocations = new SynchronizedCollection<AllocationEntity>();
         protected List<Task> Workers = new List<Task>();
 
         public ApiConfiguration Configuration { get; set; }
@@ -179,11 +178,6 @@ namespace YagnaSharpApi.Engine
                 if (!allocations.Any())
                     throw new Exception("No payment accounts. Did you forget to run 'yagna payment init --sender'?");
 
-                foreach (var alloc in allocations)
-                {
-                    this.Allocations.Add(alloc);
-                }
-
                 // 1.1. Update market strategy settings with accepted payment platforms
                 this.MarketStrategy.Conditions.PaymentPlatforms = allocations.Select(alloc => alloc.PaymentPlatform).ToList();
 
@@ -305,9 +299,9 @@ namespace YagnaSharpApi.Engine
                         System.Diagnostics.Debug.WriteLine(exc);
                     }
 
-                    // TODO wait until all work has completed (eg. all invoices paid)
+                    // wait until all work has completed (eg. all invoices paid)
 
-                    while (this.AgreementsToPay.Any())
+                    while (this.Engine.HasAgreementsToPay)
                     {
                         await Task.Delay(1000);
                     }
@@ -316,12 +310,7 @@ namespace YagnaSharpApi.Engine
                 }
                 finally
                 {
-                    foreach (var alloc in this.Allocations)
-                    {
-                        await this.PaymentRepository.ReleaseAllocationAsync(alloc.AllocationId);
-                        this.OnExecutorEvent?.Invoke(this, new AllocationReleased(alloc.AllocationId));
-
-                    }
+                    await this.Engine.ReleaseAllocationsAsync();
 
                 }
             }
@@ -570,7 +559,7 @@ namespace YagnaSharpApi.Engine
                 {
                     currentTask?.Stop(true); // reschedule failed task
                     this.OnExecutorEvent?.Invoke(this, new WorkerFinished(bufferedAgreement.Agreement, activity, exc));
-                    return false;
+                    throw;
                 }
 
                 System.Diagnostics.Debug.WriteLine($"Finished executing batch in Worker Task {Task.CurrentId}..");
@@ -604,8 +593,6 @@ namespace YagnaSharpApi.Engine
 
             return result;
         }
-
-
 
         #region Dispose
 

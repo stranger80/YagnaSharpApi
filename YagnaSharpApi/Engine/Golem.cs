@@ -61,10 +61,6 @@ namespace YagnaSharpApi.Engine
         {
             // 1. Create allocations
             var allocations = await this.CreateAllocationsAsync();
-            foreach (var allocation in allocations)
-            {
-                this.Allocations.Add(allocation);
-            }
 
             // 1.1. Update market strategy settings with accepted payment platforms
             this.MarketStrategy.Conditions.PaymentPlatforms = allocations.Select(alloc => alloc.PaymentPlatform).ToList();
@@ -96,10 +92,6 @@ namespace YagnaSharpApi.Engine
         {
             // 1. Create allocations
             var allocations = await this.CreateAllocationsAsync();
-            foreach (var allocation in allocations)
-            {
-                this.Allocations.Add(allocation);
-            }
 
             // 1.1. Update market strategy settings with accepted payment platforms
             this.MarketStrategy.Conditions.PaymentPlatforms = allocations.Select(alloc => alloc.PaymentPlatform).ToList();
@@ -185,12 +177,6 @@ namespace YagnaSharpApi.Engine
         {
             try
             {
-                foreach (var alloc in this.Allocations)
-                {
-                    await this.PaymentRepository.ReleaseAllocationAsync(alloc.AllocationId);
-                    this.ForwardExecutorEvent(this, new AllocationReleased(alloc.AllocationId));
-
-                }
             }
             finally
             {

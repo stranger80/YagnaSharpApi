@@ -6,7 +6,7 @@ namespace YagnaSharpApi.Studio
 {
     public class Config
     {
-        public string SubnetTag { get; set; } = "devnet-beta";
+        public string SubnetTag { get; set; } = "public";
 
     }
 }

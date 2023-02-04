@@ -367,7 +367,7 @@ namespace YagnaSharpApi.Tests
             {
                 golem.OnExecutorEvent += Golem_OnExecutorEvent;
 
-                var (agreement, activity) = await golem.RunPayloadAsync(payload, DateTime.Now.AddMinutes(5.0));
+                var (agreement, activity) = await golem.RunPayloadAsync(payload, DateTime.Now.AddMinutes(7.0));
 
                 Assert.IsNotNull(agreement);
                 Assert.IsNotNull(activity);
